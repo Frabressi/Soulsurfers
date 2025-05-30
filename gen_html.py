@@ -236,7 +236,7 @@ HTML_TEMPLATE_STR = """
 <body>
     <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="{{ brand_link_url }}">SoulSurfers</a>
+            <a class="navbar-brand" href="{{ brand_link_url }}">SaltRiders</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -409,14 +409,14 @@ HTML_TEMPLATE_STR = """
 text_content = {
     'it': {
         'lang_code': 'it',
-        'page_title': "SoulSurfers: L'Avventura Epica (e un po' Folle) di GG & Paco - Itinerario 2025-2026",
+        'page_title': "SaltRiders: L'Avventura Epica (e un po' Folle) di GG & Paco - Itinerario 2025-2026",
         'nav_home': "Home",
         'nav_protagonists': "Eroi (o Anti-Eroi?)",
         'nav_adventure': "L'Odissea",
         'nav_equipment': "Ferraglia & Sogni",
         'nav_map': "La Mappa del Tesoro",
-        'header_title': "SoulSurfers World Tour",
-        'header_subtitle': "L'incredibile itinerario 2025-2026 di GG & Paco, un'epopea via terra e mare all'insegna della scoperta e del surf",
+        'header_title': "SaltRiders World Tour",
+        'header_subtitle': "L'incredibile itinerario 2025-2026 di GG & Paco, un'epopea via terra e mare all'insegna del bikepacking e del surf",
         'protagonists_section_title': "I Nostri Eroi (Più o Meno)",
         'gg_alt_text': "Foto di GG, probabilmente mentre ride di un'idea folle",
         'gg_name': "GG - Il Gigante Entusiasta",
@@ -425,7 +425,7 @@ text_content = {
         'paco_name': "Paco - L'Esploratore Sagace",
         'paco_description': "Mente acuta e animo energico, Paco è l'anima organizzatrice del duo. Sempre pronto a trovare soluzioni geniali (o almeno, che sembrano tali al momento), affronta ogni peripezia con una buona dose di problem solving creativo. L’adrenalina della scoperta lo guida, trasformando ogni imprevisto in… beh, in un altro imprevisto da risolvere.",
         'adventure_section_title': "La Nostra Gloriosa Odissea",
-        'adventure_intro1': "Allacciate le cinture (o meglio, stringete le cinghie dei portapacchi)! I SoulSurfers, GG e Paco, stanno per intraprendere un'odissea che riscriverà le regole dell'esplorazione... o almeno, ci proveranno con stile. Dal cuore pulsante dell'Europa, questi due intrepidi (o incoscienti?) avventurieri scateneranno le loro fidate bici e tavole da surf in un tour de force via terra e mare, pronti a collezionare culture esotiche e panorami da cartolina.",
+        'adventure_intro1': "Allacciate le cinture (o meglio, stringete le cinghie dei portapacchi)! I SaltRiders, GG e Paco, stanno per intraprendere un'odissea che riscriverà le regole dell'esplorazione... o almeno, ci proveranno con stile. Dal cuore pulsante dell'Europa, questi due intrepidi (o incoscienti?) avventurieri scateneranno le loro fidate bici e tavole da surf in un tour de force via terra e mare, pronti a collezionare culture esotiche e panorami da cartolina.",
         'adventure_intro2': "La loro filosofia di viaggio? Più che un piano, una dichiarazione d'intenti, aperta all'imprevisto e all'ingegno:",
         'adventure_step1_title': "Europa Express, con la Calma dei Campioni",
         'adventure_step1_desc': "Da Milano, un inizio 'soft' su rotaia verso ovest, giusto per assaporare il Vecchio Continente prima del vero caos.",
@@ -447,7 +447,7 @@ text_content = {
         'equipment_image_alt': "Concept di bici con porta tavola da surf - l'ingegno all'opera!",
         'equipment_image_caption': "Pensato per il classico tragitto casa-spiaggia, il nostro sistema porta-tavola farà lo stesso… ma con qualche deviazione panoramica.",
         'map_section_title': "La Mappa Interattiva",
-        'footer_text': "© 2024 SoulSurfers Epic Fails & Adventures - GG & Paco. Mappa generata con Folium (e tanta pazienza). Stay Stoked (e incrociate le dita per noi)!",
+        'footer_text': "© 2024 SaltRiders Epic Fails & Adventures - GG & Paco. Mappa generata con Folium (e tanta pazienza). Stay Stoked (e incrociate le dita per noi)!",
         'map_tile_clear': "Mappa Chiara",
         'map_tile_standard': "Mappa Standard",
         'map_tile_satellite': "Mappa Satellitare",
@@ -494,14 +494,14 @@ text_content = {
     },
     'en': {
         'lang_code': 'en',
-        'page_title': "SoulSurfers: GG & Paco's Epic (and Slightly Mad) Adventure - 2025-2026 Itinerary",
+        'page_title': "SaltRiders: GG & Paco's Epic (and Slightly Mad) Adventure - 2025-2026 Itinerary",
         'nav_home': "Home Base",
         'nav_protagonists': "Heroes (or Villains?)",
         'nav_adventure': "The Odyssey",
         'nav_equipment': "Gear & Dreams",
         'nav_map': "Treasure Map",
-        'header_title': "SoulSurfers World Tour",
-        'header_subtitle': "GG & Paco's incredible 2025-2026 itinerary, an epic land and sea journey of discovery and surf!",
+        'header_title': "SaltRiders World Tour",
+        'header_subtitle': "GG & Paco's incredible 2025-2026 itinerary, an epic land and ocean journey of bikepacking and surf!",
         'protagonists_section_title': "Our (Sorta) Heroes",
         'gg_alt_text': "GG's Photo, probably laughing at a crazy idea",
         'gg_name': "GG - The Enthusiastic Giant",
@@ -510,7 +510,7 @@ text_content = {
         'paco_name': "Paco - The Sagacious Explorer",
         'paco_description': "A sharp mind and energetic soul, Paco is the organizing spirit of the duo. Always ready to find ingenious solutions (or at least, ones that seem so at the time), he faces every mishap with a healthy dose of creative problem-solving. The adrenaline of discovery guides him, turning every unforeseen event into… well, another unforeseen event to solve.",
         'adventure_section_title': "Our Glorious Odyssey",
-        'adventure_intro1': "Fasten your seatbelts (or rather, tighten your roof rack straps)! The SoulSurfers, GG and Paco, are about to embark on an odyssey that will redefine the very concept of exploration... or at least, they'll give it a stylish shot. From the beating heart of Europe, these two intrepid (or perhaps, gloriously reckless?) adventurers will unleash their trusty bikes and surfboards on a land-and-sea tour de force, ready to collect exotic cultures and postcard-perfect vistas.",
+        'adventure_intro1': "Fasten your seatbelts (or rather, tighten your roof rack straps)! The SaltRiders, GG and Paco, are about to embark on an odyssey that will redefine the very concept of exploration... or at least, they'll give it a stylish shot. From the beating heart of Europe, these two intrepid (or perhaps, gloriously reckless?) adventurers will unleash their trusty bikes and surfboards on a land-and-sea tour de force, ready to collect exotic cultures and postcard-perfect vistas.",
         'adventure_intro2': "Their travel philosophy? More than a plan, it's a declaration of intent, wide open to the unexpected and pure ingenuity:",
         'adventure_step1_title': "Europe Express, with Champion-like Poise",
         'adventure_step1_desc': "From Milan, a 'soft' start westward by rail, just to savour the Old Continent before the real chaos begins.",
@@ -532,7 +532,7 @@ text_content = {
         'equipment_image_alt': "Concept of a bike with a surfboard rack - ingenuity at work!",
         'equipment_image_caption': "Designed for the classic home-to-beach commute, our board rack system will do the same… but with a few scenic detours.",
         'map_section_title': "The Interactive Map",
-        'footer_text': "© 2024 SoulSurfers Epic Fails & Adventures - GG & Paco. Map generated with Folium (and a lot of patience). Stay Stoked (and cross your fingers for us)!",
+        'footer_text': "© 2024 SaltRiders Epic Fails & Adventures - GG & Paco. Map generated with Folium (and a lot of patience). Stay Stoked (and cross your fingers for us)!",
         'map_tile_clear': "Clear Map",
         'map_tile_standard': "Standard Map",
         'map_tile_satellite': "Satellite Map",
