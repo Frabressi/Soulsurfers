@@ -187,19 +187,17 @@
             margin-top: 35px; 
             background-color: #e0e0e0; 
             position: relative; 
-            /* display: flex; flex-direction: column; Rimosso per test, spesso non necessario se il figlio è position:absolute */
         }
         #map-container .folium-map { 
-            /* flex-grow: 1; Rimosso per test */
-            width: 100% !important; 
-            height: 100% !important; 
-            position: absolute; /* Assicura che prenda le dimensioni del genitore se il genitore ha position:relative */
+            width: 100%; 
+            height: 100%; 
+            position: absolute; 
             top: 0;
             left: 0;
-            border-radius: 18px;
+            border-radius: inherit; 
         }
-        .leaflet-container { /* Stile diretto al contenitore Leaflet */
-            background: var(--bg-darker); /* Sfondo di fallback per la mappa stessa */
+        .leaflet-container {
+            background: var(--bg-darker) !important; /* Usa una variabile CSS per coerenza o un colore specifico */
         }
 
         .leaflet-control-container .leaflet-control-layers {
@@ -216,7 +214,7 @@
         }
         footer p { margin-bottom: 0; }
 
-        @media (max-width: 992px) { 
+        @media (max-width: 991.98px) { /* Breakpoint lg di Bootstrap per il collapse */
             :root { --navbar-height: 56px; }
             .header-banner h1 { font-size: 3.2rem; } 
             .header-banner .subtitle { font-size: 1.5rem; } 
@@ -226,7 +224,35 @@
             .navbar-custom .navbar-brand { font-size: 1.3rem; }
             .navbar-custom .nav-link { font-size: 0.9rem; padding: 0.5rem 0.8rem;}
             .navbar-custom .language-switcher { display: flex; align-items: center; }
+
+            /* Stili per il menu navbar mobile aperto */
+            .navbar-custom .navbar-collapse.show, 
+            .navbar-custom .navbar-collapse.collapsing { /* Anche durante la transizione */
+                background-color: var(--bg-white); /* Sfondo bianco per il menu aperto */
+                box-shadow: 0 8px 16px rgba(0,0,0,0.15); /* Ombra più pronunciata */
+                border-bottom-left-radius: .5rem;
+                border-bottom-right-radius: .5rem;
+                padding: 1rem; /* Padding interno */
+                margin-top: 0; /* Rimuovi eventuale margine superiore */
+                border-top: 1px solid var(--bg-darker); /* Leggera linea di separazione */
+            }
+            .navbar-custom .navbar-collapse .nav-item {
+                margin-bottom: 0.5rem; /* Spazio tra i link */
+            }
+            .navbar-custom .navbar-collapse .nav-link {
+                color: var(--text-dark) !important; /* Colore scuro per i link su sfondo chiaro */
+                padding: .5rem 0; /* Padding per i link */
+            }
+            .navbar-custom .navbar-collapse .nav-link:hover,
+            .navbar-custom .navbar-collapse .nav-link.active {
+                color: var(--primary-color) !important;
+            }
+            .navbar-custom .navbar-collapse .language-switcher {
+                 justify-content: flex-start; /* Allinea a sinistra o centro come preferisci */
+                 padding: .5rem 0;
+            }
         }
+
         @media (max-width: 768px) { 
             .header-banner { padding: 100px 15px 80px 15px; }
             .header-banner h1 { font-size: 2.6rem; } 
@@ -237,11 +263,16 @@
             .character-card .profile-pic { width: 130px; height: 130px; }
             .trip-description p, .equipment-description p { font-size: 1.05rem; }
             .equipment-image { max-width: 90%; }
-            #map-container { height: 60vh; min-height: 450px; } 
+
+            /* Altezza mappa specifica per mobile per evitare che sia troppo alta */
+            #map-container { 
+                height: 55vh; /* Ridotta ulteriormente per schermi molto verticali */
+                min-height: 350px; /* Ridotto anche il min-height */
+            } 
             .navbar-toggler { margin-right: 0.5rem;}
             footer { font-size: 0.8rem; padding: 8px 15px;} 
             :root { --footer-height: 40px; }
-            .navbar-collapse .language-switcher { margin-top: 10px; margin-bottom: 10px; justify-content: center;}
+            /* .navbar-custom .navbar-collapse .language-switcher già gestito sopra */
         }
     </style>
 </head>
@@ -316,7 +347,7 @@
             &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; /&gt;
             &lt;style&gt;
-                #map_04261629cabe4dc97b085d8c29f9aa21 {
+                #map_ef1a6a23e727f27ed5bc3744911d700c {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -338,14 +369,14 @@
 &lt;body&gt;
     
     
-            &lt;div class=&quot;folium-map&quot; id=&quot;map_04261629cabe4dc97b085d8c29f9aa21&quot; &gt;&lt;/div&gt;
+            &lt;div class=&quot;folium-map&quot; id=&quot;map_ef1a6a23e727f27ed5bc3744911d700c&quot; &gt;&lt;/div&gt;
         
 &lt;/body&gt;
 &lt;script&gt;
     
     
-            var map_04261629cabe4dc97b085d8c29f9aa21 = L.map(
-                &quot;map_04261629cabe4dc97b085d8c29f9aa21&quot;,
+            var map_ef1a6a23e727f27ed5bc3744911d700c = L.map(
+                &quot;map_ef1a6a23e727f27ed5bc3744911d700c&quot;,
                 {
                     center: [15.0, -30.0],
                     crs: L.CRS.EPSG3857,
@@ -362,7 +393,7 @@
 
         
     
-            var tile_layer_c91e913b785056d0ef75ba865cdc6c38 = L.tileLayer(
+            var tile_layer_874fd52c67a0d76706aa6bc10ba3da6e = L.tileLayer(
                 &quot;https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png&quot;,
                 {
   &quot;minZoom&quot;: 0,
@@ -379,10 +410,10 @@
             );
         
     
-            tile_layer_c91e913b785056d0ef75ba865cdc6c38.addTo(map_04261629cabe4dc97b085d8c29f9aa21);
+            tile_layer_874fd52c67a0d76706aa6bc10ba3da6e.addTo(map_ef1a6a23e727f27ed5bc3744911d700c);
         
     
-            var tile_layer_ba5af0c7e976adbdbf18c1473d58944d = L.tileLayer(
+            var tile_layer_f81dbdc7b0ac03ecf96327a0bcd1a444 = L.tileLayer(
                 &quot;https://tile.openstreetmap.org/{z}/{x}/{y}.png&quot;,
                 {
   &quot;minZoom&quot;: 0,
@@ -399,10 +430,10 @@
             );
         
     
-            tile_layer_ba5af0c7e976adbdbf18c1473d58944d.addTo(map_04261629cabe4dc97b085d8c29f9aa21);
+            tile_layer_f81dbdc7b0ac03ecf96327a0bcd1a444.addTo(map_ef1a6a23e727f27ed5bc3744911d700c);
         
     
-            var tile_layer_7a9e5924a3332b299ec3d96331106472 = L.tileLayer(
+            var tile_layer_693584725e2bb6be0ee5b1bac76a532c = L.tileLayer(
                 &quot;https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}&quot;,
                 {
   &quot;minZoom&quot;: 0,
@@ -419,23 +450,23 @@
             );
         
     
-            tile_layer_7a9e5924a3332b299ec3d96331106472.addTo(map_04261629cabe4dc97b085d8c29f9aa21);
+            tile_layer_693584725e2bb6be0ee5b1bac76a532c.addTo(map_ef1a6a23e727f27ed5bc3744911d700c);
         
     
-            var feature_group_7c2ae45738cc732a7096290ec11dd8ab = L.featureGroup(
+            var feature_group_4d835e44f4ce33ef42c706bbe808687b = L.featureGroup(
                 {
 }
             );
         
     
-            var marker_d18aa765dd1349b5b48432c8de024413 = L.marker(
+            var marker_2f39a3716243d960fd2af47b90716be8 = L.marker(
                 [45.4642, 9.19],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var beautify_icon_a86adfc781403b3ca6db882a3bf9c008 = new L.BeautifyIcon.icon(
+            var beautify_icon_c756fae1664fcc83641a3e94f9f58cc7 = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;train&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -449,56 +480,56 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_d18aa765dd1349b5b48432c8de024413.setIcon(beautify_icon_a86adfc781403b3ca6db882a3bf9c008);
+            marker_2f39a3716243d960fd2af47b90716be8.setIcon(beautify_icon_c756fae1664fcc83641a3e94f9f58cc7);
         
     
-        var popup_8c275a7a8cf660639ccfe74ba4ab5e41 = L.popup({
+        var popup_226fb155967c6e564e3cc3f607935b5f = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_82b8cf14a3fb5780f78cb8a4a734d9b3 = $(`&lt;div id=&quot;html_82b8cf14a3fb5780f78cb8a4a734d9b3&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Milano - Qui inizia la follia!&lt;/div&gt;`)[0];
-                popup_8c275a7a8cf660639ccfe74ba4ab5e41.setContent(html_82b8cf14a3fb5780f78cb8a4a734d9b3);
+                var html_d61734050f7bb4483377d7bd4b6e719c = $(`&lt;div id=&quot;html_d61734050f7bb4483377d7bd4b6e719c&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Milano - Qui inizia la follia!&lt;/div&gt;`)[0];
+                popup_226fb155967c6e564e3cc3f607935b5f.setContent(html_d61734050f7bb4483377d7bd4b6e719c);
             
         
 
-        marker_d18aa765dd1349b5b48432c8de024413.bindPopup(popup_8c275a7a8cf660639ccfe74ba4ab5e41)
+        marker_2f39a3716243d960fd2af47b90716be8.bindPopup(popup_226fb155967c6e564e3cc3f607935b5f)
         ;
 
         
     
     
-                marker_d18aa765dd1349b5b48432c8de024413.setIcon(beautify_icon_a86adfc781403b3ca6db882a3bf9c008);
+                marker_2f39a3716243d960fd2af47b90716be8.setIcon(beautify_icon_c756fae1664fcc83641a3e94f9f58cc7);
             
     
-            var marker_71ba49601beea2bcc40f346a34e7fe95 = L.marker(
+            var marker_6d4de3880a5735cd18e3408a37526b99 = L.marker(
                 [45.4642, 9.19],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var div_icon_daba0fb0c23ae0c8c97f136cbb6eb300 = L.divIcon({
+            var div_icon_fa990dc0ee74ea39c4cfb7f93a755f58 = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e10 Set 25\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_71ba49601beea2bcc40f346a34e7fe95.setIcon(div_icon_daba0fb0c23ae0c8c97f136cbb6eb300);
+            marker_6d4de3880a5735cd18e3408a37526b99.setIcon(div_icon_fa990dc0ee74ea39c4cfb7f93a755f58);
         
     
-                marker_71ba49601beea2bcc40f346a34e7fe95.setIcon(div_icon_daba0fb0c23ae0c8c97f136cbb6eb300);
+                marker_6d4de3880a5735cd18e3408a37526b99.setIcon(div_icon_fa990dc0ee74ea39c4cfb7f93a755f58);
             
     
-            var marker_72b9016611912458ab2f85a0278984bf = L.marker(
+            var marker_543c6b42636db2a1e7adb50af7d47f48 = L.marker(
                 [45.0703, 7.6869],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var beautify_icon_29331c2e1afab899964131a16fa1c74f = new L.BeautifyIcon.icon(
+            var beautify_icon_8188f2a9428310fe3658fb96592b96e6 = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;train&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -512,55 +543,55 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_72b9016611912458ab2f85a0278984bf.setIcon(beautify_icon_29331c2e1afab899964131a16fa1c74f);
+            marker_543c6b42636db2a1e7adb50af7d47f48.setIcon(beautify_icon_8188f2a9428310fe3658fb96592b96e6);
         
     
-        var popup_9d9ae2f1567ae8d2ccb22bb78a2da276 = L.popup({
+        var popup_91d79f31754dfac0045c32b12b57cb51 = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_f15211c4e90f3ae7f718d89d9f7242b1 = $(`&lt;div id=&quot;html_f15211c4e90f3ae7f718d89d9f7242b1&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Torino - Pronti per le Alpi?!&lt;/div&gt;`)[0];
-                popup_9d9ae2f1567ae8d2ccb22bb78a2da276.setContent(html_f15211c4e90f3ae7f718d89d9f7242b1);
+                var html_1faef47afc5aa3c9d08549455ba15044 = $(`&lt;div id=&quot;html_1faef47afc5aa3c9d08549455ba15044&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Torino - Pronti per le Alpi?!&lt;/div&gt;`)[0];
+                popup_91d79f31754dfac0045c32b12b57cb51.setContent(html_1faef47afc5aa3c9d08549455ba15044);
             
         
 
-        marker_72b9016611912458ab2f85a0278984bf.bindPopup(popup_9d9ae2f1567ae8d2ccb22bb78a2da276)
+        marker_543c6b42636db2a1e7adb50af7d47f48.bindPopup(popup_91d79f31754dfac0045c32b12b57cb51)
         ;
 
         
     
     
-                marker_72b9016611912458ab2f85a0278984bf.setIcon(beautify_icon_29331c2e1afab899964131a16fa1c74f);
+                marker_543c6b42636db2a1e7adb50af7d47f48.setIcon(beautify_icon_8188f2a9428310fe3658fb96592b96e6);
             
     
-            var marker_36b304442978d1906ff8797b0fc06222 = L.marker(
+            var marker_faa1025baf5d9d9f53b83f19965506b8 = L.marker(
                 [45.0703, 7.6869],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var div_icon_044c970db2932e5f32925ddf52c65d78 = L.divIcon({
+            var div_icon_e0101330d117e75ccfa4338bdaf83520 = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e10 Set 25\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_36b304442978d1906ff8797b0fc06222.setIcon(div_icon_044c970db2932e5f32925ddf52c65d78);
+            marker_faa1025baf5d9d9f53b83f19965506b8.setIcon(div_icon_e0101330d117e75ccfa4338bdaf83520);
         
     
-                marker_36b304442978d1906ff8797b0fc06222.setIcon(div_icon_044c970db2932e5f32925ddf52c65d78);
+                marker_faa1025baf5d9d9f53b83f19965506b8.setIcon(div_icon_e0101330d117e75ccfa4338bdaf83520);
             
     
-            var poly_line_9f80a3f2a82a4dcd089df2760e530e6e = L.polyline(
+            var poly_line_b1f41859f5d98d60bdd34eabc6173ca7 = L.polyline(
                 [[45.4642, 9.19], [45.0703, 7.6869]],
                 {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#E74C3C&quot;, &quot;dashArray&quot;: &quot;2,6&quot;, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#E74C3C&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;noClip&quot;: false, &quot;opacity&quot;: 1.0, &quot;smoothFactor&quot;: 1.0, &quot;stroke&quot;: true, &quot;weight&quot;: 4}
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            poly_line_9f80a3f2a82a4dcd089df2760e530e6e.bindTooltip(
+            poly_line_b1f41859f5d98d60bdd34eabc6173ca7.bindTooltip(
                 `&lt;div&gt;
                      Treno Milano→Torino (10 Set 25) - Il riscaldamento
                  &lt;/div&gt;`,
@@ -570,14 +601,14 @@
             );
         
     
-            var marker_3c6990ead50962a58359428d3d377936 = L.marker(
+            var marker_8fd395c44b6494131cb6a61bea87da26 = L.marker(
                 [45.0703, 7.6869],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var beautify_icon_32afb9061b9a398fa4ef80cd106c5eda = new L.BeautifyIcon.icon(
+            var beautify_icon_250286a3f5e464e912545c38ce4a9372 = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;person-biking&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -591,56 +622,56 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_3c6990ead50962a58359428d3d377936.setIcon(beautify_icon_32afb9061b9a398fa4ef80cd106c5eda);
+            marker_8fd395c44b6494131cb6a61bea87da26.setIcon(beautify_icon_250286a3f5e464e912545c38ce4a9372);
         
     
-        var popup_7b0e67a1746c30540dc34ab6ee100a94 = L.popup({
+        var popup_12686054110d9075b0b80ef9f3865f23 = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_9522780aa681cafc53ddefaad3ba913c = $(`&lt;div id=&quot;html_9522780aa681cafc53ddefaad3ba913c&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Torino - Inizio Bici (e sofferenza alpina)&lt;/div&gt;`)[0];
-                popup_7b0e67a1746c30540dc34ab6ee100a94.setContent(html_9522780aa681cafc53ddefaad3ba913c);
+                var html_c0f53808a49a18b3f3e69d2f6a085467 = $(`&lt;div id=&quot;html_c0f53808a49a18b3f3e69d2f6a085467&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Torino - Inizio Bici (e sofferenza alpina)&lt;/div&gt;`)[0];
+                popup_12686054110d9075b0b80ef9f3865f23.setContent(html_c0f53808a49a18b3f3e69d2f6a085467);
             
         
 
-        marker_3c6990ead50962a58359428d3d377936.bindPopup(popup_7b0e67a1746c30540dc34ab6ee100a94)
+        marker_8fd395c44b6494131cb6a61bea87da26.bindPopup(popup_12686054110d9075b0b80ef9f3865f23)
         ;
 
         
     
     
-                marker_3c6990ead50962a58359428d3d377936.setIcon(beautify_icon_32afb9061b9a398fa4ef80cd106c5eda);
+                marker_8fd395c44b6494131cb6a61bea87da26.setIcon(beautify_icon_250286a3f5e464e912545c38ce4a9372);
             
     
-            var marker_cd0a215d1e5cf7152bc2eb6bd92b9e16 = L.marker(
+            var marker_a1a6c86e7f4b14282e580c777afd732e = L.marker(
                 [45.0703, 7.6869],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var div_icon_cab421cfac25ffe050882e048cc598cc = L.divIcon({
+            var div_icon_0b030c2927dadd59d74b32cfa1f9e467 = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e10 Set 25\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_cd0a215d1e5cf7152bc2eb6bd92b9e16.setIcon(div_icon_cab421cfac25ffe050882e048cc598cc);
+            marker_a1a6c86e7f4b14282e580c777afd732e.setIcon(div_icon_0b030c2927dadd59d74b32cfa1f9e467);
         
     
-                marker_cd0a215d1e5cf7152bc2eb6bd92b9e16.setIcon(div_icon_cab421cfac25ffe050882e048cc598cc);
+                marker_a1a6c86e7f4b14282e580c777afd732e.setIcon(div_icon_0b030c2927dadd59d74b32cfa1f9e467);
             
     
-            var marker_88bee62b62bf1f639dd7b834872b5058 = L.marker(
+            var marker_e0dbb7204bdd0f4af15befc0ba8065c4 = L.marker(
                 [45.1885, 5.7245],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var beautify_icon_209c36384f65b4d8a2fcfc187d6be164 = new L.BeautifyIcon.icon(
+            var beautify_icon_4dc7be44604ba3ffbc96cd65076a73af = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;person-biking&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -654,55 +685,55 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_88bee62b62bf1f639dd7b834872b5058.setIcon(beautify_icon_209c36384f65b4d8a2fcfc187d6be164);
+            marker_e0dbb7204bdd0f4af15befc0ba8065c4.setIcon(beautify_icon_4dc7be44604ba3ffbc96cd65076a73af);
         
     
-        var popup_93d1695aa1a7f70104d01a719c363fe6 = L.popup({
+        var popup_36366dcd669d08efa94bcab006cf5324 = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_8c3144b6dd534cc2f204721509697808 = $(`&lt;div id=&quot;html_8c3144b6dd534cc2f204721509697808&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Grenoble - Sopravvissuti alle Alpi!&lt;/div&gt;`)[0];
-                popup_93d1695aa1a7f70104d01a719c363fe6.setContent(html_8c3144b6dd534cc2f204721509697808);
+                var html_c20a3e81f78dc5c2d2ba37ddac31adbe = $(`&lt;div id=&quot;html_c20a3e81f78dc5c2d2ba37ddac31adbe&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Grenoble - Sopravvissuti alle Alpi!&lt;/div&gt;`)[0];
+                popup_36366dcd669d08efa94bcab006cf5324.setContent(html_c20a3e81f78dc5c2d2ba37ddac31adbe);
             
         
 
-        marker_88bee62b62bf1f639dd7b834872b5058.bindPopup(popup_93d1695aa1a7f70104d01a719c363fe6)
+        marker_e0dbb7204bdd0f4af15befc0ba8065c4.bindPopup(popup_36366dcd669d08efa94bcab006cf5324)
         ;
 
         
     
     
-                marker_88bee62b62bf1f639dd7b834872b5058.setIcon(beautify_icon_209c36384f65b4d8a2fcfc187d6be164);
+                marker_e0dbb7204bdd0f4af15befc0ba8065c4.setIcon(beautify_icon_4dc7be44604ba3ffbc96cd65076a73af);
             
     
-            var marker_b6082d617847e6906236e40c66c41a06 = L.marker(
+            var marker_580077be5c53b4034e0e9dc043d54ec0 = L.marker(
                 [45.1885, 5.7245],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var div_icon_36e598d228efdb6f54285eab35b2ba08 = L.divIcon({
+            var div_icon_53b8086a25e164d067757c65505e48dd = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e11 Set 25\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_b6082d617847e6906236e40c66c41a06.setIcon(div_icon_36e598d228efdb6f54285eab35b2ba08);
+            marker_580077be5c53b4034e0e9dc043d54ec0.setIcon(div_icon_53b8086a25e164d067757c65505e48dd);
         
     
-                marker_b6082d617847e6906236e40c66c41a06.setIcon(div_icon_36e598d228efdb6f54285eab35b2ba08);
+                marker_580077be5c53b4034e0e9dc043d54ec0.setIcon(div_icon_53b8086a25e164d067757c65505e48dd);
             
     
-            var poly_line_5737e6d80ae4f7873fb9e157572fef33 = L.polyline(
+            var poly_line_f960e28d3148e89ddeaf65e7442a6db1 = L.polyline(
                 [[45.0703, 7.6869], [45.1885, 5.7245]],
                 {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#F39C12&quot;, &quot;dashArray&quot;: &quot;5,8&quot;, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#F39C12&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;noClip&quot;: false, &quot;opacity&quot;: 1.0, &quot;smoothFactor&quot;: 1.0, &quot;stroke&quot;: true, &quot;weight&quot;: 4}
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            poly_line_5737e6d80ae4f7873fb9e157572fef33.bindTooltip(
+            poly_line_f960e28d3148e89ddeaf65e7442a6db1.bindTooltip(
                 `&lt;div&gt;
                      Bici Torino→Grenoble (10-11 Set 25) - &#x27;Una passeggiata&#x27;, dicevano...
                  &lt;/div&gt;`,
@@ -712,14 +743,14 @@
             );
         
     
-            var marker_dfab43bc7f632728f9a0e0299de56e44 = L.marker(
+            var marker_16802ebd8960e77a9db8df36749675d5 = L.marker(
                 [45.1885, 5.7245],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var beautify_icon_1595000a1135d4b0110af88ce0c50c41 = new L.BeautifyIcon.icon(
+            var beautify_icon_48ca2321604735a08815d665efa36788 = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;bus&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -733,56 +764,56 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_dfab43bc7f632728f9a0e0299de56e44.setIcon(beautify_icon_1595000a1135d4b0110af88ce0c50c41);
+            marker_16802ebd8960e77a9db8df36749675d5.setIcon(beautify_icon_48ca2321604735a08815d665efa36788);
         
     
-        var popup_c8851ef6cebe765500ef6aceeb2ab521 = L.popup({
+        var popup_291048e54845781b74bdcbc361bc6633 = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_5705a9a4e6ae2e103e9c929538153aa3 = $(`&lt;div id=&quot;html_5705a9a4e6ae2e103e9c929538153aa3&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Grenoble - Pausa tattica in bus&lt;/div&gt;`)[0];
-                popup_c8851ef6cebe765500ef6aceeb2ab521.setContent(html_5705a9a4e6ae2e103e9c929538153aa3);
+                var html_9d184ba9f5bfd720301116a78b6fd50e = $(`&lt;div id=&quot;html_9d184ba9f5bfd720301116a78b6fd50e&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Grenoble - Pausa tattica in bus&lt;/div&gt;`)[0];
+                popup_291048e54845781b74bdcbc361bc6633.setContent(html_9d184ba9f5bfd720301116a78b6fd50e);
             
         
 
-        marker_dfab43bc7f632728f9a0e0299de56e44.bindPopup(popup_c8851ef6cebe765500ef6aceeb2ab521)
+        marker_16802ebd8960e77a9db8df36749675d5.bindPopup(popup_291048e54845781b74bdcbc361bc6633)
         ;
 
         
     
     
-                marker_dfab43bc7f632728f9a0e0299de56e44.setIcon(beautify_icon_1595000a1135d4b0110af88ce0c50c41);
+                marker_16802ebd8960e77a9db8df36749675d5.setIcon(beautify_icon_48ca2321604735a08815d665efa36788);
             
     
-            var marker_ce3c991de461e5876724129972d0c7c4 = L.marker(
+            var marker_19538e9f1ce1ccb8aa8264bc97ea2f7e = L.marker(
                 [45.1885, 5.7245],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var div_icon_08764b17ffb05b6ae8dfb97a777a1fe8 = L.divIcon({
+            var div_icon_82c739bbb9eaa69f89bea4d8d4d505e4 = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e11 Set 25\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_ce3c991de461e5876724129972d0c7c4.setIcon(div_icon_08764b17ffb05b6ae8dfb97a777a1fe8);
+            marker_19538e9f1ce1ccb8aa8264bc97ea2f7e.setIcon(div_icon_82c739bbb9eaa69f89bea4d8d4d505e4);
         
     
-                marker_ce3c991de461e5876724129972d0c7c4.setIcon(div_icon_08764b17ffb05b6ae8dfb97a777a1fe8);
+                marker_19538e9f1ce1ccb8aa8264bc97ea2f7e.setIcon(div_icon_82c739bbb9eaa69f89bea4d8d4d505e4);
             
     
-            var marker_a686f81088646bc5993c2b29d47a36da = L.marker(
+            var marker_70d6de5f006e516bfc3603a8ce926a52 = L.marker(
                 [43.3183, -1.9812],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var beautify_icon_5b89bfd79f316d355231a607f950e15b = new L.BeautifyIcon.icon(
+            var beautify_icon_0fe77142f6548c1354ced645c02bf08a = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;bus&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -796,55 +827,55 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_a686f81088646bc5993c2b29d47a36da.setIcon(beautify_icon_5b89bfd79f316d355231a607f950e15b);
+            marker_70d6de5f006e516bfc3603a8ce926a52.setIcon(beautify_icon_0fe77142f6548c1354ced645c02bf08a);
         
     
-        var popup_f7fd8cc51129e8a111d6d9ecc177c45f = L.popup({
+        var popup_5be718ba8e464127b529840489b34f46 = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_c3fcb633294dc69b75e3049ebb4c206d = $(`&lt;div id=&quot;html_c3fcb633294dc69b75e3049ebb4c206d&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;San Sebastián - Rieccoci!&lt;/div&gt;`)[0];
-                popup_f7fd8cc51129e8a111d6d9ecc177c45f.setContent(html_c3fcb633294dc69b75e3049ebb4c206d);
+                var html_30611bfbcd671a216bf444d23e4572f3 = $(`&lt;div id=&quot;html_30611bfbcd671a216bf444d23e4572f3&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;San Sebastián - Rieccoci!&lt;/div&gt;`)[0];
+                popup_5be718ba8e464127b529840489b34f46.setContent(html_30611bfbcd671a216bf444d23e4572f3);
             
         
 
-        marker_a686f81088646bc5993c2b29d47a36da.bindPopup(popup_f7fd8cc51129e8a111d6d9ecc177c45f)
+        marker_70d6de5f006e516bfc3603a8ce926a52.bindPopup(popup_5be718ba8e464127b529840489b34f46)
         ;
 
         
     
     
-                marker_a686f81088646bc5993c2b29d47a36da.setIcon(beautify_icon_5b89bfd79f316d355231a607f950e15b);
+                marker_70d6de5f006e516bfc3603a8ce926a52.setIcon(beautify_icon_0fe77142f6548c1354ced645c02bf08a);
             
     
-            var marker_3d624cefd2c087fe967d2b04d7022a36 = L.marker(
+            var marker_1000da432971ecbf93a9ea6a26fb7694 = L.marker(
                 [43.3183, -1.9812],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var div_icon_9c3102b25e95db9b54e764bfc8cf2eb1 = L.divIcon({
+            var div_icon_c5c1a4d91a3632b8a054fcd6a6520f18 = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e12 Set 25\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_3d624cefd2c087fe967d2b04d7022a36.setIcon(div_icon_9c3102b25e95db9b54e764bfc8cf2eb1);
+            marker_1000da432971ecbf93a9ea6a26fb7694.setIcon(div_icon_c5c1a4d91a3632b8a054fcd6a6520f18);
         
     
-                marker_3d624cefd2c087fe967d2b04d7022a36.setIcon(div_icon_9c3102b25e95db9b54e764bfc8cf2eb1);
+                marker_1000da432971ecbf93a9ea6a26fb7694.setIcon(div_icon_c5c1a4d91a3632b8a054fcd6a6520f18);
             
     
-            var poly_line_e648339ae141882c92a8e3d675d4364e = L.polyline(
+            var poly_line_9fc9dff01ac8b1743ec396d0f2927fd2 = L.polyline(
                 [[45.1885, 5.7245], [43.3183, -1.9812]],
                 {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#8E44AD&quot;, &quot;dashArray&quot;: &quot;2,10&quot;, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#8E44AD&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;noClip&quot;: false, &quot;opacity&quot;: 1.0, &quot;smoothFactor&quot;: 1.0, &quot;stroke&quot;: true, &quot;weight&quot;: 4}
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            poly_line_e648339ae141882c92a8e3d675d4364e.bindTooltip(
+            poly_line_9fc9dff01ac8b1743ec396d0f2927fd2.bindTooltip(
                 `&lt;div&gt;
                      Bus Grenoble→San Sebastián (11-12 Set 25) - Civilizzazione temporanea
                  &lt;/div&gt;`,
@@ -854,14 +885,14 @@
             );
         
     
-            var marker_ebbe16d05f6b6d86a2ce738152e28ffa = L.marker(
+            var marker_d4b58db40aca7913db4ba38da1843efc = L.marker(
                 [43.3183, -1.9812],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var beautify_icon_8b29c803fb7be34279e8f43b282afd00 = new L.BeautifyIcon.icon(
+            var beautify_icon_1714083c56c5996a7f00f7cbd1fdefca = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;person-biking&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -875,56 +906,56 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_ebbe16d05f6b6d86a2ce738152e28ffa.setIcon(beautify_icon_8b29c803fb7be34279e8f43b282afd00);
+            marker_d4b58db40aca7913db4ba38da1843efc.setIcon(beautify_icon_1714083c56c5996a7f00f7cbd1fdefca);
         
     
-        var popup_3e04d228f875c02299b7532feea36f98 = L.popup({
+        var popup_2e9f23df4c7a5ad75acae35c96102c15 = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_c8eaab2d873daeb9c94469962b09ee03 = $(`&lt;div id=&quot;html_c8eaab2d873daeb9c94469962b09ee03&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;San Sebastián - Si riparte a pedalare sulla costa!&lt;/div&gt;`)[0];
-                popup_3e04d228f875c02299b7532feea36f98.setContent(html_c8eaab2d873daeb9c94469962b09ee03);
+                var html_3b8e61104204e9a8861d6043daae4329 = $(`&lt;div id=&quot;html_3b8e61104204e9a8861d6043daae4329&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;San Sebastián - Si riparte a pedalare sulla costa!&lt;/div&gt;`)[0];
+                popup_2e9f23df4c7a5ad75acae35c96102c15.setContent(html_3b8e61104204e9a8861d6043daae4329);
             
         
 
-        marker_ebbe16d05f6b6d86a2ce738152e28ffa.bindPopup(popup_3e04d228f875c02299b7532feea36f98)
+        marker_d4b58db40aca7913db4ba38da1843efc.bindPopup(popup_2e9f23df4c7a5ad75acae35c96102c15)
         ;
 
         
     
     
-                marker_ebbe16d05f6b6d86a2ce738152e28ffa.setIcon(beautify_icon_8b29c803fb7be34279e8f43b282afd00);
+                marker_d4b58db40aca7913db4ba38da1843efc.setIcon(beautify_icon_1714083c56c5996a7f00f7cbd1fdefca);
             
     
-            var marker_2bce1afd579750dd318bc6a8a5108681 = L.marker(
+            var marker_0a0e4cdfd96f47ada8c0a363d65aa40c = L.marker(
                 [43.3183, -1.9812],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var div_icon_b52cb569405734a7bfa3fab2976a1864 = L.divIcon({
+            var div_icon_dd04c514e31bb2bd61ba98f2fa2c107f = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e14 Sep 25\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_2bce1afd579750dd318bc6a8a5108681.setIcon(div_icon_b52cb569405734a7bfa3fab2976a1864);
+            marker_0a0e4cdfd96f47ada8c0a363d65aa40c.setIcon(div_icon_dd04c514e31bb2bd61ba98f2fa2c107f);
         
     
-                marker_2bce1afd579750dd318bc6a8a5108681.setIcon(div_icon_b52cb569405734a7bfa3fab2976a1864);
+                marker_0a0e4cdfd96f47ada8c0a363d65aa40c.setIcon(div_icon_dd04c514e31bb2bd61ba98f2fa2c107f);
             
     
-            var marker_c5cae49a898f528ea67ea7804164bf69 = L.marker(
+            var marker_59f5563572a45f15f02601524a4a67b2 = L.marker(
                 [42.88, -9.3],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var beautify_icon_0f2f9f6d2b29d9d2d696ddecc0417752 = new L.BeautifyIcon.icon(
+            var beautify_icon_9f014e0638b1fb8ae321590b83069945 = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;person-biking&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -938,56 +969,56 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_c5cae49a898f528ea67ea7804164bf69.setIcon(beautify_icon_0f2f9f6d2b29d9d2d696ddecc0417752);
+            marker_59f5563572a45f15f02601524a4a67b2.setIcon(beautify_icon_9f014e0638b1fb8ae321590b83069945);
         
     
-        var popup_e092eb7b3ba34588eaf24aa0a36a648a = L.popup({
+        var popup_f102dd97fec704a76e78d80b6c959801 = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_3c2f08431d3d61a3bcb8efd9e0a68d56 = $(`&lt;div id=&quot;html_3c2f08431d3d61a3bcb8efd9e0a68d56&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Finisterre&lt;/div&gt;`)[0];
-                popup_e092eb7b3ba34588eaf24aa0a36a648a.setContent(html_3c2f08431d3d61a3bcb8efd9e0a68d56);
+                var html_cd37c3979cd99d2625152509ce7d9d99 = $(`&lt;div id=&quot;html_cd37c3979cd99d2625152509ce7d9d99&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Finisterre&lt;/div&gt;`)[0];
+                popup_f102dd97fec704a76e78d80b6c959801.setContent(html_cd37c3979cd99d2625152509ce7d9d99);
             
         
 
-        marker_c5cae49a898f528ea67ea7804164bf69.bindPopup(popup_e092eb7b3ba34588eaf24aa0a36a648a)
+        marker_59f5563572a45f15f02601524a4a67b2.bindPopup(popup_f102dd97fec704a76e78d80b6c959801)
         ;
 
         
     
     
-                marker_c5cae49a898f528ea67ea7804164bf69.setIcon(beautify_icon_0f2f9f6d2b29d9d2d696ddecc0417752);
+                marker_59f5563572a45f15f02601524a4a67b2.setIcon(beautify_icon_9f014e0638b1fb8ae321590b83069945);
             
     
-            var marker_29f9600406c9b49b3cc88607d363a9d1 = L.marker(
+            var marker_0b9e262a0561f05b6b8fd4ba4ea3fc5a = L.marker(
                 [42.88, -9.3],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var div_icon_0bbaa072072030f1f9a097f5d09b3435 = L.divIcon({
+            var div_icon_06cc252e23445c4078097596f5d6e28d = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e30 Sep 25\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_29f9600406c9b49b3cc88607d363a9d1.setIcon(div_icon_0bbaa072072030f1f9a097f5d09b3435);
+            marker_0b9e262a0561f05b6b8fd4ba4ea3fc5a.setIcon(div_icon_06cc252e23445c4078097596f5d6e28d);
         
     
-                marker_29f9600406c9b49b3cc88607d363a9d1.setIcon(div_icon_0bbaa072072030f1f9a097f5d09b3435);
+                marker_0b9e262a0561f05b6b8fd4ba4ea3fc5a.setIcon(div_icon_06cc252e23445c4078097596f5d6e28d);
             
     
-            var marker_10de1956ae67ace6f13337addb9b6d72 = L.marker(
+            var marker_2ec188223cec516bdd3609e34984b43a = L.marker(
                 [41.15, -8.63],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var beautify_icon_95d9eef6567bdf434cf6b032fdc91f04 = new L.BeautifyIcon.icon(
+            var beautify_icon_464a690fe1e8b530c499fe98d48f794d = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;person-biking&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -1001,56 +1032,56 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_10de1956ae67ace6f13337addb9b6d72.setIcon(beautify_icon_95d9eef6567bdf434cf6b032fdc91f04);
+            marker_2ec188223cec516bdd3609e34984b43a.setIcon(beautify_icon_464a690fe1e8b530c499fe98d48f794d);
         
     
-        var popup_64645939e2cc3781cf338b00884c0f85 = L.popup({
+        var popup_6cd0f52b2b25b7d81005761ed0f5d0a8 = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_01489df08ffa32743bb0f71ea852d096 = $(`&lt;div id=&quot;html_01489df08ffa32743bb0f71ea852d096&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Porto&lt;/div&gt;`)[0];
-                popup_64645939e2cc3781cf338b00884c0f85.setContent(html_01489df08ffa32743bb0f71ea852d096);
+                var html_347c15d6ca8a9be37983fcc90b6297b6 = $(`&lt;div id=&quot;html_347c15d6ca8a9be37983fcc90b6297b6&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Porto&lt;/div&gt;`)[0];
+                popup_6cd0f52b2b25b7d81005761ed0f5d0a8.setContent(html_347c15d6ca8a9be37983fcc90b6297b6);
             
         
 
-        marker_10de1956ae67ace6f13337addb9b6d72.bindPopup(popup_64645939e2cc3781cf338b00884c0f85)
+        marker_2ec188223cec516bdd3609e34984b43a.bindPopup(popup_6cd0f52b2b25b7d81005761ed0f5d0a8)
         ;
 
         
     
     
-                marker_10de1956ae67ace6f13337addb9b6d72.setIcon(beautify_icon_95d9eef6567bdf434cf6b032fdc91f04);
+                marker_2ec188223cec516bdd3609e34984b43a.setIcon(beautify_icon_464a690fe1e8b530c499fe98d48f794d);
             
     
-            var marker_65755836c1c4551e56a13647417102d3 = L.marker(
+            var marker_2d1a56731a870164a8a1da0d78b8036b = L.marker(
                 [41.15, -8.63],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var div_icon_d75d0a1107e9128570a85b3e69c3d743 = L.divIcon({
+            var div_icon_5c88207aaecd5eec82f2e25543893d90 = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e10 Oct 25\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_65755836c1c4551e56a13647417102d3.setIcon(div_icon_d75d0a1107e9128570a85b3e69c3d743);
+            marker_2d1a56731a870164a8a1da0d78b8036b.setIcon(div_icon_5c88207aaecd5eec82f2e25543893d90);
         
     
-                marker_65755836c1c4551e56a13647417102d3.setIcon(div_icon_d75d0a1107e9128570a85b3e69c3d743);
+                marker_2d1a56731a870164a8a1da0d78b8036b.setIcon(div_icon_5c88207aaecd5eec82f2e25543893d90);
             
     
-            var marker_820198faa59b92e2a22b497720c65dcf = L.marker(
+            var marker_8f51ad53ffe12c8581e5661da8718ad6 = L.marker(
                 [39.5, -9.13],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var beautify_icon_0a2ed68c10a4cd93a6a3466ccf847437 = new L.BeautifyIcon.icon(
+            var beautify_icon_6944c4915aba643883070d8ad5cfec95 = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;person-biking&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -1064,56 +1095,56 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_820198faa59b92e2a22b497720c65dcf.setIcon(beautify_icon_0a2ed68c10a4cd93a6a3466ccf847437);
+            marker_8f51ad53ffe12c8581e5661da8718ad6.setIcon(beautify_icon_6944c4915aba643883070d8ad5cfec95);
         
     
-        var popup_018e112cfd1bdb2d8d96e58e10fba548 = L.popup({
+        var popup_eee393b0e502518edddd631b637617cf = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_fba83b8d9de493b8259e69d48d5b756f = $(`&lt;div id=&quot;html_fba83b8d9de493b8259e69d48d5b756f&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Ericeira&lt;/div&gt;`)[0];
-                popup_018e112cfd1bdb2d8d96e58e10fba548.setContent(html_fba83b8d9de493b8259e69d48d5b756f);
+                var html_f04b42b5d2295720b8a82cd328d3ed97 = $(`&lt;div id=&quot;html_f04b42b5d2295720b8a82cd328d3ed97&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Ericeira&lt;/div&gt;`)[0];
+                popup_eee393b0e502518edddd631b637617cf.setContent(html_f04b42b5d2295720b8a82cd328d3ed97);
             
         
 
-        marker_820198faa59b92e2a22b497720c65dcf.bindPopup(popup_018e112cfd1bdb2d8d96e58e10fba548)
+        marker_8f51ad53ffe12c8581e5661da8718ad6.bindPopup(popup_eee393b0e502518edddd631b637617cf)
         ;
 
         
     
     
-                marker_820198faa59b92e2a22b497720c65dcf.setIcon(beautify_icon_0a2ed68c10a4cd93a6a3466ccf847437);
+                marker_8f51ad53ffe12c8581e5661da8718ad6.setIcon(beautify_icon_6944c4915aba643883070d8ad5cfec95);
             
     
-            var marker_4fab786d4f6ea2f29a35afb68ae657af = L.marker(
+            var marker_6a83e5aa5ff446dba40cef32afb30d29 = L.marker(
                 [39.5, -9.13],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var div_icon_7137c08349395866f8093f24f1815e36 = L.divIcon({
+            var div_icon_daa83c230c9e5e939cbdc54d9dfe1742 = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e15 Oct 25\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_4fab786d4f6ea2f29a35afb68ae657af.setIcon(div_icon_7137c08349395866f8093f24f1815e36);
+            marker_6a83e5aa5ff446dba40cef32afb30d29.setIcon(div_icon_daa83c230c9e5e939cbdc54d9dfe1742);
         
     
-                marker_4fab786d4f6ea2f29a35afb68ae657af.setIcon(div_icon_7137c08349395866f8093f24f1815e36);
+                marker_6a83e5aa5ff446dba40cef32afb30d29.setIcon(div_icon_daa83c230c9e5e939cbdc54d9dfe1742);
             
     
-            var marker_10ecb3ab3a84d210a65803fcd36f2554 = L.marker(
+            var marker_68dd18ddf78745ef2ddb34ea8e1327f6 = L.marker(
                 [38.72, -9.14],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var beautify_icon_6e4b6371b5136ff303e079bf9aebce86 = new L.BeautifyIcon.icon(
+            var beautify_icon_346ab392dda1c1507066f525b49a7881 = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;person-biking&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -1127,56 +1158,56 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_10ecb3ab3a84d210a65803fcd36f2554.setIcon(beautify_icon_6e4b6371b5136ff303e079bf9aebce86);
+            marker_68dd18ddf78745ef2ddb34ea8e1327f6.setIcon(beautify_icon_346ab392dda1c1507066f525b49a7881);
         
     
-        var popup_5b4c823e7b723251b15783741e3c1db6 = L.popup({
+        var popup_a26babb0e9e8b8c303b139f9609634c4 = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_d38f106c6381fa760fc83dd969e03dee = $(`&lt;div id=&quot;html_d38f106c6381fa760fc83dd969e03dee&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Lisbona&lt;/div&gt;`)[0];
-                popup_5b4c823e7b723251b15783741e3c1db6.setContent(html_d38f106c6381fa760fc83dd969e03dee);
+                var html_571dc27496c29d5beec26a96be168732 = $(`&lt;div id=&quot;html_571dc27496c29d5beec26a96be168732&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Lisbona&lt;/div&gt;`)[0];
+                popup_a26babb0e9e8b8c303b139f9609634c4.setContent(html_571dc27496c29d5beec26a96be168732);
             
         
 
-        marker_10ecb3ab3a84d210a65803fcd36f2554.bindPopup(popup_5b4c823e7b723251b15783741e3c1db6)
+        marker_68dd18ddf78745ef2ddb34ea8e1327f6.bindPopup(popup_a26babb0e9e8b8c303b139f9609634c4)
         ;
 
         
     
     
-                marker_10ecb3ab3a84d210a65803fcd36f2554.setIcon(beautify_icon_6e4b6371b5136ff303e079bf9aebce86);
+                marker_68dd18ddf78745ef2ddb34ea8e1327f6.setIcon(beautify_icon_346ab392dda1c1507066f525b49a7881);
             
     
-            var marker_c0da300251b003409e5acf6cbb708ab7 = L.marker(
+            var marker_3133e39e307ad9cdd9bd0ad711127b09 = L.marker(
                 [38.72, -9.14],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var div_icon_14a9e9f4bb25c0ea6756c071406fae34 = L.divIcon({
+            var div_icon_dbc00c2d0c4d944184d5a74e51e83340 = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e20 Oct 25\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_c0da300251b003409e5acf6cbb708ab7.setIcon(div_icon_14a9e9f4bb25c0ea6756c071406fae34);
+            marker_3133e39e307ad9cdd9bd0ad711127b09.setIcon(div_icon_dbc00c2d0c4d944184d5a74e51e83340);
         
     
-                marker_c0da300251b003409e5acf6cbb708ab7.setIcon(div_icon_14a9e9f4bb25c0ea6756c071406fae34);
+                marker_3133e39e307ad9cdd9bd0ad711127b09.setIcon(div_icon_dbc00c2d0c4d944184d5a74e51e83340);
             
     
-            var marker_d8ffc224d732cd580c6bbb300cecb0a7 = L.marker(
+            var marker_e57f45c7b016b111b8e631741ebd9cff = L.marker(
                 [37.02, -8.93],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var beautify_icon_6558f850e4351fd0e2d64d4ea64ad732 = new L.BeautifyIcon.icon(
+            var beautify_icon_18bef1399949716e9cfe946288fc0541 = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;person-biking&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -1190,56 +1221,56 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_d8ffc224d732cd580c6bbb300cecb0a7.setIcon(beautify_icon_6558f850e4351fd0e2d64d4ea64ad732);
+            marker_e57f45c7b016b111b8e631741ebd9cff.setIcon(beautify_icon_18bef1399949716e9cfe946288fc0541);
         
     
-        var popup_88d3bda5dd9c30e9fb44fecd2dc0570c = L.popup({
+        var popup_9e5da6dc4e2c435f09cd387f2a39d0a2 = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_f6fa5fd7267f34051c179207bf29897f = $(`&lt;div id=&quot;html_f6fa5fd7267f34051c179207bf29897f&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Sagres&lt;/div&gt;`)[0];
-                popup_88d3bda5dd9c30e9fb44fecd2dc0570c.setContent(html_f6fa5fd7267f34051c179207bf29897f);
+                var html_7f90ee91a39aeeb5e5c3966dc6e7f48d = $(`&lt;div id=&quot;html_7f90ee91a39aeeb5e5c3966dc6e7f48d&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Sagres&lt;/div&gt;`)[0];
+                popup_9e5da6dc4e2c435f09cd387f2a39d0a2.setContent(html_7f90ee91a39aeeb5e5c3966dc6e7f48d);
             
         
 
-        marker_d8ffc224d732cd580c6bbb300cecb0a7.bindPopup(popup_88d3bda5dd9c30e9fb44fecd2dc0570c)
+        marker_e57f45c7b016b111b8e631741ebd9cff.bindPopup(popup_9e5da6dc4e2c435f09cd387f2a39d0a2)
         ;
 
         
     
     
-                marker_d8ffc224d732cd580c6bbb300cecb0a7.setIcon(beautify_icon_6558f850e4351fd0e2d64d4ea64ad732);
+                marker_e57f45c7b016b111b8e631741ebd9cff.setIcon(beautify_icon_18bef1399949716e9cfe946288fc0541);
             
     
-            var marker_7e28b0f5a80ab3c5917215a78af7100a = L.marker(
+            var marker_fc6b584c3c2f9829f0df18e46a7b22fd = L.marker(
                 [37.02, -8.93],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var div_icon_90fd66fcb7b40cf0be13703096535b3d = L.divIcon({
+            var div_icon_6cf48f66cb99d7496f1508d49d30cbdc = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e25 Oct 25\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_7e28b0f5a80ab3c5917215a78af7100a.setIcon(div_icon_90fd66fcb7b40cf0be13703096535b3d);
+            marker_fc6b584c3c2f9829f0df18e46a7b22fd.setIcon(div_icon_6cf48f66cb99d7496f1508d49d30cbdc);
         
     
-                marker_7e28b0f5a80ab3c5917215a78af7100a.setIcon(div_icon_90fd66fcb7b40cf0be13703096535b3d);
+                marker_fc6b584c3c2f9829f0df18e46a7b22fd.setIcon(div_icon_6cf48f66cb99d7496f1508d49d30cbdc);
             
     
-            var marker_68adbbd30787638df87f17a2bf491078 = L.marker(
+            var marker_0c5c7242bc8feccf604ffb0b93e3082e = L.marker(
                 [37.0179, -7.9307],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var beautify_icon_553f45839f85df4e43bc2156435dfe6f = new L.BeautifyIcon.icon(
+            var beautify_icon_a137ba62b2d5de062f20b41144bbc477 = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;person-biking&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -1253,55 +1284,55 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_68adbbd30787638df87f17a2bf491078.setIcon(beautify_icon_553f45839f85df4e43bc2156435dfe6f);
+            marker_0c5c7242bc8feccf604ffb0b93e3082e.setIcon(beautify_icon_a137ba62b2d5de062f20b41144bbc477);
         
     
-        var popup_3980e27e6f2e6715b064be1822716192 = L.popup({
+        var popup_bd2d077bcf5e4f24ccb6d971d446ef57 = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_3111239b75cb5d631cb4d2da3a991780 = $(`&lt;div id=&quot;html_3111239b75cb5d631cb4d2da3a991780&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Faro&lt;/div&gt;`)[0];
-                popup_3980e27e6f2e6715b064be1822716192.setContent(html_3111239b75cb5d631cb4d2da3a991780);
+                var html_8dcc68eb38ac41a9922d9df29ec85945 = $(`&lt;div id=&quot;html_8dcc68eb38ac41a9922d9df29ec85945&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Faro&lt;/div&gt;`)[0];
+                popup_bd2d077bcf5e4f24ccb6d971d446ef57.setContent(html_8dcc68eb38ac41a9922d9df29ec85945);
             
         
 
-        marker_68adbbd30787638df87f17a2bf491078.bindPopup(popup_3980e27e6f2e6715b064be1822716192)
+        marker_0c5c7242bc8feccf604ffb0b93e3082e.bindPopup(popup_bd2d077bcf5e4f24ccb6d971d446ef57)
         ;
 
         
     
     
-                marker_68adbbd30787638df87f17a2bf491078.setIcon(beautify_icon_553f45839f85df4e43bc2156435dfe6f);
+                marker_0c5c7242bc8feccf604ffb0b93e3082e.setIcon(beautify_icon_a137ba62b2d5de062f20b41144bbc477);
             
     
-            var marker_9abda249f17190a64d90830c3def2e20 = L.marker(
+            var marker_06802179e8e4d55fd3cd6c4a6af3bda4 = L.marker(
                 [37.0179, -7.9307],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var div_icon_5916db2239e8b894ac3e2df23f4c8a67 = L.divIcon({
+            var div_icon_d182a6a0dbd1f6d1bd7b84e0d0cd15e8 = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e28 Oct 25\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_9abda249f17190a64d90830c3def2e20.setIcon(div_icon_5916db2239e8b894ac3e2df23f4c8a67);
+            marker_06802179e8e4d55fd3cd6c4a6af3bda4.setIcon(div_icon_d182a6a0dbd1f6d1bd7b84e0d0cd15e8);
         
     
-                marker_9abda249f17190a64d90830c3def2e20.setIcon(div_icon_5916db2239e8b894ac3e2df23f4c8a67);
+                marker_06802179e8e4d55fd3cd6c4a6af3bda4.setIcon(div_icon_d182a6a0dbd1f6d1bd7b84e0d0cd15e8);
             
     
-            var poly_line_1cb85bd3fdd5caffbd1bdbd8fa25fab1 = L.polyline(
+            var poly_line_ca69fbe0bba4cc022986c80e926efb4d = L.polyline(
                 [[43.3183, -1.9812], [42.88, -9.3], [41.15, -8.63], [39.5, -9.13], [38.72, -9.14], [37.02, -8.93], [37.0179, -7.9307]],
                 {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#F39C12&quot;, &quot;dashArray&quot;: &quot;5,8&quot;, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#F39C12&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;noClip&quot;: false, &quot;opacity&quot;: 1.0, &quot;smoothFactor&quot;: 1.0, &quot;stroke&quot;: true, &quot;weight&quot;: 4}
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            poly_line_1cb85bd3fdd5caffbd1bdbd8fa25fab1.bindTooltip(
+            poly_line_ca69fbe0bba4cc022986c80e926efb4d.bindTooltip(
                 `&lt;div&gt;
                      Bici Costa Atlantica (14 Set - 28 Ott 25) - Gambe, onde e tapas
                  &lt;/div&gt;`,
@@ -1311,14 +1342,14 @@
             );
         
     
-            var marker_949d811a7d1707c8adc03fab3a06a74f = L.marker(
+            var marker_44b6acda8a8fcd8f11f1a4356d255c00 = L.marker(
                 [37.0179, -7.9307],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var beautify_icon_8dc2177eaa121a041e8bb203e7fc81f8 = new L.BeautifyIcon.icon(
+            var beautify_icon_5d1e1a6976720e169dc1d2a9bb324867 = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;sailboat&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -1332,56 +1363,56 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_949d811a7d1707c8adc03fab3a06a74f.setIcon(beautify_icon_8dc2177eaa121a041e8bb203e7fc81f8);
+            marker_44b6acda8a8fcd8f11f1a4356d255c00.setIcon(beautify_icon_5d1e1a6976720e169dc1d2a9bb324867);
         
     
-        var popup_89da83c2795a4eee8e27873aa410c30d = L.popup({
+        var popup_aa95f745747c0505f98f3c407fd9b1dc = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_8a13e52688bb3226a537864c813f9970 = $(`&lt;div id=&quot;html_8a13e52688bb3226a537864c813f9970&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Faro - Cercasi passaggio per l&#x27;Atlantico&lt;/div&gt;`)[0];
-                popup_89da83c2795a4eee8e27873aa410c30d.setContent(html_8a13e52688bb3226a537864c813f9970);
+                var html_af891c412d3f6f841e924f0d96582486 = $(`&lt;div id=&quot;html_af891c412d3f6f841e924f0d96582486&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Faro - Cercasi passaggio per l&#x27;Atlantico&lt;/div&gt;`)[0];
+                popup_aa95f745747c0505f98f3c407fd9b1dc.setContent(html_af891c412d3f6f841e924f0d96582486);
             
         
 
-        marker_949d811a7d1707c8adc03fab3a06a74f.bindPopup(popup_89da83c2795a4eee8e27873aa410c30d)
+        marker_44b6acda8a8fcd8f11f1a4356d255c00.bindPopup(popup_aa95f745747c0505f98f3c407fd9b1dc)
         ;
 
         
     
     
-                marker_949d811a7d1707c8adc03fab3a06a74f.setIcon(beautify_icon_8dc2177eaa121a041e8bb203e7fc81f8);
+                marker_44b6acda8a8fcd8f11f1a4356d255c00.setIcon(beautify_icon_5d1e1a6976720e169dc1d2a9bb324867);
             
     
-            var marker_8c435f44bb08f9b1e1a7f25d7d9345e7 = L.marker(
+            var marker_2d1eb6ea83239cb9a39fdbd1060a7d3a = L.marker(
                 [37.0179, -7.9307],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var div_icon_a900d1a27755fd24cb8d882364f1690c = L.divIcon({
+            var div_icon_6c19298a4ee4c771c7cc96d403d2b953 = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e29 Oct 25\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_8c435f44bb08f9b1e1a7f25d7d9345e7.setIcon(div_icon_a900d1a27755fd24cb8d882364f1690c);
+            marker_2d1eb6ea83239cb9a39fdbd1060a7d3a.setIcon(div_icon_6c19298a4ee4c771c7cc96d403d2b953);
         
     
-                marker_8c435f44bb08f9b1e1a7f25d7d9345e7.setIcon(div_icon_a900d1a27755fd24cb8d882364f1690c);
+                marker_2d1eb6ea83239cb9a39fdbd1060a7d3a.setIcon(div_icon_6c19298a4ee4c771c7cc96d403d2b953);
             
     
-            var marker_642cb6bed772df0a7e4921ef9fd2089d = L.marker(
+            var marker_f87acbad680de5ef554179af7c904473 = L.marker(
                 [28.1234, -15.4362],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var beautify_icon_0c95b4cbf0fecbb6d1c83df5c9859e4d = new L.BeautifyIcon.icon(
+            var beautify_icon_a5d82f4b4406c6a0e009dfa53255e365 = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;sailboat&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -1395,55 +1426,55 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_642cb6bed772df0a7e4921ef9fd2089d.setIcon(beautify_icon_0c95b4cbf0fecbb6d1c83df5c9859e4d);
+            marker_f87acbad680de5ef554179af7c904473.setIcon(beautify_icon_a5d82f4b4406c6a0e009dfa53255e365);
         
     
-        var popup_d9f741ef985c2dba6a3ccd0906668ca5 = L.popup({
+        var popup_da26acf152bd7b697bd3d31175fb41af = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_4e83f1d74fa61d8fb17550e8f27373aa = $(`&lt;div id=&quot;html_4e83f1d74fa61d8fb17550e8f27373aa&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Las Palmas, Gran Canaria - Pronti per l&#x27;ARC (o quasi)&lt;/div&gt;`)[0];
-                popup_d9f741ef985c2dba6a3ccd0906668ca5.setContent(html_4e83f1d74fa61d8fb17550e8f27373aa);
+                var html_3917338516bf1ebdf472ad77c83ce7c2 = $(`&lt;div id=&quot;html_3917338516bf1ebdf472ad77c83ce7c2&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Las Palmas, Gran Canaria - Pronti per l&#x27;ARC (o quasi)&lt;/div&gt;`)[0];
+                popup_da26acf152bd7b697bd3d31175fb41af.setContent(html_3917338516bf1ebdf472ad77c83ce7c2);
             
         
 
-        marker_642cb6bed772df0a7e4921ef9fd2089d.bindPopup(popup_d9f741ef985c2dba6a3ccd0906668ca5)
+        marker_f87acbad680de5ef554179af7c904473.bindPopup(popup_da26acf152bd7b697bd3d31175fb41af)
         ;
 
         
     
     
-                marker_642cb6bed772df0a7e4921ef9fd2089d.setIcon(beautify_icon_0c95b4cbf0fecbb6d1c83df5c9859e4d);
+                marker_f87acbad680de5ef554179af7c904473.setIcon(beautify_icon_a5d82f4b4406c6a0e009dfa53255e365);
             
     
-            var marker_dd68aee69fc0219ba77bd01b5935d8e7 = L.marker(
+            var marker_17ef5019ad53f1a34de8c925f32403cb = L.marker(
                 [28.1234, -15.4362],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var div_icon_be6b21d245c87641d57b4c69ef503ce0 = L.divIcon({
+            var div_icon_2b69998f9f183e6f2790f5e6a2a45e3d = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e23 Nov 25\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_dd68aee69fc0219ba77bd01b5935d8e7.setIcon(div_icon_be6b21d245c87641d57b4c69ef503ce0);
+            marker_17ef5019ad53f1a34de8c925f32403cb.setIcon(div_icon_2b69998f9f183e6f2790f5e6a2a45e3d);
         
     
-                marker_dd68aee69fc0219ba77bd01b5935d8e7.setIcon(div_icon_be6b21d245c87641d57b4c69ef503ce0);
+                marker_17ef5019ad53f1a34de8c925f32403cb.setIcon(div_icon_2b69998f9f183e6f2790f5e6a2a45e3d);
             
     
-            var poly_line_822c722d7355f3bfd114f4f17ee99d39 = L.polyline(
+            var poly_line_862c4cfdf751c57fd33437878a648b1c = L.polyline(
                 [[37.0179, -7.9307], [28.1234, -15.4362]],
                 {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2980B9&quot;, &quot;dashArray&quot;: &quot;&quot;, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#2980B9&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;noClip&quot;: false, &quot;opacity&quot;: 1.0, &quot;smoothFactor&quot;: 1.0, &quot;stroke&quot;: true, &quot;weight&quot;: 4}
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            poly_line_822c722d7355f3bfd114f4f17ee99d39.bindTooltip(
+            poly_line_862c4cfdf751c57fd33437878a648b1c.bindTooltip(
                 `&lt;div&gt;
                      Vela Faro→Las Palmas (29 Ott - 03 Nov 25) - Allenamento Atlantico
                  &lt;/div&gt;`,
@@ -1453,13 +1484,13 @@
             );
         
     
-            var circle_ac7887ed111d97087a1bca9fb12a8c82 = L.circle(
+            var circle_765d000e3ddc8a194ba0f082fa0f72ea = L.circle(
                 [28.1234, -15.4362],
                 {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2980B9&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#AED6F1&quot;, &quot;fillOpacity&quot;: 0.3, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 250000, &quot;stroke&quot;: true, &quot;weight&quot;: 1}
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            circle_ac7887ed111d97087a1bca9fb12a8c82.bindTooltip(
+            circle_765d000e3ddc8a194ba0f082fa0f72ea.bindTooltip(
                 `&lt;div&gt;
                      Sosta e preparativi (panico?) ARC a Gran Canaria
 03 Nov - 23 Nov 25
@@ -1470,14 +1501,14 @@
             );
         
     
-            var marker_b8a98db9c86c56cd913b0fcc0ebd09b0 = L.marker(
+            var marker_01773aeaa43f4eace1d182fad7059d74 = L.marker(
                 [14.0108, -60.9707],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var beautify_icon_0c22c3a82b8d6779a24960b620eda619 = new L.BeautifyIcon.icon(
+            var beautify_icon_f112ecf8d1c06cfef95ef2dff0c19b2f = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;sailboat&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -1491,55 +1522,55 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_b8a98db9c86c56cd913b0fcc0ebd09b0.setIcon(beautify_icon_0c22c3a82b8d6779a24960b620eda619);
+            marker_01773aeaa43f4eace1d182fad7059d74.setIcon(beautify_icon_f112ecf8d1c06cfef95ef2dff0c19b2f);
         
     
-        var popup_59d47790903f380d4cde254146a3d02e = L.popup({
+        var popup_6a4739336ba89e42c5eca178d034ab2e = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_184dacdec72317fa8af88e30b8b82f8a = $(`&lt;div id=&quot;html_184dacdec72317fa8af88e30b8b82f8a&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Saint Lucia, Caraibi - Terra! (Finalmente)&lt;/div&gt;`)[0];
-                popup_59d47790903f380d4cde254146a3d02e.setContent(html_184dacdec72317fa8af88e30b8b82f8a);
+                var html_e29d1fe603f4a9e9059fbee9e99de464 = $(`&lt;div id=&quot;html_e29d1fe603f4a9e9059fbee9e99de464&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Saint Lucia, Caraibi - Terra! (Finalmente)&lt;/div&gt;`)[0];
+                popup_6a4739336ba89e42c5eca178d034ab2e.setContent(html_e29d1fe603f4a9e9059fbee9e99de464);
             
         
 
-        marker_b8a98db9c86c56cd913b0fcc0ebd09b0.bindPopup(popup_59d47790903f380d4cde254146a3d02e)
+        marker_01773aeaa43f4eace1d182fad7059d74.bindPopup(popup_6a4739336ba89e42c5eca178d034ab2e)
         ;
 
         
     
     
-                marker_b8a98db9c86c56cd913b0fcc0ebd09b0.setIcon(beautify_icon_0c22c3a82b8d6779a24960b620eda619);
+                marker_01773aeaa43f4eace1d182fad7059d74.setIcon(beautify_icon_f112ecf8d1c06cfef95ef2dff0c19b2f);
             
     
-            var marker_0e40478ebab963f91417c0a6a40e802a = L.marker(
+            var marker_a0b093ddca65a0ce6d8600b4d795203a = L.marker(
                 [14.0108, -60.9707],
                 {
 }
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            var div_icon_f7ab849667290ddfcb9f63916935d73e = L.divIcon({
+            var div_icon_83caad21daee26a3917079b1fa1c9c57 = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e10-15 Dec 25\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_0e40478ebab963f91417c0a6a40e802a.setIcon(div_icon_f7ab849667290ddfcb9f63916935d73e);
+            marker_a0b093ddca65a0ce6d8600b4d795203a.setIcon(div_icon_83caad21daee26a3917079b1fa1c9c57);
         
     
-                marker_0e40478ebab963f91417c0a6a40e802a.setIcon(div_icon_f7ab849667290ddfcb9f63916935d73e);
+                marker_a0b093ddca65a0ce6d8600b4d795203a.setIcon(div_icon_83caad21daee26a3917079b1fa1c9c57);
             
     
-            var poly_line_967078f532a5e6d1fb73afb78250042f = L.polyline(
+            var poly_line_25a17423aa6351401bb850380289f256 = L.polyline(
                 [[28.1234, -15.4362], [14.0108, -60.9707]],
                 {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#1A5276&quot;, &quot;dashArray&quot;: &quot;&quot;, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#1A5276&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;noClip&quot;: false, &quot;opacity&quot;: 1.0, &quot;smoothFactor&quot;: 1.0, &quot;stroke&quot;: true, &quot;weight&quot;: 4}
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            poly_line_967078f532a5e6d1fb73afb78250042f.bindTooltip(
+            poly_line_25a17423aa6351401bb850380289f256.bindTooltip(
                 `&lt;div&gt;
                      ARC: Traversata Atlantica (23 Nov - 10/15 Dic 25) - Onde, stelle e mal di mare
                  &lt;/div&gt;`,
@@ -1549,13 +1580,13 @@
             );
         
     
-            var circle_c391cf7a25e752b6be9b252cfa321126 = L.circle(
+            var circle_7c4d1a712c0834ba4009cb1d8d767a29 = L.circle(
                 [14.0108, -60.9707],
                 {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#1A5276&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#A9CCE3&quot;, &quot;fillOpacity&quot;: 0.3, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 300000, &quot;stroke&quot;: true, &quot;weight&quot;: 1}
-            ).addTo(feature_group_7c2ae45738cc732a7096290ec11dd8ab);
+            ).addTo(feature_group_4d835e44f4ce33ef42c706bbe808687b);
         
     
-            circle_c391cf7a25e752b6be9b252cfa321126.bindTooltip(
+            circle_7c4d1a712c0834ba4009cb1d8d767a29.bindTooltip(
                 `&lt;div&gt;
                      Esplorazione Caraibi (e recupero energie)
 15 Dic 25 - 15 Feb 26
@@ -1566,23 +1597,23 @@
             );
         
     
-            feature_group_7c2ae45738cc732a7096290ec11dd8ab.addTo(map_04261629cabe4dc97b085d8c29f9aa21);
+            feature_group_4d835e44f4ce33ef42c706bbe808687b.addTo(map_ef1a6a23e727f27ed5bc3744911d700c);
         
     
-            var feature_group_aadf343838d2981ed4f89742e3159742 = L.featureGroup(
+            var feature_group_484de545240e895ec7c04a6e6fa67fe3 = L.featureGroup(
                 {
 }
             );
         
     
-            var marker_549b76e68f811e20debe12bff748c855 = L.marker(
+            var marker_81c4562dbfc7af607a55bf2b12877f02 = L.marker(
                 [9.0, -79.5],
                 {
 }
-            ).addTo(feature_group_aadf343838d2981ed4f89742e3159742);
+            ).addTo(feature_group_484de545240e895ec7c04a6e6fa67fe3);
         
     
-            var beautify_icon_a3137bdfa0d35424876f8f425d01eed5 = new L.BeautifyIcon.icon(
+            var beautify_icon_edeba1bc35bab2470ecbcf6eff75a0dc = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;anchor&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -1596,55 +1627,55 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_549b76e68f811e20debe12bff748c855.setIcon(beautify_icon_a3137bdfa0d35424876f8f425d01eed5);
+            marker_81c4562dbfc7af607a55bf2b12877f02.setIcon(beautify_icon_edeba1bc35bab2470ecbcf6eff75a0dc);
         
     
-        var popup_9a45a23722bf4e8c1c93564af098ad94 = L.popup({
+        var popup_382710d2431c3d1e824de79b0964fa5f = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_1d2e8fe89837376f739662bb69699a6e = $(`&lt;div id=&quot;html_1d2e8fe89837376f739662bb69699a6e&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Panama City - Verso il Grande Blu (Pacifico)&lt;/div&gt;`)[0];
-                popup_9a45a23722bf4e8c1c93564af098ad94.setContent(html_1d2e8fe89837376f739662bb69699a6e);
+                var html_91b94618a78176771f5143356ba965be = $(`&lt;div id=&quot;html_91b94618a78176771f5143356ba965be&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Panama City - Verso il Grande Blu (Pacifico)&lt;/div&gt;`)[0];
+                popup_382710d2431c3d1e824de79b0964fa5f.setContent(html_91b94618a78176771f5143356ba965be);
             
         
 
-        marker_549b76e68f811e20debe12bff748c855.bindPopup(popup_9a45a23722bf4e8c1c93564af098ad94)
+        marker_81c4562dbfc7af607a55bf2b12877f02.bindPopup(popup_382710d2431c3d1e824de79b0964fa5f)
         ;
 
         
     
     
-                marker_549b76e68f811e20debe12bff748c855.setIcon(beautify_icon_a3137bdfa0d35424876f8f425d01eed5);
+                marker_81c4562dbfc7af607a55bf2b12877f02.setIcon(beautify_icon_edeba1bc35bab2470ecbcf6eff75a0dc);
             
     
-            var marker_7ede5b8e93f89b092efd642ea4b8574f = L.marker(
+            var marker_b51849d739cdf4689022a8aa76ade855 = L.marker(
                 [9.0, -79.5],
                 {
 }
-            ).addTo(feature_group_aadf343838d2981ed4f89742e3159742);
+            ).addTo(feature_group_484de545240e895ec7c04a6e6fa67fe3);
         
     
-            var div_icon_9edb68787a51f52f2348b843c990a876 = L.divIcon({
+            var div_icon_b6ccf3c429a596d71ca27c8abcc96e17 = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e16 Feb 26\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_7ede5b8e93f89b092efd642ea4b8574f.setIcon(div_icon_9edb68787a51f52f2348b843c990a876);
+            marker_b51849d739cdf4689022a8aa76ade855.setIcon(div_icon_b6ccf3c429a596d71ca27c8abcc96e17);
         
     
-                marker_7ede5b8e93f89b092efd642ea4b8574f.setIcon(div_icon_9edb68787a51f52f2348b843c990a876);
+                marker_b51849d739cdf4689022a8aa76ade855.setIcon(div_icon_b6ccf3c429a596d71ca27c8abcc96e17);
             
     
-            var poly_line_0556e690a0bac31e966f2c762edcce36 = L.polyline(
+            var poly_line_d25d6298ca14778365380341d385a50d = L.polyline(
                 [[14.0108, -60.9707], [9.0, -79.5]],
                 {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5DADE2&quot;, &quot;dashArray&quot;: &quot;4,8&quot;, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5DADE2&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;noClip&quot;: false, &quot;opacity&quot;: 1.0, &quot;smoothFactor&quot;: 1.0, &quot;stroke&quot;: true, &quot;weight&quot;: 4}
-            ).addTo(feature_group_aadf343838d2981ed4f89742e3159742);
+            ).addTo(feature_group_484de545240e895ec7c04a6e6fa67fe3);
         
     
-            poly_line_0556e690a0bac31e966f2c762edcce36.bindTooltip(
+            poly_line_d25d6298ca14778365380341d385a50d.bindTooltip(
                 `&lt;div&gt;
                      Passaggio via mare Caraibi→Panama (Feb 26) - Si cambia oceano!
                  &lt;/div&gt;`,
@@ -1654,13 +1685,13 @@
             );
         
     
-            var circle_130690c8036bdb657bf8c85dbcaca2ef = L.circle(
+            var circle_6cb020ccf6e50742360e1624b9b6c906 = L.circle(
                 [9.0, -79.5],
                 {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#8E44AD&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#D5B9F8&quot;, &quot;fillOpacity&quot;: 0.3, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 200000, &quot;stroke&quot;: true, &quot;weight&quot;: 1}
-            ).addTo(feature_group_aadf343838d2981ed4f89742e3159742);
+            ).addTo(feature_group_484de545240e895ec7c04a6e6fa67fe3);
         
     
-            circle_130690c8036bdb657bf8c85dbcaca2ef.bindTooltip(
+            circle_6cb020ccf6e50742360e1624b9b6c906.bindTooltip(
                 `&lt;div&gt;
                      Preparativi a Panama (e ricerca mappe del tesoro)
 16 Feb - 28 Feb 26
@@ -1671,14 +1702,14 @@
             );
         
     
-            var marker_9c822dcc162e37751c54ea8abb3ec0ef = L.marker(
+            var marker_a5eb3c108cee48551fbc15202e9454d9 = L.marker(
                 [9.0, -79.5],
                 {
 }
-            ).addTo(feature_group_aadf343838d2981ed4f89742e3159742);
+            ).addTo(feature_group_484de545240e895ec7c04a6e6fa67fe3);
         
     
-            var beautify_icon_f80da533d6fe8e5946acbe5068507da4 = new L.BeautifyIcon.icon(
+            var beautify_icon_899061a3cf35a0731bb8b6cb2f13db70 = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;sailboat&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -1692,56 +1723,56 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_9c822dcc162e37751c54ea8abb3ec0ef.setIcon(beautify_icon_f80da533d6fe8e5946acbe5068507da4);
+            marker_a5eb3c108cee48551fbc15202e9454d9.setIcon(beautify_icon_899061a3cf35a0731bb8b6cb2f13db70);
         
     
-        var popup_4849b2b8eec09c8aea5068d0dd4d8a1f = L.popup({
+        var popup_d18d3dd3b78fcd4169dfb5bf769df52a = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_17be9082e1489a96d11a708b98f769e1 = $(`&lt;div id=&quot;html_17be9082e1489a96d11a708b98f769e1&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Panama - Inizio Traversata Pacifico (all&#x27;arrembaggio!)&lt;/div&gt;`)[0];
-                popup_4849b2b8eec09c8aea5068d0dd4d8a1f.setContent(html_17be9082e1489a96d11a708b98f769e1);
+                var html_f88c39bb10faee4cad82b344b05f4af3 = $(`&lt;div id=&quot;html_f88c39bb10faee4cad82b344b05f4af3&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Panama - Inizio Traversata Pacifico (all&#x27;arrembaggio!)&lt;/div&gt;`)[0];
+                popup_d18d3dd3b78fcd4169dfb5bf769df52a.setContent(html_f88c39bb10faee4cad82b344b05f4af3);
             
         
 
-        marker_9c822dcc162e37751c54ea8abb3ec0ef.bindPopup(popup_4849b2b8eec09c8aea5068d0dd4d8a1f)
+        marker_a5eb3c108cee48551fbc15202e9454d9.bindPopup(popup_d18d3dd3b78fcd4169dfb5bf769df52a)
         ;
 
         
     
     
-                marker_9c822dcc162e37751c54ea8abb3ec0ef.setIcon(beautify_icon_f80da533d6fe8e5946acbe5068507da4);
+                marker_a5eb3c108cee48551fbc15202e9454d9.setIcon(beautify_icon_899061a3cf35a0731bb8b6cb2f13db70);
             
     
-            var marker_0ad06d99927ba5a1f1c4bfa843358a40 = L.marker(
+            var marker_e902f9ca03315a9c1461c5b5fd107c74 = L.marker(
                 [9.0, -79.5],
                 {
 }
-            ).addTo(feature_group_aadf343838d2981ed4f89742e3159742);
+            ).addTo(feature_group_484de545240e895ec7c04a6e6fa67fe3);
         
     
-            var div_icon_8881388b8294a56d7c444defe56c9790 = L.divIcon({
+            var div_icon_fe6adb5f30c9daf4f471768b72b50da1 = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e01 Mar 26\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_0ad06d99927ba5a1f1c4bfa843358a40.setIcon(div_icon_8881388b8294a56d7c444defe56c9790);
+            marker_e902f9ca03315a9c1461c5b5fd107c74.setIcon(div_icon_fe6adb5f30c9daf4f471768b72b50da1);
         
     
-                marker_0ad06d99927ba5a1f1c4bfa843358a40.setIcon(div_icon_8881388b8294a56d7c444defe56c9790);
+                marker_e902f9ca03315a9c1461c5b5fd107c74.setIcon(div_icon_fe6adb5f30c9daf4f471768b72b50da1);
             
     
-            var marker_d9f3e8acb8b031060a72f660353aa15d = L.marker(
+            var marker_4fdf9091bceed348ce9a50175ce57054 = L.marker(
                 [-0.9, -89.6],
                 {
 }
-            ).addTo(feature_group_aadf343838d2981ed4f89742e3159742);
+            ).addTo(feature_group_484de545240e895ec7c04a6e6fa67fe3);
         
     
-            var beautify_icon_c9df88a29442a515c1c16a20ddf3b8b1 = new L.BeautifyIcon.icon(
+            var beautify_icon_2baff03f4c77394e43d7b232c63166be = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;sailboat&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -1755,55 +1786,55 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_d9f3e8acb8b031060a72f660353aa15d.setIcon(beautify_icon_c9df88a29442a515c1c16a20ddf3b8b1);
+            marker_4fdf9091bceed348ce9a50175ce57054.setIcon(beautify_icon_2baff03f4c77394e43d7b232c63166be);
         
     
-        var popup_f800b039409865b858783769bf394eba = L.popup({
+        var popup_f4737be1a7c3b5b0911f4617cf5457a0 = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_74ffaf0acf6359091fb423c35aa17344 = $(`&lt;div id=&quot;html_74ffaf0acf6359091fb423c35aa17344&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Galápagos&lt;/div&gt;`)[0];
-                popup_f800b039409865b858783769bf394eba.setContent(html_74ffaf0acf6359091fb423c35aa17344);
+                var html_6ce485aadf73df7da4143ad088992e46 = $(`&lt;div id=&quot;html_6ce485aadf73df7da4143ad088992e46&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Galápagos&lt;/div&gt;`)[0];
+                popup_f4737be1a7c3b5b0911f4617cf5457a0.setContent(html_6ce485aadf73df7da4143ad088992e46);
             
         
 
-        marker_d9f3e8acb8b031060a72f660353aa15d.bindPopup(popup_f800b039409865b858783769bf394eba)
+        marker_4fdf9091bceed348ce9a50175ce57054.bindPopup(popup_f4737be1a7c3b5b0911f4617cf5457a0)
         ;
 
         
     
     
-                marker_d9f3e8acb8b031060a72f660353aa15d.setIcon(beautify_icon_c9df88a29442a515c1c16a20ddf3b8b1);
+                marker_4fdf9091bceed348ce9a50175ce57054.setIcon(beautify_icon_2baff03f4c77394e43d7b232c63166be);
             
     
-            var marker_db4c7365373287a1515aa905689e7966 = L.marker(
+            var marker_17ece7be5b0e6eb4201482a80e5d4426 = L.marker(
                 [-0.9, -89.6],
                 {
 }
-            ).addTo(feature_group_aadf343838d2981ed4f89742e3159742);
+            ).addTo(feature_group_484de545240e895ec7c04a6e6fa67fe3);
         
     
-            var div_icon_da3c622c5f296a509273028e6bf9c050 = L.divIcon({
+            var div_icon_70167d8b789090b67a1ddf277b46b66c = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e10 Mar 26\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_db4c7365373287a1515aa905689e7966.setIcon(div_icon_da3c622c5f296a509273028e6bf9c050);
+            marker_17ece7be5b0e6eb4201482a80e5d4426.setIcon(div_icon_70167d8b789090b67a1ddf277b46b66c);
         
     
-                marker_db4c7365373287a1515aa905689e7966.setIcon(div_icon_da3c622c5f296a509273028e6bf9c050);
+                marker_17ece7be5b0e6eb4201482a80e5d4426.setIcon(div_icon_70167d8b789090b67a1ddf277b46b66c);
             
     
-            var poly_line_e7aad5aca65ac5a3b483423a39c60176 = L.polyline(
+            var poly_line_9c7c36254187b7ce6d2f73b17332bc9b = L.polyline(
                 [[9.0, -79.5], [-0.9, -89.6]],
                 {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#27AE60&quot;, &quot;dashArray&quot;: &quot;&quot;, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#27AE60&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;noClip&quot;: false, &quot;opacity&quot;: 1.0, &quot;smoothFactor&quot;: 1.0, &quot;stroke&quot;: true, &quot;weight&quot;: 4}
-            ).addTo(feature_group_aadf343838d2981ed4f89742e3159742);
+            ).addTo(feature_group_484de545240e895ec7c04a6e6fa67fe3);
         
     
-            poly_line_e7aad5aca65ac5a3b483423a39c60176.bindTooltip(
+            poly_line_9c7c36254187b7ce6d2f73b17332bc9b.bindTooltip(
                 `&lt;div&gt;
                      Vela Panama - Inizio Traversata Pacifico (all&#x27;arrembaggio!)→Galápagos (01 Mar 26 - 10 Mar 26)
                  &lt;/div&gt;`,
@@ -1813,13 +1844,13 @@
             );
         
     
-            var circle_d5a06867de29c0505dc25453c645b819 = L.circle(
+            var circle_38543f00b693ed231a45d37da7719005 = L.circle(
                 [-0.9, -89.6],
                 {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2ECC71&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#A9DFBF&quot;, &quot;fillOpacity&quot;: 0.3, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 150000, &quot;stroke&quot;: true, &quot;weight&quot;: 1}
-            ).addTo(feature_group_aadf343838d2981ed4f89742e3159742);
+            ).addTo(feature_group_484de545240e895ec7c04a6e6fa67fe3);
         
     
-            circle_d5a06867de29c0505dc25453c645b819.bindTooltip(
+            circle_38543f00b693ed231a45d37da7719005.bindTooltip(
                 `&lt;div&gt;
                      Sosta a Galápagos
 10 Mar - 25 Mar 26
@@ -1830,14 +1861,14 @@
             );
         
     
-            var marker_a9e71ab575d46d9790b0abb4c49f2cd6 = L.marker(
+            var marker_964e50e40917f7cd5d55f1db1f3e1d46 = L.marker(
                 [-9.8, -139.0],
                 {
 }
-            ).addTo(feature_group_aadf343838d2981ed4f89742e3159742);
+            ).addTo(feature_group_484de545240e895ec7c04a6e6fa67fe3);
         
     
-            var beautify_icon_97aca8eedbe357e7ff004dc4c930507d = new L.BeautifyIcon.icon(
+            var beautify_icon_c521b28120bc1b5f6192bb68a74ec9e3 = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;sailboat&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -1851,55 +1882,55 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_a9e71ab575d46d9790b0abb4c49f2cd6.setIcon(beautify_icon_97aca8eedbe357e7ff004dc4c930507d);
+            marker_964e50e40917f7cd5d55f1db1f3e1d46.setIcon(beautify_icon_c521b28120bc1b5f6192bb68a74ec9e3);
         
     
-        var popup_8d6d0d521bfc0de1f6c8795c825d669f = L.popup({
+        var popup_f395a46f50326c07bcd0b76a1e5f326c = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_e8f66746d7b2458f129fe968155bcaa6 = $(`&lt;div id=&quot;html_e8f66746d7b2458f129fe968155bcaa6&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Marchesi&lt;/div&gt;`)[0];
-                popup_8d6d0d521bfc0de1f6c8795c825d669f.setContent(html_e8f66746d7b2458f129fe968155bcaa6);
+                var html_3ecfba030b70aa4914d5eb1ccd8cc99f = $(`&lt;div id=&quot;html_3ecfba030b70aa4914d5eb1ccd8cc99f&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Marchesi&lt;/div&gt;`)[0];
+                popup_f395a46f50326c07bcd0b76a1e5f326c.setContent(html_3ecfba030b70aa4914d5eb1ccd8cc99f);
             
         
 
-        marker_a9e71ab575d46d9790b0abb4c49f2cd6.bindPopup(popup_8d6d0d521bfc0de1f6c8795c825d669f)
+        marker_964e50e40917f7cd5d55f1db1f3e1d46.bindPopup(popup_f395a46f50326c07bcd0b76a1e5f326c)
         ;
 
         
     
     
-                marker_a9e71ab575d46d9790b0abb4c49f2cd6.setIcon(beautify_icon_97aca8eedbe357e7ff004dc4c930507d);
+                marker_964e50e40917f7cd5d55f1db1f3e1d46.setIcon(beautify_icon_c521b28120bc1b5f6192bb68a74ec9e3);
             
     
-            var marker_1e28833a77af64215143afca01141439 = L.marker(
+            var marker_8feda8ae41d0e4b6493cf4f651620679 = L.marker(
                 [-9.8, -139.0],
                 {
 }
-            ).addTo(feature_group_aadf343838d2981ed4f89742e3159742);
+            ).addTo(feature_group_484de545240e895ec7c04a6e6fa67fe3);
         
     
-            var div_icon_76f9231501f8671be404602701cfea59 = L.divIcon({
+            var div_icon_4614a016ca3cc9c7ef24413a444bd862 = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e30 Apr 26\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_1e28833a77af64215143afca01141439.setIcon(div_icon_76f9231501f8671be404602701cfea59);
+            marker_8feda8ae41d0e4b6493cf4f651620679.setIcon(div_icon_4614a016ca3cc9c7ef24413a444bd862);
         
     
-                marker_1e28833a77af64215143afca01141439.setIcon(div_icon_76f9231501f8671be404602701cfea59);
+                marker_8feda8ae41d0e4b6493cf4f651620679.setIcon(div_icon_4614a016ca3cc9c7ef24413a444bd862);
             
     
-            var poly_line_6b41f778bd00a510a68adf6ce30d9000 = L.polyline(
+            var poly_line_abcae186f49beb3f92574addb6e34c9b = L.polyline(
                 [[-0.9, -89.6], [-9.8, -139.0]],
                 {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#27AE60&quot;, &quot;dashArray&quot;: &quot;&quot;, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#27AE60&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;noClip&quot;: false, &quot;opacity&quot;: 1.0, &quot;smoothFactor&quot;: 1.0, &quot;stroke&quot;: true, &quot;weight&quot;: 4}
-            ).addTo(feature_group_aadf343838d2981ed4f89742e3159742);
+            ).addTo(feature_group_484de545240e895ec7c04a6e6fa67fe3);
         
     
-            poly_line_6b41f778bd00a510a68adf6ce30d9000.bindTooltip(
+            poly_line_abcae186f49beb3f92574addb6e34c9b.bindTooltip(
                 `&lt;div&gt;
                      Vela Galápagos→Marchesi (10 Mar 26 - 30 Apr 26)
                  &lt;/div&gt;`,
@@ -1909,13 +1940,13 @@
             );
         
     
-            var circle_9b99987f1c741078a722922110760ddb = L.circle(
+            var circle_7d11bc46e5334b565b704089832b847a = L.circle(
                 [-9.8, -139.0],
                 {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2ECC71&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#A9DFBF&quot;, &quot;fillOpacity&quot;: 0.3, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 150000, &quot;stroke&quot;: true, &quot;weight&quot;: 1}
-            ).addTo(feature_group_aadf343838d2981ed4f89742e3159742);
+            ).addTo(feature_group_484de545240e895ec7c04a6e6fa67fe3);
         
     
-            circle_9b99987f1c741078a722922110760ddb.bindTooltip(
+            circle_7d11bc46e5334b565b704089832b847a.bindTooltip(
                 `&lt;div&gt;
                      Sosta a Marchesi
 30 Apr - 15 May 26
@@ -1926,14 +1957,14 @@
             );
         
     
-            var marker_a66fb9839866762abec24ca0afcbc74a = L.marker(
+            var marker_7a8f152e6fff54b98bd10fd124054016 = L.marker(
                 [-17.55, -149.56],
                 {
 }
-            ).addTo(feature_group_aadf343838d2981ed4f89742e3159742);
+            ).addTo(feature_group_484de545240e895ec7c04a6e6fa67fe3);
         
     
-            var beautify_icon_2d3572a71042d8f88e37ae619f0f1fe2 = new L.BeautifyIcon.icon(
+            var beautify_icon_85a38673a622ce887a3c2a383837a7a1 = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;sailboat&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -1947,55 +1978,55 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_a66fb9839866762abec24ca0afcbc74a.setIcon(beautify_icon_2d3572a71042d8f88e37ae619f0f1fe2);
+            marker_7a8f152e6fff54b98bd10fd124054016.setIcon(beautify_icon_85a38673a622ce887a3c2a383837a7a1);
         
     
-        var popup_74e8c2de0de0130d766cea70b4915a04 = L.popup({
+        var popup_6ff102f7f886e05431813ff9cdf3bf98 = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_a2f923344b648029721d92d8db01d3a8 = $(`&lt;div id=&quot;html_a2f923344b648029721d92d8db01d3a8&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Tahiti&lt;/div&gt;`)[0];
-                popup_74e8c2de0de0130d766cea70b4915a04.setContent(html_a2f923344b648029721d92d8db01d3a8);
+                var html_38b25577f3fa23794f48b5a9985195dd = $(`&lt;div id=&quot;html_38b25577f3fa23794f48b5a9985195dd&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Tahiti&lt;/div&gt;`)[0];
+                popup_6ff102f7f886e05431813ff9cdf3bf98.setContent(html_38b25577f3fa23794f48b5a9985195dd);
             
         
 
-        marker_a66fb9839866762abec24ca0afcbc74a.bindPopup(popup_74e8c2de0de0130d766cea70b4915a04)
+        marker_7a8f152e6fff54b98bd10fd124054016.bindPopup(popup_6ff102f7f886e05431813ff9cdf3bf98)
         ;
 
         
     
     
-                marker_a66fb9839866762abec24ca0afcbc74a.setIcon(beautify_icon_2d3572a71042d8f88e37ae619f0f1fe2);
+                marker_7a8f152e6fff54b98bd10fd124054016.setIcon(beautify_icon_85a38673a622ce887a3c2a383837a7a1);
             
     
-            var marker_56280ca992b31cd56ef873fe3f554a91 = L.marker(
+            var marker_8d777839045b13f52edc65272ef037fb = L.marker(
                 [-17.55, -149.56],
                 {
 }
-            ).addTo(feature_group_aadf343838d2981ed4f89742e3159742);
+            ).addTo(feature_group_484de545240e895ec7c04a6e6fa67fe3);
         
     
-            var div_icon_18236280f428f09862cc4ac3c4eef875 = L.divIcon({
+            var div_icon_a66dadd15dc2e018cc4e89e92989951f = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e15 Jun 26\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_56280ca992b31cd56ef873fe3f554a91.setIcon(div_icon_18236280f428f09862cc4ac3c4eef875);
+            marker_8d777839045b13f52edc65272ef037fb.setIcon(div_icon_a66dadd15dc2e018cc4e89e92989951f);
         
     
-                marker_56280ca992b31cd56ef873fe3f554a91.setIcon(div_icon_18236280f428f09862cc4ac3c4eef875);
+                marker_8d777839045b13f52edc65272ef037fb.setIcon(div_icon_a66dadd15dc2e018cc4e89e92989951f);
             
     
-            var poly_line_a7a7bf7dcdd5947934c13ad21a9197f0 = L.polyline(
+            var poly_line_e7fe18c1ad56b75c4ff5c89e4bf008c0 = L.polyline(
                 [[-9.8, -139.0], [-17.55, -149.56]],
                 {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#27AE60&quot;, &quot;dashArray&quot;: &quot;&quot;, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#27AE60&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;noClip&quot;: false, &quot;opacity&quot;: 1.0, &quot;smoothFactor&quot;: 1.0, &quot;stroke&quot;: true, &quot;weight&quot;: 4}
-            ).addTo(feature_group_aadf343838d2981ed4f89742e3159742);
+            ).addTo(feature_group_484de545240e895ec7c04a6e6fa67fe3);
         
     
-            poly_line_a7a7bf7dcdd5947934c13ad21a9197f0.bindTooltip(
+            poly_line_e7fe18c1ad56b75c4ff5c89e4bf008c0.bindTooltip(
                 `&lt;div&gt;
                      Vela Marchesi→Tahiti (30 Apr 26 - 15 Jun 26)
                  &lt;/div&gt;`,
@@ -2005,13 +2036,13 @@
             );
         
     
-            var circle_ac623616054252210f7d2114736fb5cb = L.circle(
+            var circle_20e375c282139286ad60a29455c28cb5 = L.circle(
                 [-17.55, -149.56],
                 {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2ECC71&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#A9DFBF&quot;, &quot;fillOpacity&quot;: 0.3, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 150000, &quot;stroke&quot;: true, &quot;weight&quot;: 1}
-            ).addTo(feature_group_aadf343838d2981ed4f89742e3159742);
+            ).addTo(feature_group_484de545240e895ec7c04a6e6fa67fe3);
         
     
-            circle_ac623616054252210f7d2114736fb5cb.bindTooltip(
+            circle_20e375c282139286ad60a29455c28cb5.bindTooltip(
                 `&lt;div&gt;
                      Sosta a Tahiti
 15 Jun - 30 Jun 26
@@ -2022,20 +2053,20 @@
             );
         
     
-            var feature_group_584b723fcdd2ea0a1afb56c1a8fd6d6c = L.featureGroup(
+            var feature_group_6eb4666c6ac1a0a8f65a2a22a414bc7d = L.featureGroup(
                 {
 }
             );
         
     
-            var marker_b93a9b4cfeea828bcd5cbc4a2192e94f = L.marker(
+            var marker_58f422a0ffaae0379bec0fe897c148ff = L.marker(
                 [-2.17, -79.9],
                 {
 }
-            ).addTo(feature_group_584b723fcdd2ea0a1afb56c1a8fd6d6c);
+            ).addTo(feature_group_6eb4666c6ac1a0a8f65a2a22a414bc7d);
         
     
-            var beautify_icon_a1682dcd5d6a20574d3f3af81fde9082 = new L.BeautifyIcon.icon(
+            var beautify_icon_f42b381a115ca52ada8850cce7afd2c9 = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;anchor&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -2049,55 +2080,55 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_b93a9b4cfeea828bcd5cbc4a2192e94f.setIcon(beautify_icon_a1682dcd5d6a20574d3f3af81fde9082);
+            marker_58f422a0ffaae0379bec0fe897c148ff.setIcon(beautify_icon_f42b381a115ca52ada8850cce7afd2c9);
         
     
-        var popup_a060507e2fbb1c5c6e2c8b02d2cffa6b = L.popup({
+        var popup_665a56673fffa70272392d6bcd6fb232 = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_47dd8eef4d5fa4bed521dc437b10be63 = $(`&lt;div id=&quot;html_47dd8eef4d5fa4bed521dc437b10be63&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Guayaquil, Ecuador - Inizio Avventura Sudamericana&lt;/div&gt;`)[0];
-                popup_a060507e2fbb1c5c6e2c8b02d2cffa6b.setContent(html_47dd8eef4d5fa4bed521dc437b10be63);
+                var html_8cdc7c3f80e5695d6da1e75492bbbf3e = $(`&lt;div id=&quot;html_8cdc7c3f80e5695d6da1e75492bbbf3e&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Guayaquil, Ecuador - Inizio Avventura Sudamericana&lt;/div&gt;`)[0];
+                popup_665a56673fffa70272392d6bcd6fb232.setContent(html_8cdc7c3f80e5695d6da1e75492bbbf3e);
             
         
 
-        marker_b93a9b4cfeea828bcd5cbc4a2192e94f.bindPopup(popup_a060507e2fbb1c5c6e2c8b02d2cffa6b)
+        marker_58f422a0ffaae0379bec0fe897c148ff.bindPopup(popup_665a56673fffa70272392d6bcd6fb232)
         ;
 
         
     
     
-                marker_b93a9b4cfeea828bcd5cbc4a2192e94f.setIcon(beautify_icon_a1682dcd5d6a20574d3f3af81fde9082);
+                marker_58f422a0ffaae0379bec0fe897c148ff.setIcon(beautify_icon_f42b381a115ca52ada8850cce7afd2c9);
             
     
-            var marker_c1b30baa520c42d7c021669e5cd16c2d = L.marker(
+            var marker_99c18c6a0fc30c51b5a2a5980ee59beb = L.marker(
                 [-2.17, -79.9],
                 {
 }
-            ).addTo(feature_group_584b723fcdd2ea0a1afb56c1a8fd6d6c);
+            ).addTo(feature_group_6eb4666c6ac1a0a8f65a2a22a414bc7d);
         
     
-            var div_icon_be75af57e94f7a7114d3d5d00f5c730e = L.divIcon({
+            var div_icon_8bd4021dd3238f932c63fe931cda66bd = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e16 Feb 26\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_c1b30baa520c42d7c021669e5cd16c2d.setIcon(div_icon_be75af57e94f7a7114d3d5d00f5c730e);
+            marker_99c18c6a0fc30c51b5a2a5980ee59beb.setIcon(div_icon_8bd4021dd3238f932c63fe931cda66bd);
         
     
-                marker_c1b30baa520c42d7c021669e5cd16c2d.setIcon(div_icon_be75af57e94f7a7114d3d5d00f5c730e);
+                marker_99c18c6a0fc30c51b5a2a5980ee59beb.setIcon(div_icon_8bd4021dd3238f932c63fe931cda66bd);
             
     
-            var poly_line_f008090fcd48979815065b078189a83c = L.polyline(
+            var poly_line_65e475f1de019bb1566613bf81b90d82 = L.polyline(
                 [[14.0108, -60.9707], [-2.17, -79.9]],
                 {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5DADE2&quot;, &quot;dashArray&quot;: &quot;4,8&quot;, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5DADE2&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;noClip&quot;: false, &quot;opacity&quot;: 1.0, &quot;smoothFactor&quot;: 1.0, &quot;stroke&quot;: true, &quot;weight&quot;: 4}
-            ).addTo(feature_group_584b723fcdd2ea0a1afb56c1a8fd6d6c);
+            ).addTo(feature_group_6eb4666c6ac1a0a8f65a2a22a414bc7d);
         
     
-            poly_line_f008090fcd48979815065b078189a83c.bindTooltip(
+            poly_line_65e475f1de019bb1566613bf81b90d82.bindTooltip(
                 `&lt;div&gt;
                      Passaggio via mare Caraibi→Ecuador (Feb 26) - Rotta a Sud!
                  &lt;/div&gt;`,
@@ -2107,13 +2138,13 @@
             );
         
     
-            var circle_a3a0e199ee202f48b85e3bd16561ef5e = L.circle(
+            var circle_c3c51b6d077ce205a2cd26f3d9a9b996 = L.circle(
                 [-2.17, -79.9],
                 {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#D35400&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#EB984E&quot;, &quot;fillOpacity&quot;: 0.3, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 200000, &quot;stroke&quot;: true, &quot;weight&quot;: 1}
-            ).addTo(feature_group_584b723fcdd2ea0a1afb56c1a8fd6d6c);
+            ).addTo(feature_group_6eb4666c6ac1a0a8f65a2a22a414bc7d);
         
     
-            circle_a3a0e199ee202f48b85e3bd16561ef5e.bindTooltip(
+            circle_c3c51b6d077ce205a2cd26f3d9a9b996.bindTooltip(
                 `&lt;div&gt;
                      Esplorazione Ecuador (e acclimatamento)
 16 Feb - 01 Mar 26
@@ -2124,14 +2155,14 @@
             );
         
     
-            var marker_7cb71672aebd10069931e54e2c5060ee = L.marker(
+            var marker_d238bba72353068fa81dec6feb30d925 = L.marker(
                 [-2.17, -79.9],
                 {
 }
-            ).addTo(feature_group_584b723fcdd2ea0a1afb56c1a8fd6d6c);
+            ).addTo(feature_group_6eb4666c6ac1a0a8f65a2a22a414bc7d);
         
     
-            var beautify_icon_950105268cf1404aeff5c7b1834f57e4 = new L.BeautifyIcon.icon(
+            var beautify_icon_add95a2bcd632d44bd598c5520355c85 = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;person-biking&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -2145,56 +2176,56 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_7cb71672aebd10069931e54e2c5060ee.setIcon(beautify_icon_950105268cf1404aeff5c7b1834f57e4);
+            marker_d238bba72353068fa81dec6feb30d925.setIcon(beautify_icon_add95a2bcd632d44bd598c5520355c85);
         
     
-        var popup_e547ea9deb06b2ee9f953b84d0e9b4ee = L.popup({
+        var popup_c8bfe5703ef73287f56156a144540972 = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_68a63c46856d64ce2b206832dd98427e = $(`&lt;div id=&quot;html_68a63c46856d64ce2b206832dd98427e&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Guayaquil - Inizio Bike Pacifica (e che il dio del ciclismo ci assista)&lt;/div&gt;`)[0];
-                popup_e547ea9deb06b2ee9f953b84d0e9b4ee.setContent(html_68a63c46856d64ce2b206832dd98427e);
+                var html_8e67062b5abcbc3f1bad3501a94a9409 = $(`&lt;div id=&quot;html_8e67062b5abcbc3f1bad3501a94a9409&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Guayaquil - Inizio Bike Pacifica (e che il dio del ciclismo ci assista)&lt;/div&gt;`)[0];
+                popup_c8bfe5703ef73287f56156a144540972.setContent(html_8e67062b5abcbc3f1bad3501a94a9409);
             
         
 
-        marker_7cb71672aebd10069931e54e2c5060ee.bindPopup(popup_e547ea9deb06b2ee9f953b84d0e9b4ee)
+        marker_d238bba72353068fa81dec6feb30d925.bindPopup(popup_c8bfe5703ef73287f56156a144540972)
         ;
 
         
     
     
-                marker_7cb71672aebd10069931e54e2c5060ee.setIcon(beautify_icon_950105268cf1404aeff5c7b1834f57e4);
+                marker_d238bba72353068fa81dec6feb30d925.setIcon(beautify_icon_add95a2bcd632d44bd598c5520355c85);
             
     
-            var marker_c3b4fc6144241921a19ffcb891867dae = L.marker(
+            var marker_f5dd875072b39a901aa841a2bc5d7a75 = L.marker(
                 [-2.17, -79.9],
                 {
 }
-            ).addTo(feature_group_584b723fcdd2ea0a1afb56c1a8fd6d6c);
+            ).addTo(feature_group_6eb4666c6ac1a0a8f65a2a22a414bc7d);
         
     
-            var div_icon_159420b7ffa973a5144d86d67d55f9f9 = L.divIcon({
+            var div_icon_10ca6711e1cca83a4774ab0aee56cf89 = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e01 Mar 26\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_c3b4fc6144241921a19ffcb891867dae.setIcon(div_icon_159420b7ffa973a5144d86d67d55f9f9);
+            marker_f5dd875072b39a901aa841a2bc5d7a75.setIcon(div_icon_10ca6711e1cca83a4774ab0aee56cf89);
         
     
-                marker_c3b4fc6144241921a19ffcb891867dae.setIcon(div_icon_159420b7ffa973a5144d86d67d55f9f9);
+                marker_f5dd875072b39a901aa841a2bc5d7a75.setIcon(div_icon_10ca6711e1cca83a4774ab0aee56cf89);
             
     
-            var marker_636125bc22610b5946a4848f9759401f = L.marker(
+            var marker_c120ad3d4eea4e053cbc24b0478fe2d1 = L.marker(
                 [-1.83, -80.75],
                 {
 }
-            ).addTo(feature_group_584b723fcdd2ea0a1afb56c1a8fd6d6c);
+            ).addTo(feature_group_6eb4666c6ac1a0a8f65a2a22a414bc7d);
         
     
-            var beautify_icon_a64c9b93cd782f11951d52157d89968f = new L.BeautifyIcon.icon(
+            var beautify_icon_36a7852be2f6dc3a78661a078460480b = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;person-biking&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -2208,56 +2239,56 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_636125bc22610b5946a4848f9759401f.setIcon(beautify_icon_a64c9b93cd782f11951d52157d89968f);
+            marker_c120ad3d4eea4e053cbc24b0478fe2d1.setIcon(beautify_icon_36a7852be2f6dc3a78661a078460480b);
         
     
-        var popup_c81aeea18fa9645fe560d81f2f8f4fc2 = L.popup({
+        var popup_f65a605150df824a67c1c30e5156e101 = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_370b3c18efc7762b889e8ba1f9e27f65 = $(`&lt;div id=&quot;html_370b3c18efc7762b889e8ba1f9e27f65&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Montañita&lt;/div&gt;`)[0];
-                popup_c81aeea18fa9645fe560d81f2f8f4fc2.setContent(html_370b3c18efc7762b889e8ba1f9e27f65);
+                var html_67a31fcb66ead48b3d6d7b3a15079247 = $(`&lt;div id=&quot;html_67a31fcb66ead48b3d6d7b3a15079247&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Montañita&lt;/div&gt;`)[0];
+                popup_f65a605150df824a67c1c30e5156e101.setContent(html_67a31fcb66ead48b3d6d7b3a15079247);
             
         
 
-        marker_636125bc22610b5946a4848f9759401f.bindPopup(popup_c81aeea18fa9645fe560d81f2f8f4fc2)
+        marker_c120ad3d4eea4e053cbc24b0478fe2d1.bindPopup(popup_f65a605150df824a67c1c30e5156e101)
         ;
 
         
     
     
-                marker_636125bc22610b5946a4848f9759401f.setIcon(beautify_icon_a64c9b93cd782f11951d52157d89968f);
+                marker_c120ad3d4eea4e053cbc24b0478fe2d1.setIcon(beautify_icon_36a7852be2f6dc3a78661a078460480b);
             
     
-            var marker_97c0bc40e2bbcd45f41a06fad7429d4b = L.marker(
+            var marker_a3db65e3fdf95cbb24d52e8392b5ed57 = L.marker(
                 [-1.83, -80.75],
                 {
 }
-            ).addTo(feature_group_584b723fcdd2ea0a1afb56c1a8fd6d6c);
+            ).addTo(feature_group_6eb4666c6ac1a0a8f65a2a22a414bc7d);
         
     
-            var div_icon_e9b09aa8951d6894af5f60b91155612f = L.divIcon({
+            var div_icon_4df3e3650fdbf1971eb28cf0b81cfdc1 = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e15 Apr 26\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_97c0bc40e2bbcd45f41a06fad7429d4b.setIcon(div_icon_e9b09aa8951d6894af5f60b91155612f);
+            marker_a3db65e3fdf95cbb24d52e8392b5ed57.setIcon(div_icon_4df3e3650fdbf1971eb28cf0b81cfdc1);
         
     
-                marker_97c0bc40e2bbcd45f41a06fad7429d4b.setIcon(div_icon_e9b09aa8951d6894af5f60b91155612f);
+                marker_a3db65e3fdf95cbb24d52e8392b5ed57.setIcon(div_icon_4df3e3650fdbf1971eb28cf0b81cfdc1);
             
     
-            var marker_3c351e87f1a29ae6b5e01fb2da999c0c = L.marker(
+            var marker_6b29e362ab6619e391f68af9a31b87ab = L.marker(
                 [-4.44, -81.28],
                 {
 }
-            ).addTo(feature_group_584b723fcdd2ea0a1afb56c1a8fd6d6c);
+            ).addTo(feature_group_6eb4666c6ac1a0a8f65a2a22a414bc7d);
         
     
-            var beautify_icon_9074327473b7c4ad2c22d5de24d6a256 = new L.BeautifyIcon.icon(
+            var beautify_icon_45ecaf28177a11e39131cb836ae915b6 = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;person-biking&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -2271,56 +2302,56 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_3c351e87f1a29ae6b5e01fb2da999c0c.setIcon(beautify_icon_9074327473b7c4ad2c22d5de24d6a256);
+            marker_6b29e362ab6619e391f68af9a31b87ab.setIcon(beautify_icon_45ecaf28177a11e39131cb836ae915b6);
         
     
-        var popup_deb74d0e67198541edcb853b0e2f9658 = L.popup({
+        var popup_9c15ffeff99b08c3a9f6a884d5cef210 = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_94a4c7209fc315c0f322591dcb84f5b8 = $(`&lt;div id=&quot;html_94a4c7209fc315c0f322591dcb84f5b8&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Lobitos&lt;/div&gt;`)[0];
-                popup_deb74d0e67198541edcb853b0e2f9658.setContent(html_94a4c7209fc315c0f322591dcb84f5b8);
+                var html_4f1f64a31e80787eb40d44d352d590dc = $(`&lt;div id=&quot;html_4f1f64a31e80787eb40d44d352d590dc&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Lobitos&lt;/div&gt;`)[0];
+                popup_9c15ffeff99b08c3a9f6a884d5cef210.setContent(html_4f1f64a31e80787eb40d44d352d590dc);
             
         
 
-        marker_3c351e87f1a29ae6b5e01fb2da999c0c.bindPopup(popup_deb74d0e67198541edcb853b0e2f9658)
+        marker_6b29e362ab6619e391f68af9a31b87ab.bindPopup(popup_9c15ffeff99b08c3a9f6a884d5cef210)
         ;
 
         
     
     
-                marker_3c351e87f1a29ae6b5e01fb2da999c0c.setIcon(beautify_icon_9074327473b7c4ad2c22d5de24d6a256);
+                marker_6b29e362ab6619e391f68af9a31b87ab.setIcon(beautify_icon_45ecaf28177a11e39131cb836ae915b6);
             
     
-            var marker_86270fef2162862e082476c9f9ed1155 = L.marker(
+            var marker_e586316c4928dc0cecf88a2bdaa94a62 = L.marker(
                 [-4.44, -81.28],
                 {
 }
-            ).addTo(feature_group_584b723fcdd2ea0a1afb56c1a8fd6d6c);
+            ).addTo(feature_group_6eb4666c6ac1a0a8f65a2a22a414bc7d);
         
     
-            var div_icon_48ff413c3287a758bfdba33f0bf590cf = L.divIcon({
+            var div_icon_b66803d493c6c1a3a241935c7b082636 = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e15 May 26\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_86270fef2162862e082476c9f9ed1155.setIcon(div_icon_48ff413c3287a758bfdba33f0bf590cf);
+            marker_e586316c4928dc0cecf88a2bdaa94a62.setIcon(div_icon_b66803d493c6c1a3a241935c7b082636);
         
     
-                marker_86270fef2162862e082476c9f9ed1155.setIcon(div_icon_48ff413c3287a758bfdba33f0bf590cf);
+                marker_e586316c4928dc0cecf88a2bdaa94a62.setIcon(div_icon_b66803d493c6c1a3a241935c7b082636);
             
     
-            var marker_a81f115f56bc76e480f2d65e1f5a0ca4 = L.marker(
+            var marker_199acf53d2ee3a293ab92672874b2c32 = L.marker(
                 [-12.05, -77.04],
                 {
 }
-            ).addTo(feature_group_584b723fcdd2ea0a1afb56c1a8fd6d6c);
+            ).addTo(feature_group_6eb4666c6ac1a0a8f65a2a22a414bc7d);
         
     
-            var beautify_icon_d03b36bb3f8ec8c141fccde746878b14 = new L.BeautifyIcon.icon(
+            var beautify_icon_31f81f7e6db3b5413a8a99bd8e6177cf = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;person-biking&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -2334,56 +2365,56 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_a81f115f56bc76e480f2d65e1f5a0ca4.setIcon(beautify_icon_d03b36bb3f8ec8c141fccde746878b14);
+            marker_199acf53d2ee3a293ab92672874b2c32.setIcon(beautify_icon_31f81f7e6db3b5413a8a99bd8e6177cf);
         
     
-        var popup_c9b1978104d426ae457542b3a00c5366 = L.popup({
+        var popup_bf3d65c8605563170deb4aed7394b66f = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_4e89ca14bd89f3440c18c0e3b9cbe286 = $(`&lt;div id=&quot;html_4e89ca14bd89f3440c18c0e3b9cbe286&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Lima&lt;/div&gt;`)[0];
-                popup_c9b1978104d426ae457542b3a00c5366.setContent(html_4e89ca14bd89f3440c18c0e3b9cbe286);
+                var html_ffc902411e4e6ce9e63e828238e4bc9c = $(`&lt;div id=&quot;html_ffc902411e4e6ce9e63e828238e4bc9c&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Lima&lt;/div&gt;`)[0];
+                popup_bf3d65c8605563170deb4aed7394b66f.setContent(html_ffc902411e4e6ce9e63e828238e4bc9c);
             
         
 
-        marker_a81f115f56bc76e480f2d65e1f5a0ca4.bindPopup(popup_c9b1978104d426ae457542b3a00c5366)
+        marker_199acf53d2ee3a293ab92672874b2c32.bindPopup(popup_bf3d65c8605563170deb4aed7394b66f)
         ;
 
         
     
     
-                marker_a81f115f56bc76e480f2d65e1f5a0ca4.setIcon(beautify_icon_d03b36bb3f8ec8c141fccde746878b14);
+                marker_199acf53d2ee3a293ab92672874b2c32.setIcon(beautify_icon_31f81f7e6db3b5413a8a99bd8e6177cf);
             
     
-            var marker_87100a89a2be4eea8a64df7037334ca6 = L.marker(
+            var marker_cb481bda450c439f254e0857249518af = L.marker(
                 [-12.05, -77.04],
                 {
 }
-            ).addTo(feature_group_584b723fcdd2ea0a1afb56c1a8fd6d6c);
+            ).addTo(feature_group_6eb4666c6ac1a0a8f65a2a22a414bc7d);
         
     
-            var div_icon_b255e5318480a195855f4c6fb2534676 = L.divIcon({
+            var div_icon_eb0333539b3e60f41c24d640af0b4c0e = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e15 Jun 26\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_87100a89a2be4eea8a64df7037334ca6.setIcon(div_icon_b255e5318480a195855f4c6fb2534676);
+            marker_cb481bda450c439f254e0857249518af.setIcon(div_icon_eb0333539b3e60f41c24d640af0b4c0e);
         
     
-                marker_87100a89a2be4eea8a64df7037334ca6.setIcon(div_icon_b255e5318480a195855f4c6fb2534676);
+                marker_cb481bda450c439f254e0857249518af.setIcon(div_icon_eb0333539b3e60f41c24d640af0b4c0e);
             
     
-            var marker_ab72116becd91c205c3c4395099fc329 = L.marker(
+            var marker_f7b53006afe6790d56953c89dd03344d = L.marker(
                 [-20.23, -70.14],
                 {
 }
-            ).addTo(feature_group_584b723fcdd2ea0a1afb56c1a8fd6d6c);
+            ).addTo(feature_group_6eb4666c6ac1a0a8f65a2a22a414bc7d);
         
     
-            var beautify_icon_54ea8c3225b9575ac9ddffe8c8dd41ee = new L.BeautifyIcon.icon(
+            var beautify_icon_13b583dddc9c28c37af5f2bd2696b3a9 = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;person-biking&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -2397,56 +2428,56 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_ab72116becd91c205c3c4395099fc329.setIcon(beautify_icon_54ea8c3225b9575ac9ddffe8c8dd41ee);
+            marker_f7b53006afe6790d56953c89dd03344d.setIcon(beautify_icon_13b583dddc9c28c37af5f2bd2696b3a9);
         
     
-        var popup_cf238b0bb14ae8f51589748f4a308748 = L.popup({
+        var popup_b9a0697750b5984e526139e6509707e0 = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_022211005d8859079d0675ede2efbffb = $(`&lt;div id=&quot;html_022211005d8859079d0675ede2efbffb&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Iquique&lt;/div&gt;`)[0];
-                popup_cf238b0bb14ae8f51589748f4a308748.setContent(html_022211005d8859079d0675ede2efbffb);
+                var html_990101443288779e84f60cfff885ab37 = $(`&lt;div id=&quot;html_990101443288779e84f60cfff885ab37&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Iquique&lt;/div&gt;`)[0];
+                popup_b9a0697750b5984e526139e6509707e0.setContent(html_990101443288779e84f60cfff885ab37);
             
         
 
-        marker_ab72116becd91c205c3c4395099fc329.bindPopup(popup_cf238b0bb14ae8f51589748f4a308748)
+        marker_f7b53006afe6790d56953c89dd03344d.bindPopup(popup_b9a0697750b5984e526139e6509707e0)
         ;
 
         
     
     
-                marker_ab72116becd91c205c3c4395099fc329.setIcon(beautify_icon_54ea8c3225b9575ac9ddffe8c8dd41ee);
+                marker_f7b53006afe6790d56953c89dd03344d.setIcon(beautify_icon_13b583dddc9c28c37af5f2bd2696b3a9);
             
     
-            var marker_cc9ff5ef103ba113c0db08f0eb4e8ca3 = L.marker(
+            var marker_c5bc3d54db42931ebb7d699dc89c6f4e = L.marker(
                 [-20.23, -70.14],
                 {
 }
-            ).addTo(feature_group_584b723fcdd2ea0a1afb56c1a8fd6d6c);
+            ).addTo(feature_group_6eb4666c6ac1a0a8f65a2a22a414bc7d);
         
     
-            var div_icon_43be54928cb13b4f42647a98c45a407d = L.divIcon({
+            var div_icon_5be250b2ab9ebdb400fa07397dea4dfc = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e01 Jul 26\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_cc9ff5ef103ba113c0db08f0eb4e8ca3.setIcon(div_icon_43be54928cb13b4f42647a98c45a407d);
+            marker_c5bc3d54db42931ebb7d699dc89c6f4e.setIcon(div_icon_5be250b2ab9ebdb400fa07397dea4dfc);
         
     
-                marker_cc9ff5ef103ba113c0db08f0eb4e8ca3.setIcon(div_icon_43be54928cb13b4f42647a98c45a407d);
+                marker_c5bc3d54db42931ebb7d699dc89c6f4e.setIcon(div_icon_5be250b2ab9ebdb400fa07397dea4dfc);
             
     
-            var marker_003be6cee3d36a1e14738e2161880314 = L.marker(
+            var marker_eed1507134140d80ef55ec22918fb449 = L.marker(
                 [-34.38, -72.0],
                 {
 }
-            ).addTo(feature_group_584b723fcdd2ea0a1afb56c1a8fd6d6c);
+            ).addTo(feature_group_6eb4666c6ac1a0a8f65a2a22a414bc7d);
         
     
-            var beautify_icon_27a3f420f1a0da80974776b37822a484 = new L.BeautifyIcon.icon(
+            var beautify_icon_e8dcba553f717051a580e99795fb4beb = new L.BeautifyIcon.icon(
                 {
   &quot;icon&quot;: &quot;person-biking&quot;,
   &quot;iconShape&quot;: &quot;marker&quot;,
@@ -2460,55 +2491,55 @@
   &quot;prefix&quot;: &quot;fa&quot;,
 }
             )
-            marker_003be6cee3d36a1e14738e2161880314.setIcon(beautify_icon_27a3f420f1a0da80974776b37822a484);
+            marker_eed1507134140d80ef55ec22918fb449.setIcon(beautify_icon_e8dcba553f717051a580e99795fb4beb);
         
     
-        var popup_4b1ad7d9263369807dade6ccafbe0b38 = L.popup({
+        var popup_e9c027ff62898e7dbefb06f1e4326cf4 = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_34dfbd9976605a8bcc428d3161039376 = $(`&lt;div id=&quot;html_34dfbd9976605a8bcc428d3161039376&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Pichilemu&lt;/div&gt;`)[0];
-                popup_4b1ad7d9263369807dade6ccafbe0b38.setContent(html_34dfbd9976605a8bcc428d3161039376);
+                var html_1a1eb0147709bf0686a4e056610b9ea9 = $(`&lt;div id=&quot;html_1a1eb0147709bf0686a4e056610b9ea9&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Pichilemu&lt;/div&gt;`)[0];
+                popup_e9c027ff62898e7dbefb06f1e4326cf4.setContent(html_1a1eb0147709bf0686a4e056610b9ea9);
             
         
 
-        marker_003be6cee3d36a1e14738e2161880314.bindPopup(popup_4b1ad7d9263369807dade6ccafbe0b38)
+        marker_eed1507134140d80ef55ec22918fb449.bindPopup(popup_e9c027ff62898e7dbefb06f1e4326cf4)
         ;
 
         
     
     
-                marker_003be6cee3d36a1e14738e2161880314.setIcon(beautify_icon_27a3f420f1a0da80974776b37822a484);
+                marker_eed1507134140d80ef55ec22918fb449.setIcon(beautify_icon_e8dcba553f717051a580e99795fb4beb);
             
     
-            var marker_cb8a8c5e5f5abef705234f1db1ec5620 = L.marker(
+            var marker_cc0ffef0a4b040d0add9facdd318b8b3 = L.marker(
                 [-34.38, -72.0],
                 {
 }
-            ).addTo(feature_group_584b723fcdd2ea0a1afb56c1a8fd6d6c);
+            ).addTo(feature_group_6eb4666c6ac1a0a8f65a2a22a414bc7d);
         
     
-            var div_icon_5b7b476e326454072585864668e76e95 = L.divIcon({
+            var div_icon_77271e21e9e5196b542fc7ee5d4cb7a6 = L.divIcon({
   &quot;html&quot;: &quot;\u003cdiv style=\&quot;font-size:8pt; color:rgba(0,0,0,0.7); text-align:center; white-space: nowrap;\&quot;\u003e30 Jul 26\u003c/div\u003e&quot;,
   &quot;iconSize&quot;: [150, 24],
   &quot;iconAnchor&quot;: [75, -10],
   &quot;className&quot;: &quot;empty&quot;,
 });
-            marker_cb8a8c5e5f5abef705234f1db1ec5620.setIcon(div_icon_5b7b476e326454072585864668e76e95);
+            marker_cc0ffef0a4b040d0add9facdd318b8b3.setIcon(div_icon_77271e21e9e5196b542fc7ee5d4cb7a6);
         
     
-                marker_cb8a8c5e5f5abef705234f1db1ec5620.setIcon(div_icon_5b7b476e326454072585864668e76e95);
+                marker_cc0ffef0a4b040d0add9facdd318b8b3.setIcon(div_icon_77271e21e9e5196b542fc7ee5d4cb7a6);
             
     
-            var poly_line_2e5c2c94b63a0025218956ee099a6898 = L.polyline(
+            var poly_line_95c956d969d7dc150f4dffd1ea26dd00 = L.polyline(
                 [[-2.17, -79.9], [-1.83, -80.75], [-4.44, -81.28], [-12.05, -77.04], [-20.23, -70.14], [-34.38, -72.0]],
                 {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#E67E22&quot;, &quot;dashArray&quot;: &quot;5,8&quot;, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#E67E22&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;noClip&quot;: false, &quot;opacity&quot;: 1.0, &quot;smoothFactor&quot;: 1.0, &quot;stroke&quot;: true, &quot;weight&quot;: 4}
-            ).addTo(feature_group_584b723fcdd2ea0a1afb56c1a8fd6d6c);
+            ).addTo(feature_group_6eb4666c6ac1a0a8f65a2a22a414bc7d);
         
     
-            poly_line_2e5c2c94b63a0025218956ee099a6898.bindTooltip(
+            poly_line_95c956d969d7dc150f4dffd1ea26dd00.bindTooltip(
                 `&lt;div&gt;
                      Bike Costa Pacifica (Mar - Lug 26) - Chilometri, sudore e panorami
                  &lt;/div&gt;`,
@@ -2525,15 +2556,15 @@
   &quot;titleCancel&quot;: &quot;Esci da Schermo Intero (Ritorno alla Realt\u00e0)&quot;,
   &quot;forceSeparateButton&quot;: false,
 }
-            ).addTo(map_04261629cabe4dc97b085d8c29f9aa21);
+            ).addTo(map_ef1a6a23e727f27ed5bc3744911d700c);
         
     
-            var tile_layer_4a4c34ea09595cae881c836ffee0c8c9 = L.tileLayer(
+            var tile_layer_5f01e7b1ee0ea2002098ad1a6341a009 = L.tileLayer(
                 &quot;https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png&quot;,
                 {&quot;attribution&quot;: &quot;\u0026copy; \u003ca href=\&quot;https://www.openstreetmap.org/copyright\&quot;\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\&quot;https://carto.com/attributions\&quot;\u003eCARTO\u003c/a\u003e&quot;, &quot;detect_retina&quot;: false, &quot;max_native_zoom&quot;: 20, &quot;max_zoom&quot;: 20, &quot;min_zoom&quot;: 0, &quot;no_wrap&quot;: false, &quot;opacity&quot;: 1, &quot;subdomains&quot;: &quot;abcd&quot;, &quot;tms&quot;: false}
             );
-            var mini_map_11adc9c017612e21da24a401b6a65ec4 = new L.Control.MiniMap(
-                tile_layer_4a4c34ea09595cae881c836ffee0c8c9,
+            var mini_map_a5b0db722abf014d043687fb6a4f902a = new L.Control.MiniMap(
+                tile_layer_5f01e7b1ee0ea2002098ad1a6341a009,
                 {
   &quot;position&quot;: &quot;bottomright&quot;,
   &quot;width&quot;: 150,
@@ -2549,36 +2580,36 @@
   &quot;zoomLevelOffset&quot;: -6,
 }
             );
-            map_04261629cabe4dc97b085d8c29f9aa21.addControl(mini_map_11adc9c017612e21da24a401b6a65ec4);
+            map_ef1a6a23e727f27ed5bc3744911d700c.addControl(mini_map_a5b0db722abf014d043687fb6a4f902a);
         
     
-            var locate_control_e8eaf2ea76eef9153881383d6b628565 = L.control.locate(
+            var locate_control_74acd0f8ff9e9432b14052e273eb6886 = L.control.locate(
                 {&quot;strings&quot;: {&quot;popup&quot;: &quot;Sei qui (pi\u00f9 o meno... speriamo)&quot;, &quot;title&quot;: &quot;Dove Diavolo Sono?&quot;}}
-            ).addTo(map_04261629cabe4dc97b085d8c29f9aa21);
+            ).addTo(map_ef1a6a23e727f27ed5bc3744911d700c);
             
         
     
-            var layer_control_0e8b87982bb55190f1bfff60d6218715_layers = {
+            var layer_control_f65d84622b2e709dadcc030e36f372ed_layers = {
                 base_layers : {
-                    &quot;Mappa Chiara&quot; : tile_layer_c91e913b785056d0ef75ba865cdc6c38,
-                    &quot;Mappa Standard&quot; : tile_layer_ba5af0c7e976adbdbf18c1473d58944d,
-                    &quot;Mappa Satellitare&quot; : tile_layer_7a9e5924a3332b299ec3d96331106472,
+                    &quot;Mappa Chiara&quot; : tile_layer_874fd52c67a0d76706aa6bc10ba3da6e,
+                    &quot;Mappa Standard&quot; : tile_layer_f81dbdc7b0ac03ecf96327a0bcd1a444,
+                    &quot;Mappa Satellitare&quot; : tile_layer_693584725e2bb6be0ee5b1bac76a532c,
                 },
                 overlays :  {
-                    &quot;Percorso Principale (Teorico)&quot; : feature_group_7c2ae45738cc732a7096290ec11dd8ab,
-                    &quot;Opzione Pacifico: Traversata Oceanica&quot; : feature_group_aadf343838d2981ed4f89742e3159742,
-                    &quot;Opzione Pacifico: Bici Sudamerica&quot; : feature_group_584b723fcdd2ea0a1afb56c1a8fd6d6c,
+                    &quot;Percorso Principale (Teorico)&quot; : feature_group_4d835e44f4ce33ef42c706bbe808687b,
+                    &quot;Opzione Pacifico: Traversata Oceanica&quot; : feature_group_484de545240e895ec7c04a6e6fa67fe3,
+                    &quot;Opzione Pacifico: Bici Sudamerica&quot; : feature_group_6eb4666c6ac1a0a8f65a2a22a414bc7d,
                 },
             };
-            let layer_control_0e8b87982bb55190f1bfff60d6218715 = L.control.layers(
-                layer_control_0e8b87982bb55190f1bfff60d6218715_layers.base_layers,
-                layer_control_0e8b87982bb55190f1bfff60d6218715_layers.overlays,
+            let layer_control_f65d84622b2e709dadcc030e36f372ed = L.control.layers(
+                layer_control_f65d84622b2e709dadcc030e36f372ed_layers.base_layers,
+                layer_control_f65d84622b2e709dadcc030e36f372ed_layers.overlays,
                 {
   &quot;position&quot;: &quot;topright&quot;,
   &quot;collapsed&quot;: false,
   &quot;autoZIndex&quot;: true,
 }
-            ).addTo(map_04261629cabe4dc97b085d8c29f9aa21);
+            ).addTo(map_ef1a6a23e727f27ed5bc3744911d700c);
 
         
 &lt;/script&gt;
@@ -2673,7 +2704,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // --- Gestione scroll e link attivi navbar ---
             const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
             navLinks.forEach(link => {
                 link.addEventListener('click', function (e) {
@@ -2692,7 +2722,6 @@
                                 const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
                                 window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
                             }
-
                             const navbarToggler = document.querySelector('.navbar-toggler');
                             const navbarCollapse = document.querySelector('.navbar-collapse');
                             if (navbarToggler && navbarCollapse.classList.contains('show')) {
@@ -2707,25 +2736,32 @@
             const observerOptions = {
                 root: null,
                 rootMargin: "0px 0px -40% 0px",
-                threshold: 0.01 
+                threshold: 0.1 // Aumentato leggermente threshold per migliore reattività
             };
 
             const sectionObserver = new IntersectionObserver((entries, observer) => {
+                let intersectingEntry = null;
                 entries.forEach(entry => {
-                    const id = entry.target.getAttribute('id');
-                    if (id) {
-                        const navLink = document.querySelector(`.navbar-nav .nav-link[href="#${id}"]`);
-                        if (navLink) {
-                            if (entry.isIntersecting) {
-                                if (entry.target.classList.contains('content-section') || entry.target.classList.contains('header-banner')) {
-                                    entry.target.classList.add('visible');
-                                }
-                                document.querySelectorAll('.navbar-nav .nav-link').forEach(link => link.classList.remove('active'));
-                                navLink.classList.add('active');
-                            }
+                    if (entry.isIntersecting) {
+                        if (!intersectingEntry || entry.intersectionRatio > intersectingEntry.intersectionRatio) {
+                            intersectingEntry = entry;
                         }
                     }
                 });
+
+                if (intersectingEntry) {
+                    const id = intersectingEntry.target.getAttribute('id');
+                    if (id) {
+                        const navLink = document.querySelector(`.navbar-nav .nav-link[href="#${id}"]`);
+                        if (navLink) {
+                            if (intersectingEntry.target.classList.contains('content-section') || intersectingEntry.target.classList.contains('header-banner')) {
+                                intersectingEntry.target.classList.add('visible');
+                            }
+                            document.querySelectorAll('.navbar-nav .nav-link').forEach(link => link.classList.remove('active'));
+                            navLink.classList.add('active');
+                        }
+                    }
+                }
             }, observerOptions);
 
             sections.forEach(section => {
@@ -2734,63 +2770,79 @@
 
             function setActiveLinkOnLoad() {
                 let firstVisibleSectionId = 'home'; 
+                let maxVisibility = 0;
+                const navbarHeight = document.querySelector('.navbar-custom')?.offsetHeight || 0;
+
                 for (const section of sections) {
                     const rect = section.getBoundingClientRect();
-                    const navbarHeight = document.querySelector('.navbar-custom')?.offsetHeight || 0;
-                    if (rect.top < (window.innerHeight - rect.height / 2) && (rect.bottom - navbarHeight) > 0) {
-                         firstVisibleSectionId = section.getAttribute('id');
-                         break; 
+                    const visibleHeight = Math.max(0, Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, navbarHeight));
+                    const visibleRatio = visibleHeight / rect.height;
+
+                    if (visibleHeight > 0 && rect.top < window.innerHeight - navbarHeight && rect.bottom > navbarHeight) {
+                         // Diamo priorità a sezioni più in alto nella viewport
+                        if (firstVisibleSectionId === 'home' || rect.top < document.getElementById(firstVisibleSectionId).getBoundingClientRect().top) {
+                           if (visibleRatio > maxVisibility || firstVisibleSectionId === 'home') { // Più visibile o è la prima
+                                maxVisibility = visibleRatio;
+                                firstVisibleSectionId = section.getAttribute('id');
+                           }
+                        }
+                    }
+                     if (section.id === 'home' && rect.top >= 0 && rect.top < navbarHeight) { // Home è sempre prioritaria se in cima
+                        firstVisibleSectionId = 'home';
+                        break;
                     }
                 }
+
                 document.querySelectorAll('.navbar-nav .nav-link').forEach(link => link.classList.remove('active'));
                 const activeNavLink = document.querySelector(`.navbar-nav .nav-link[href="#${firstVisibleSectionId}"]`);
                 if (activeNavLink) {
                     activeNavLink.classList.add('active');
                 }
                 const firstSectionElement = document.getElementById(firstVisibleSectionId);
-                if (firstSectionElement && !firstSectionElement.classList.contains('visible')) {
-                    // Ritarda leggermente l'aggiunta di 'visible' per assicurare che la transizione CSS avvenga
+                 if (firstSectionElement && !firstSectionElement.classList.contains('visible')) {
                     setTimeout(() => { firstSectionElement.classList.add('visible'); }, 50);
                 }
             }
-            setTimeout(setActiveLinkOnLoad, 100);
+            setTimeout(setActiveLinkOnLoad, 200); // Aumentato timeout per sicurezza
 
-            // --- Gestione ridimensionamento mappa Leaflet ---
-            // Trova tutte le mappe Leaflet sulla pagina (Folium ne crea una con classe .folium-map)
-            const leafletMaps = [];
-            if (typeof L !== 'undefined') { // Controlla se Leaflet è caricato
-                const mapDivs = document.querySelectorAll('.folium-map');
-                mapDivs.forEach(div => {
-                    // Leaflet aggiunge l'istanza della mappa all'elemento DOM con la chiave _leaflet_map
-                    if (div._leaflet_map) {
-                        leafletMaps.push(div._leaflet_map);
+
+            var leafletMapInstances = []; 
+            function initializeMapResizeLogic() {
+                if (typeof L !== 'undefined') {
+                    var mapDivs = document.querySelectorAll('#map-container .folium-map');
+                    mapDivs.forEach(function(div) {
+                        if (div._leaflet_map && leafletMapInstances.indexOf(div._leaflet_map) === -1) {
+                            leafletMapInstances.push(div._leaflet_map);
+                        }
+                    });
+                }
+                invalidateAllMapsSize(); // Chiamata iniziale
+            }
+
+            function invalidateAllMapsSize() {
+                leafletMapInstances.forEach(function(mapInstance) {
+                    if (mapInstance) {
+                        mapInstance.invalidateSize({ animate: false }); // Prova con animate: false
                     }
                 });
             }
 
-            function invalidateMapsSize() {
-                leafletMaps.forEach(mapInstance => {
-                    mapInstance.invalidateSize();
-                });
-            }
-
-            // Invalida le dimensioni della mappa dopo un breve ritardo dal caricamento del DOM
-            // per dare tempo a Folium e al CSS di fare il loro lavoro.
-            setTimeout(invalidateMapsSize, 300); // Aumentato leggermente il timeout
-
-            // Invalida le dimensioni della mappa anche al resize della finestra
-            let resizeTimeout;
-            window.addEventListener('resize', function() {
-                clearTimeout(resizeTimeout);
-                resizeTimeout = setTimeout(invalidateMapsSize, 200); // Debounce per performance
+            // Esegui dopo il caricamento completo della finestra
+            window.addEventListener('load', function() {
+                initializeMapResizeLogic();
             });
 
-            // Se la mappa è in un tab o un elemento che diventa visibile dopo,
-            // potresti aver bisogno di chiamare invalidateMapsSize() quando quel tab/elemento diventa visibile.
-            // Ad esempio, se usi Bootstrap tabs:
-            // $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
-            //     invalidateMapsSize();
-            // });
+            var resizeDebounceTimeout;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeDebounceTimeout);
+                resizeDebounceTimeout = setTimeout(invalidateAllMapsSize, 250); 
+            });
+
+            document.addEventListener('visibilitychange', function() {
+                if (document.visibilityState === 'visible') {
+                    setTimeout(invalidateAllMapsSize, 200); 
+                }
+            });
         });
     </script>
 </body>

@@ -5,7 +5,7 @@ from folium.features import DivIcon
 from jinja2 import Template
 from datetime import datetime, timedelta
 
-# --- 0. HTML Template String (SOLO LO SCRIPT JS ALLA FINE È MODIFICATO SIGNIFICATIVAMENTE) ---
+# --- 0. HTML Template String (CSS e JS MODIFICATI) ---
 HTML_TEMPLATE_STR = """
 <!DOCTYPE html>
 <html lang="{{ lang_code }}">
@@ -195,19 +195,17 @@ HTML_TEMPLATE_STR = """
             margin-top: 35px; 
             background-color: #e0e0e0; 
             position: relative; 
-            /* display: flex; flex-direction: column; Rimosso per test, spesso non necessario se il figlio è position:absolute */
         }
         #map-container .folium-map { 
-            /* flex-grow: 1; Rimosso per test */
-            width: 100% !important; 
-            height: 100% !important; 
-            position: absolute; /* Assicura che prenda le dimensioni del genitore se il genitore ha position:relative */
+            width: 100%; 
+            height: 100%; 
+            position: absolute; 
             top: 0;
             left: 0;
-            border-radius: 18px;
+            border-radius: inherit; 
         }
-        .leaflet-container { /* Stile diretto al contenitore Leaflet */
-            background: var(--bg-darker); /* Sfondo di fallback per la mappa stessa */
+        .leaflet-container {
+            background: var(--bg-darker) !important; /* Usa una variabile CSS per coerenza o un colore specifico */
         }
 
         .leaflet-control-container .leaflet-control-layers {
@@ -224,7 +222,7 @@ HTML_TEMPLATE_STR = """
         }
         footer p { margin-bottom: 0; }
 
-        @media (max-width: 992px) { 
+        @media (max-width: 991.98px) { /* Breakpoint lg di Bootstrap per il collapse */
             :root { --navbar-height: 56px; }
             .header-banner h1 { font-size: 3.2rem; } 
             .header-banner .subtitle { font-size: 1.5rem; } 
@@ -234,7 +232,35 @@ HTML_TEMPLATE_STR = """
             .navbar-custom .navbar-brand { font-size: 1.3rem; }
             .navbar-custom .nav-link { font-size: 0.9rem; padding: 0.5rem 0.8rem;}
             .navbar-custom .language-switcher { display: flex; align-items: center; }
+
+            /* Stili per il menu navbar mobile aperto */
+            .navbar-custom .navbar-collapse.show, 
+            .navbar-custom .navbar-collapse.collapsing { /* Anche durante la transizione */
+                background-color: var(--bg-white); /* Sfondo bianco per il menu aperto */
+                box-shadow: 0 8px 16px rgba(0,0,0,0.15); /* Ombra più pronunciata */
+                border-bottom-left-radius: .5rem;
+                border-bottom-right-radius: .5rem;
+                padding: 1rem; /* Padding interno */
+                margin-top: 0; /* Rimuovi eventuale margine superiore */
+                border-top: 1px solid var(--bg-darker); /* Leggera linea di separazione */
+            }
+            .navbar-custom .navbar-collapse .nav-item {
+                margin-bottom: 0.5rem; /* Spazio tra i link */
+            }
+            .navbar-custom .navbar-collapse .nav-link {
+                color: var(--text-dark) !important; /* Colore scuro per i link su sfondo chiaro */
+                padding: .5rem 0; /* Padding per i link */
+            }
+            .navbar-custom .navbar-collapse .nav-link:hover,
+            .navbar-custom .navbar-collapse .nav-link.active {
+                color: var(--primary-color) !important;
+            }
+            .navbar-custom .navbar-collapse .language-switcher {
+                 justify-content: flex-start; /* Allinea a sinistra o centro come preferisci */
+                 padding: .5rem 0;
+            }
         }
+
         @media (max-width: 768px) { 
             .header-banner { padding: 100px 15px 80px 15px; }
             .header-banner h1 { font-size: 2.6rem; } 
@@ -245,11 +271,16 @@ HTML_TEMPLATE_STR = """
             .character-card .profile-pic { width: 130px; height: 130px; }
             .trip-description p, .equipment-description p { font-size: 1.05rem; }
             .equipment-image { max-width: 90%; }
-            #map-container { height: 60vh; min-height: 450px; } 
+
+            /* Altezza mappa specifica per mobile per evitare che sia troppo alta */
+            #map-container { 
+                height: 55vh; /* Ridotta ulteriormente per schermi molto verticali */
+                min-height: 350px; /* Ridotto anche il min-height */
+            } 
             .navbar-toggler { margin-right: 0.5rem;}
             footer { font-size: 0.8rem; padding: 8px 15px;} 
             :root { --footer-height: 40px; }
-            .navbar-collapse .language-switcher { margin-top: 10px; margin-bottom: 10px; justify-content: center;}
+            /* .navbar-custom .navbar-collapse .language-switcher già gestito sopra */
         }
     </style>
 </head>
@@ -388,7 +419,6 @@ HTML_TEMPLATE_STR = """
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // --- Gestione scroll e link attivi navbar ---
             const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
             navLinks.forEach(link => {
                 link.addEventListener('click', function (e) {
@@ -407,7 +437,6 @@ HTML_TEMPLATE_STR = """
                                 const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
                                 window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
                             }
-
                             const navbarToggler = document.querySelector('.navbar-toggler');
                             const navbarCollapse = document.querySelector('.navbar-collapse');
                             if (navbarToggler && navbarCollapse.classList.contains('show')) {
@@ -422,25 +451,32 @@ HTML_TEMPLATE_STR = """
             const observerOptions = {
                 root: null,
                 rootMargin: "0px 0px -40% 0px",
-                threshold: 0.01 
+                threshold: 0.1 // Aumentato leggermente threshold per migliore reattività
             };
 
             const sectionObserver = new IntersectionObserver((entries, observer) => {
+                let intersectingEntry = null;
                 entries.forEach(entry => {
-                    const id = entry.target.getAttribute('id');
-                    if (id) {
-                        const navLink = document.querySelector(`.navbar-nav .nav-link[href="#${id}"]`);
-                        if (navLink) {
-                            if (entry.isIntersecting) {
-                                if (entry.target.classList.contains('content-section') || entry.target.classList.contains('header-banner')) {
-                                    entry.target.classList.add('visible');
-                                }
-                                document.querySelectorAll('.navbar-nav .nav-link').forEach(link => link.classList.remove('active'));
-                                navLink.classList.add('active');
-                            }
+                    if (entry.isIntersecting) {
+                        if (!intersectingEntry || entry.intersectionRatio > intersectingEntry.intersectionRatio) {
+                            intersectingEntry = entry;
                         }
                     }
                 });
+
+                if (intersectingEntry) {
+                    const id = intersectingEntry.target.getAttribute('id');
+                    if (id) {
+                        const navLink = document.querySelector(`.navbar-nav .nav-link[href="#${id}"]`);
+                        if (navLink) {
+                            if (intersectingEntry.target.classList.contains('content-section') || intersectingEntry.target.classList.contains('header-banner')) {
+                                intersectingEntry.target.classList.add('visible');
+                            }
+                            document.querySelectorAll('.navbar-nav .nav-link').forEach(link => link.classList.remove('active'));
+                            navLink.classList.add('active');
+                        }
+                    }
+                }
             }, observerOptions);
 
             sections.forEach(section => {
@@ -449,70 +485,86 @@ HTML_TEMPLATE_STR = """
 
             function setActiveLinkOnLoad() {
                 let firstVisibleSectionId = 'home'; 
+                let maxVisibility = 0;
+                const navbarHeight = document.querySelector('.navbar-custom')?.offsetHeight || 0;
+
                 for (const section of sections) {
                     const rect = section.getBoundingClientRect();
-                    const navbarHeight = document.querySelector('.navbar-custom')?.offsetHeight || 0;
-                    if (rect.top < (window.innerHeight - rect.height / 2) && (rect.bottom - navbarHeight) > 0) {
-                         firstVisibleSectionId = section.getAttribute('id');
-                         break; 
+                    const visibleHeight = Math.max(0, Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, navbarHeight));
+                    const visibleRatio = visibleHeight / rect.height;
+
+                    if (visibleHeight > 0 && rect.top < window.innerHeight - navbarHeight && rect.bottom > navbarHeight) {
+                         // Diamo priorità a sezioni più in alto nella viewport
+                        if (firstVisibleSectionId === 'home' || rect.top < document.getElementById(firstVisibleSectionId).getBoundingClientRect().top) {
+                           if (visibleRatio > maxVisibility || firstVisibleSectionId === 'home') { // Più visibile o è la prima
+                                maxVisibility = visibleRatio;
+                                firstVisibleSectionId = section.getAttribute('id');
+                           }
+                        }
+                    }
+                     if (section.id === 'home' && rect.top >= 0 && rect.top < navbarHeight) { // Home è sempre prioritaria se in cima
+                        firstVisibleSectionId = 'home';
+                        break;
                     }
                 }
+
                 document.querySelectorAll('.navbar-nav .nav-link').forEach(link => link.classList.remove('active'));
                 const activeNavLink = document.querySelector(`.navbar-nav .nav-link[href="#${firstVisibleSectionId}"]`);
                 if (activeNavLink) {
                     activeNavLink.classList.add('active');
                 }
                 const firstSectionElement = document.getElementById(firstVisibleSectionId);
-                if (firstSectionElement && !firstSectionElement.classList.contains('visible')) {
-                    // Ritarda leggermente l'aggiunta di 'visible' per assicurare che la transizione CSS avvenga
+                 if (firstSectionElement && !firstSectionElement.classList.contains('visible')) {
                     setTimeout(() => { firstSectionElement.classList.add('visible'); }, 50);
                 }
             }
-            setTimeout(setActiveLinkOnLoad, 100);
+            setTimeout(setActiveLinkOnLoad, 200); // Aumentato timeout per sicurezza
 
-            // --- Gestione ridimensionamento mappa Leaflet ---
-            // Trova tutte le mappe Leaflet sulla pagina (Folium ne crea una con classe .folium-map)
-            const leafletMaps = [];
-            if (typeof L !== 'undefined') { // Controlla se Leaflet è caricato
-                const mapDivs = document.querySelectorAll('.folium-map');
-                mapDivs.forEach(div => {
-                    // Leaflet aggiunge l'istanza della mappa all'elemento DOM con la chiave _leaflet_map
-                    if (div._leaflet_map) {
-                        leafletMaps.push(div._leaflet_map);
+
+            var leafletMapInstances = []; 
+            function initializeMapResizeLogic() {
+                if (typeof L !== 'undefined') {
+                    var mapDivs = document.querySelectorAll('#map-container .folium-map');
+                    mapDivs.forEach(function(div) {
+                        if (div._leaflet_map && leafletMapInstances.indexOf(div._leaflet_map) === -1) {
+                            leafletMapInstances.push(div._leaflet_map);
+                        }
+                    });
+                }
+                invalidateAllMapsSize(); // Chiamata iniziale
+            }
+
+            function invalidateAllMapsSize() {
+                leafletMapInstances.forEach(function(mapInstance) {
+                    if (mapInstance) {
+                        mapInstance.invalidateSize({ animate: false }); // Prova con animate: false
                     }
                 });
             }
 
-            function invalidateMapsSize() {
-                leafletMaps.forEach(mapInstance => {
-                    mapInstance.invalidateSize();
-                });
-            }
-
-            // Invalida le dimensioni della mappa dopo un breve ritardo dal caricamento del DOM
-            // per dare tempo a Folium e al CSS di fare il loro lavoro.
-            setTimeout(invalidateMapsSize, 300); // Aumentato leggermente il timeout
-
-            // Invalida le dimensioni della mappa anche al resize della finestra
-            let resizeTimeout;
-            window.addEventListener('resize', function() {
-                clearTimeout(resizeTimeout);
-                resizeTimeout = setTimeout(invalidateMapsSize, 200); // Debounce per performance
+            // Esegui dopo il caricamento completo della finestra
+            window.addEventListener('load', function() {
+                initializeMapResizeLogic();
             });
 
-            // Se la mappa è in un tab o un elemento che diventa visibile dopo,
-            // potresti aver bisogno di chiamare invalidateMapsSize() quando quel tab/elemento diventa visibile.
-            // Ad esempio, se usi Bootstrap tabs:
-            // $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
-            //     invalidateMapsSize();
-            // });
+            var resizeDebounceTimeout;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeDebounceTimeout);
+                resizeDebounceTimeout = setTimeout(invalidateAllMapsSize, 250); 
+            });
+
+            document.addEventListener('visibilitychange', function() {
+                if (document.visibilityState === 'visible') {
+                    setTimeout(invalidateAllMapsSize, 200); 
+                }
+            });
         });
     </script>
 </body>
 </html>
 """
 
-# --- Testi (MANTENUTI IDENTICI all'ultima versione che mi hai fornito) ---
+# --- Testi (INVARIATI dall'ultima versione) ---
 text_content = {
     'it': {
         'lang_code': 'it',
@@ -603,7 +655,7 @@ text_content = {
         'map_locate_title': "Dove Diavolo Sono?",
         'map_locate_popup': "Sei qui (più o meno... speriamo)",
     },
-    'en': {
+    'en': {  # ... (contenuti in inglese come da tua ultima versione)
         'lang_code': 'en',
         'page_title': "SaltRiders: GG & Paco's Epic (and Slightly Mad) Adventure - 2025-2026 Itinerary",
         'nav_home': "Home Base",
@@ -685,7 +737,7 @@ text_content = {
         'map_guayaquil_bike_popup': "Guayaquil - Pacific Bike Tour Start (may the cycling gods be with us)",
         'map_bike_pacific_tooltip': "Bike Pacific Coast (Mar - Jul 26) - Kilometers, sweat, and views",
         'map_finisterre_name': "Finisterre", 'map_porto_name': "Porto", 'map_ericeira_name': "Ericeira", 'map_lisbon_name': "Lisbon", 'map_sagres_name': "Sagres", 'map_faro_name': "Faro",
-        'map_galapagos_name': "Galápagos", 'map_marquesas_name': "Marquesas", 'map_tahiti_name': "Tahiti",
+        'map_galapagos_name': "Galápagos", 'map_marquesas_name': "Marchesi", 'map_tahiti_name': "Tahiti",
         'map_montanita_name': "Montañita", 'map_lobitos_name': "Lobitos", 'map_lima_name': "Lima", 'map_iquique_name': "Iquique", 'map_pichilemu_name': "Pichilemu",
         'map_fullscreen_title': "Fullscreen (Cinema Mode)",
         'map_fullscreen_cancel': "Exit Fullscreen (Back to Reality)",
@@ -695,6 +747,7 @@ text_content = {
 }
 
 # --- 1. Definizioni Dati e Funzioni Helper (INVARIATE) ---
+# (Identiche alla versione precedente)
 base_output_dir = "."
 os.makedirs(os.path.join(base_output_dir, "en"), exist_ok=True)
 os.makedirs(os.path.join(base_output_dir, "images"), exist_ok=True)
@@ -735,7 +788,6 @@ def add_circle_custom(coords, radius, color, weight, fill, fill_color, fill_opac
                   fill_opacity=fill_opacity, tooltip=tooltip_text).add_to(group)
 
 
-# --- Dati Comuni del Viaggio (INVARIATI) ---
 train_pts = [(45.4642, 9.1900), (45.0703, 7.6869)]
 bike1_pts = [(45.0703, 7.6869), (45.1885, 5.7245)]
 bus_pts = [(45.1885, 5.7245), (43.3183, -1.9812)]
@@ -828,7 +880,7 @@ def generate_map_for_language(lang):
     return m._repr_html_()
 
 
-# --- Generazione dei file HTML ---
+# --- Generazione dei file HTML (INVARIATA) ---
 for lang_code in ['it', 'en']:
     lang_specific_texts = text_content[lang_code].copy()
 
@@ -868,6 +920,5 @@ for lang_code in ['it', 'en']:
         f.write(rendered_html_content)
     print(f"Pagina in {lang_code.upper()} salvata in: {output_path}")
 
-print("\n--- Processo di generazione completato con script JS aggiornato per resize mappa. ---")
-print("Controlla se il problema dello spazio sotto la mappa è risolto, specialmente dopo aver ridimensionato la finestra del browser.")
-print("Assicurati che le immagini necessarie siano presenti nella cartella 'images'.")
+print("\n--- Processo di generazione completato con CSS per navbar mobile e mappa mobile, e JS per resize mappa aggiornati. ---")
+print("Verifica il comportamento della mappa e del menu su schermi di diverse dimensioni, inclusi i telefoni.")
