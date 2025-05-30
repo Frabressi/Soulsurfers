@@ -5,7 +5,7 @@ from folium.features import DivIcon
 from jinja2 import Template
 from datetime import datetime, timedelta
 
-# --- 0. HTML Template String (con bandiere e link lingua aggiornati) ---
+# --- 0. HTML Template String (SOLO LO SCRIPT JS ALLA FINE È MODIFICATO SIGNIFICATIVAMENTE) ---
 HTML_TEMPLATE_STR = """
 <!DOCTYPE html>
 <html lang="{{ lang_code }}">
@@ -31,7 +31,7 @@ HTML_TEMPLATE_STR = """
 
     <style>
         :root {
-            --primary-color: #007bff; /* Bootstrap blue */
+            --primary-color: #007bff; 
             --secondary-color: #0056b3; 
             --text-dark: #2c3e50;
             --text-light: #555;
@@ -82,8 +82,8 @@ HTML_TEMPLATE_STR = """
             color: var(--primary-color);
         }
         .navbar-custom .language-switcher a {
-            font-size: 1.1rem; /* Aumentato per le bandiere */
-            padding: 0.3rem 0.7rem; /* Leggermente aggiustato */
+            font-size: 1.1rem; 
+            padding: 0.3rem 0.7rem; 
             margin-left: 8px;
             text-decoration: none;
             border-radius: 4px;
@@ -96,9 +96,8 @@ HTML_TEMPLATE_STR = """
         }
         .navbar-custom .language-switcher .active-lang {
             opacity: 1;
-            font-weight: bold; /* Potrebbe non essere necessario con le bandiere */
-            /* border: 1px solid var(--primary-color); */ /* Rimosso bordo per stile più pulito con bandiere */
-             color: var(--primary-color); /* Evidenzia la lingua attiva */
+            font-weight: bold; 
+             color: var(--primary-color); 
         }
 
         .header-banner { 
@@ -178,18 +177,39 @@ HTML_TEMPLATE_STR = """
             text-align: center; font-size: 1.15em; vertical-align: middle;
         }
         .trip-description ul ul { margin-top: 12px; padding-left: 28px; }
-        .equipment-image-container { text-align: center; margin-top: 15px; margin-bottom: 10px; }
+        .equipment-image-container { text-align: center; margin-top: 15px; margin-bottom: 25px; }
         .equipment-image {
-            max-width: 75%; height: auto; border-radius: 15px;
+            max-width: 80%; 
+            height: auto; border-radius: 15px;
             box-shadow: 0 12px 35px rgba(0,0,0,0.1); border: 1px solid #ccc;
         }
         .equipment-image-caption { font-size: 0.92rem; color: #6c757d; margin-top: 18px; font-style: italic; }
+
         #map-container {
-            width: 100%; height: 70vh; min-height: 550px; border-radius: 18px;
-            overflow: hidden; box-shadow: 0 12px 35px rgba(0,0,0,0.08);
-            margin-top: 35px; background-color: #e0e0e0; position: relative; 
+            width: 100%; 
+            height: 70vh; 
+            min-height: 550px; 
+            border-radius: 18px;
+            overflow: hidden; 
+            box-shadow: 0 12px 35px rgba(0,0,0,0.08);
+            margin-top: 35px; 
+            background-color: #e0e0e0; 
+            position: relative; 
+            /* display: flex; flex-direction: column; Rimosso per test, spesso non necessario se il figlio è position:absolute */
         }
-        #map-container .folium-map { width: 100% !important; height: 100% !important; }
+        #map-container .folium-map { 
+            /* flex-grow: 1; Rimosso per test */
+            width: 100% !important; 
+            height: 100% !important; 
+            position: absolute; /* Assicura che prenda le dimensioni del genitore se il genitore ha position:relative */
+            top: 0;
+            left: 0;
+            border-radius: 18px;
+        }
+        .leaflet-container { /* Stile diretto al contenitore Leaflet */
+            background: var(--bg-darker); /* Sfondo di fallback per la mappa stessa */
+        }
+
         .leaflet-control-container .leaflet-control-layers {
             opacity: 0.97; border-radius: 10px; box-shadow: 0 3px 12px rgba(0,0,0,0.18);
         }
@@ -246,6 +266,9 @@ HTML_TEMPLATE_STR = """
                         <a class="nav-link active" href="#home">{{ nav_home }}</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="#mappa">{{ nav_map }}</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#protagonisti">{{ nav_protagonists }}</a>
                     </li>
                     <li class="nav-item">
@@ -253,9 +276,6 @@ HTML_TEMPLATE_STR = """
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#attrezzatura">{{ nav_equipment }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#mappa">{{ nav_map }}</a>
                     </li>
                 </ul>
                 <div class="language-switcher d-flex align-items-center">
@@ -272,6 +292,15 @@ HTML_TEMPLATE_STR = """
             <p class="subtitle">{{ header_subtitle }}</p>
         </div>
     </header>
+
+    <section id="mappa" class="content-section bg-light-custom">
+        <div class="container">
+            <h2 class="section-title">{{ map_section_title }}</h2>
+            <div id="map-container">
+                {{ map_html_fragment | safe }}
+            </div>
+        </div>
+    </section>
 
     <section id="protagonisti" class="content-section">
         <div class="container">
@@ -298,6 +327,12 @@ HTML_TEMPLATE_STR = """
     <section id="avventura" class="content-section bg-light-custom">
         <div class="container trip-description">
             <h2 class="section-title">{{ adventure_section_title }}</h2>
+
+            <div class="equipment-image-container" style="margin-bottom: 40px;"> 
+                <img src="{{ ocean_crossing_photo_url }}" alt="{{ ocean_crossing_alt }}" class="equipment-image" style="max-width: 85%; border: 2px solid var(--primary-color);">
+                 <p class="equipment-image-caption"><em>{{ ocean_crossing_caption }}</em></p>
+            </div>
+
             <p class="text-center">{{ adventure_intro1 }}</p>
             <p class="text-center">{{ adventure_intro2 }}</p>
             <ul>
@@ -320,19 +355,17 @@ HTML_TEMPLATE_STR = """
         <div class="container equipment-description">
             <h2 class="section-title">{{ equipment_section_title }}</h2>
             <p class="text-center">{{ equipment_desc1 }}</p>
-            <p class="text-center">{{ equipment_desc2 }}</p> 
+
             <div class="equipment-image-container">
                 <img src="{{ bike_setup_photo_url }}" alt="{{ equipment_image_alt }}" class="equipment-image">
                  <p class="equipment-image-caption"><em>{{ equipment_image_caption }}</em></p>
             </div>
-        </div>
-    </section>
 
-    <section id="mappa" class="content-section bg-light-custom">
-        <div class="container">
-            <h2 class="section-title">{{ map_section_title }}</h2>
-            <div id="map-container">
-                {{ map_html_fragment | safe }}
+            <p class="text-center">{{ equipment_desc2 }}</p> 
+
+            <div class="equipment-image-container">
+                <img src="{{ grizl_photo_url }}" alt="{{ grizl_image_alt }}" class="equipment-image">
+                 <p class="equipment-image-caption"><em>{{ grizl_image_caption }}</em></p>
             </div>
         </div>
     </section>
@@ -355,6 +388,7 @@ HTML_TEMPLATE_STR = """
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // --- Gestione scroll e link attivi navbar ---
             const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
             navLinks.forEach(link => {
                 link.addEventListener('click', function (e) {
@@ -366,9 +400,14 @@ HTML_TEMPLATE_STR = """
                         if (targetElement) {
                             const navbarHeight = document.querySelector('.navbar-custom').offsetHeight;
                             let headerOffset = navbarHeight;
-                            const elementPosition = targetElement.getBoundingClientRect().top;
-                            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                            if (targetId === 'home') {
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                            } else {
+                                const elementPosition = targetElement.getBoundingClientRect().top;
+                                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                            }
+
                             const navbarToggler = document.querySelector('.navbar-toggler');
                             const navbarCollapse = document.querySelector('.navbar-collapse');
                             if (navbarToggler && navbarCollapse.classList.contains('show')) {
@@ -378,34 +417,102 @@ HTML_TEMPLATE_STR = """
                     }
                 });
             });
-            const sections = document.querySelectorAll('.content-section, .header-banner');
-            const observerOptions = { root: null, rootMargin: '-100px 0px -50% 0px', threshold: 0.01 };
+
+            const sections = document.querySelectorAll('.header-banner, .content-section');
+            const observerOptions = {
+                root: null,
+                rootMargin: "0px 0px -40% 0px",
+                threshold: 0.01 
+            };
+
             const sectionObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        if (entry.target.classList.contains('content-section')) {
-                            entry.target.classList.add('visible');
-                        }
-                        const id = entry.target.getAttribute('id');
-                        if (id) {
-                            document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
-                                link.classList.remove('active');
-                                if (link.getAttribute('href') === '#' + id) {
-                                    link.classList.add('active');
+                    const id = entry.target.getAttribute('id');
+                    if (id) {
+                        const navLink = document.querySelector(`.navbar-nav .nav-link[href="#${id}"]`);
+                        if (navLink) {
+                            if (entry.isIntersecting) {
+                                if (entry.target.classList.contains('content-section') || entry.target.classList.contains('header-banner')) {
+                                    entry.target.classList.add('visible');
                                 }
-                            });
+                                document.querySelectorAll('.navbar-nav .nav-link').forEach(link => link.classList.remove('active'));
+                                navLink.classList.add('active');
+                            }
                         }
                     }
                 });
             }, observerOptions);
-            sections.forEach(section => { sectionObserver.observe(section); });
+
+            sections.forEach(section => {
+                sectionObserver.observe(section);
+            });
+
+            function setActiveLinkOnLoad() {
+                let firstVisibleSectionId = 'home'; 
+                for (const section of sections) {
+                    const rect = section.getBoundingClientRect();
+                    const navbarHeight = document.querySelector('.navbar-custom')?.offsetHeight || 0;
+                    if (rect.top < (window.innerHeight - rect.height / 2) && (rect.bottom - navbarHeight) > 0) {
+                         firstVisibleSectionId = section.getAttribute('id');
+                         break; 
+                    }
+                }
+                document.querySelectorAll('.navbar-nav .nav-link').forEach(link => link.classList.remove('active'));
+                const activeNavLink = document.querySelector(`.navbar-nav .nav-link[href="#${firstVisibleSectionId}"]`);
+                if (activeNavLink) {
+                    activeNavLink.classList.add('active');
+                }
+                const firstSectionElement = document.getElementById(firstVisibleSectionId);
+                if (firstSectionElement && !firstSectionElement.classList.contains('visible')) {
+                    // Ritarda leggermente l'aggiunta di 'visible' per assicurare che la transizione CSS avvenga
+                    setTimeout(() => { firstSectionElement.classList.add('visible'); }, 50);
+                }
+            }
+            setTimeout(setActiveLinkOnLoad, 100);
+
+            // --- Gestione ridimensionamento mappa Leaflet ---
+            // Trova tutte le mappe Leaflet sulla pagina (Folium ne crea una con classe .folium-map)
+            const leafletMaps = [];
+            if (typeof L !== 'undefined') { // Controlla se Leaflet è caricato
+                const mapDivs = document.querySelectorAll('.folium-map');
+                mapDivs.forEach(div => {
+                    // Leaflet aggiunge l'istanza della mappa all'elemento DOM con la chiave _leaflet_map
+                    if (div._leaflet_map) {
+                        leafletMaps.push(div._leaflet_map);
+                    }
+                });
+            }
+
+            function invalidateMapsSize() {
+                leafletMaps.forEach(mapInstance => {
+                    mapInstance.invalidateSize();
+                });
+            }
+
+            // Invalida le dimensioni della mappa dopo un breve ritardo dal caricamento del DOM
+            // per dare tempo a Folium e al CSS di fare il loro lavoro.
+            setTimeout(invalidateMapsSize, 300); // Aumentato leggermente il timeout
+
+            // Invalida le dimensioni della mappa anche al resize della finestra
+            let resizeTimeout;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(invalidateMapsSize, 200); // Debounce per performance
+            });
+
+            // Se la mappa è in un tab o un elemento che diventa visibile dopo,
+            // potresti aver bisogno di chiamare invalidateMapsSize() quando quel tab/elemento diventa visibile.
+            // Ad esempio, se usi Bootstrap tabs:
+            // $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+            //     invalidateMapsSize();
+            // });
         });
     </script>
 </body>
 </html>
 """
 
-# --- Testi ---
+# --- Testi (MANTENUTI IDENTICI all'ultima versione che mi hai fornito) ---
 text_content = {
     'it': {
         'lang_code': 'it',
@@ -418,13 +525,15 @@ text_content = {
         'header_title': "SaltRiders World Tour",
         'header_subtitle': "L'incredibile itinerario 2025-2026 di GG & Paco, un'epopea via terra e mare all'insegna del bikepacking e del surf",
         'protagonists_section_title': "I Nostri Eroi (Più o Meno)",
-        'gg_alt_text': "Foto di GG, probabilmente mentre ride di un'idea folle",
+        'gg_alt_text': "Foto di GG pronto per l'avventura",
         'gg_name': "GG - Il Gigante Entusiasta",
         'gg_description': "Spirito libero con una riserva inesauribile di entusiasmo (e forse un pizzico di sana incoscienza). GG affronta ogni sfida, anche la più assurda, con un entusiasmo che potrebbe svegliare un vulcano spento. La sua missione: trasformare ogni giorno in un'avventura memorabile, collezionando amici e aneddoti improbabili.",
         'paco_alt_text': "Foto di Paco, perso per le montagne",
         'paco_name': "Paco - L'Esploratore Sagace",
         'paco_description': "Mente acuta e animo energico, Paco è l'anima organizzatrice del duo. Sempre pronto a trovare soluzioni geniali (o almeno, che sembrano tali al momento), affronta ogni peripezia con una buona dose di problem solving creativo. L’adrenalina della scoperta lo guida, trasformando ogni imprevisto in… beh, in un altro imprevisto da risolvere.",
         'adventure_section_title': "La Nostra Gloriosa Odissea",
+        'ocean_crossing_alt': "Barca a vela in navigazione oceanica sotto un cielo blu",
+        'ocean_crossing_caption': "L'immensità dell'oceano ci attende: la prossima grande sfida.",
         'adventure_intro1': "Allacciate le cinture (o meglio, stringete le cinghie dei portapacchi)! I SaltRiders, GG e Paco, stanno per intraprendere un'odissea che riscriverà le regole dell'esplorazione... o almeno, ci proveranno con stile. Dal cuore pulsante dell'Europa, questi due intrepidi (o incoscienti?) avventurieri scateneranno le loro fidate bici e tavole da surf in un tour de force via terra e mare, pronti a collezionare culture esotiche e panorami da cartolina.",
         'adventure_intro2': "La loro filosofia di viaggio? Più che un piano, una dichiarazione d'intenti, aperta all'imprevisto e all'ingegno:",
         'adventure_step1_title': "Europa Express, con la Calma dei Campioni",
@@ -442,10 +551,12 @@ text_content = {
         'adventure_step5_optionB_desc': "Un passaggio marittimo dai Caraibi all'Ecuador segnerà l'inizio di una LUNGA pedalata. Giù per la costa Pacifica del Sudamerica, inseguendo onde mitiche, attraversando deserti e montagne che metteranno alla prova anche i più stoici. Un'immersione nel cuore pulsante del continente fino al Cile, o finché le gambe reggeranno.",
         'adventure_outro': "Dimenticate le tabelle di marcia precise: questo è più un manifesto al viaggio vissuto con spirito indomito, un brindisi all'imprevisto che diventa la norma e un tributo a ogni singola, strampalata, meravigliosa connessione umana. Restate sintonizzati, perché il bello deve ancora venire (e probabilmente non andrà come previsto)!",
         'equipment_section_title': "L'Arsenale dei Sognatori: Bici, Surf & Tenda",
-        'equipment_desc1': "L'essenza di un'avventura così particolare risiede anche nella genialità della semplicità e in un pizzico di spirito d’adattamento. Per affrontare le lunghe tratte costiere, GG e Paco hanno scelto bici gravel equipaggiate con supporti laterali dedicati per trasportare le loro amate tavole da surf. Questo sistema ingegnoso permette loro di essere agili come gazzelle (carichi come muli) e vivere appieno l’esperienza del viaggio a misura d’uomo e di tavola. Il supporto è leggero ma resistente, e se il vento laterale si farà sentire… fa parte dell’avventura. Con loro anche una tenda compatta, per fermarsi dove capita e dormire sotto le stelle, pronti a ripartire all’alba con la fedele compagna d’onda sempre al fianco, come un’appendice aerodinamica un po’ sbilenca ma indispensabile.",
-        'equipment_desc2': "",
-        'equipment_image_alt': "Concept di bici con porta tavola da surf - l'ingegno all'opera!",
-        'equipment_image_caption': "Pensato per il classico tragitto casa-spiaggia, il nostro sistema porta-tavola farà lo stesso… ma con qualche deviazione panoramica.",
+        'equipment_desc1': "L'essenza di un'avventura così particolare risiede anche nella genialità della semplicità e in un pizzico di spirito d’adattamento. Per affrontare le lunghe tratte costiere, GG e Paco hanno scelto bici gravel equipaggiate con supporti laterali dedicati per trasportare le loro amate tavole da surf. Questo sistema ingegnoso permette loro di essere agili come gazzelle (carichi come muli) e vivere appieno l’esperienza del viaggio a misura d’uomo e di tavola.",
+        'equipment_desc2': "Il supporto è leggero ma resistente, e se il vento laterale si farà sentire… fa parte dell’avventura. Con loro anche una tenda compatta, per fermarsi dove capita e dormire sotto le stelle, pronti a ripartire all’alba con la fedele compagna d’onda sempre al fianco, come un’appendice aerodinamica un po’ sbilenca ma indispensabile.",
+        'equipment_image_alt': "Bikepacking con tavola da surf: l'essenza SaltRiders!",
+        'equipment_image_caption': "Il nostro assetto da SaltRiders: bici, tavola e orizzonti infiniti.",
+        'grizl_image_alt': "Bici gravel Grizl pronta per l'avventura su sterrato",
+        'grizl_image_caption': "La nostra fidata compagna a due ruote, pronta ad affrontare ogni tipo di terreno.",
         'map_section_title': "La Mappa Interattiva",
         'footer_text': "© 2024 SaltRiders Epic Fails & Adventures - GG & Paco. Mappa generata con Folium (e tanta pazienza). Stay Stoked (e incrociate le dita per noi)!",
         'map_tile_clear': "Mappa Chiara",
@@ -503,13 +614,15 @@ text_content = {
         'header_title': "SaltRiders World Tour",
         'header_subtitle': "GG & Paco's incredible 2025-2026 itinerary, an epic land and ocean journey of bikepacking and surf!",
         'protagonists_section_title': "Our (Sorta) Heroes",
-        'gg_alt_text': "GG's Photo, probably laughing at a crazy idea",
+        'gg_alt_text': "GG's photo, ready for adventure",
         'gg_name': "GG - The Enthusiastic Giant",
         'gg_description': "A free spirit with an inexhaustible supply of enthusiasm (and perhaps a dash of healthy recklessness). GG faces every challenge, no matter how absurd, with an enthusiasm that could awaken a dormant volcano. His mission: to turn every day into a memorable adventure, collecting friends and improbable anecdotes.",
         'paco_alt_text': "Paco's Photo, lost in the mountains",
         'paco_name': "Paco - The Sagacious Explorer",
         'paco_description': "A sharp mind and energetic soul, Paco is the organizing spirit of the duo. Always ready to find ingenious solutions (or at least, ones that seem so at the time), he faces every mishap with a healthy dose of creative problem-solving. The adrenaline of discovery guides him, turning every unforeseen event into… well, another unforeseen event to solve.",
         'adventure_section_title': "Our Glorious Odyssey",
+        'ocean_crossing_alt': "Sailboat on an ocean crossing under a blue sky",
+        'ocean_crossing_caption': "The vastness of the ocean awaits us: our next great challenge.",
         'adventure_intro1': "Fasten your seatbelts (or rather, tighten your roof rack straps)! The SaltRiders, GG and Paco, are about to embark on an odyssey that will redefine the very concept of exploration... or at least, they'll give it a stylish shot. From the beating heart of Europe, these two intrepid (or perhaps, gloriously reckless?) adventurers will unleash their trusty bikes and surfboards on a land-and-sea tour de force, ready to collect exotic cultures and postcard-perfect vistas.",
         'adventure_intro2': "Their travel philosophy? More than a plan, it's a declaration of intent, wide open to the unexpected and pure ingenuity:",
         'adventure_step1_title': "Europe Express, with Champion-like Poise",
@@ -527,11 +640,13 @@ text_content = {
         'adventure_step5_optionB_desc': "A sea passage from the Caribbean to Ecuador will mark the beginning of a LONG cycling journey. Down the Pacific coast of South America, chasing legendary waves, crossing deserts straight out of a western movie, and mountains that will test even the most stoic. An immersion into the continent's vibrant heart all the way to Chile, or until their legs give out.",
         'adventure_outro': "Forget rigid schedules: this is more a manifesto for travel lived with an indomitable spirit, a toast to the unexpected becoming the norm, and a tribute to every single, quirky, wonderful human connection. Stay tuned, because the best (and most hilariously unpredictable parts) are yet to come!",
         'equipment_section_title': "The Dreamers' Arsenal: Bikes, Surfboards & Tent",
-        'equipment_desc1': "The essence of such a unique adventure lies also in the genius of simplicity and a touch of adaptability. To tackle the long coastal stretches, GG and Paco have chosen gravel bikes equipped with dedicated side racks to carry their beloved surfboards. This ingenious system allows them to be as agile as gazelles (though loaded like mules) and fully experience the human-and-board-scaled journey. The rack is lightweight yet sturdy, and if the crosswinds make themselves felt... well, that's part of the adventure. They'll also carry a compact tent, to stop wherever they fancy and sleep under the stars, ready to set off at dawn with their faithful wave-riding companion always by their side, like a somewhat lopsided but indispensable aerodynamic appendage.",
-        'equipment_desc2': "",
-        'equipment_image_alt': "Concept of a bike with a surfboard rack - ingenuity at work!",
-        'equipment_image_caption': "Designed for the classic home-to-beach commute, our board rack system will do the same… but with a few scenic detours.",
-        'map_section_title': "The Interactive Map",
+        'equipment_desc1': "The essence of such a unique adventure lies also in the genius of simplicity and a touch of adaptability. To tackle the long coastal stretches, GG and Paco have chosen gravel bikes equipped with dedicated side racks to carry their beloved surfboards. This ingenious system allows them to be as agile as gazelles (though loaded like mules) and fully experience the human-and-board-scaled journey.",
+        'equipment_desc2': "The rack is lightweight yet sturdy, and if the crosswinds make themselves felt... well, that's part of the adventure. They'll also carry a compact tent, to stop wherever they fancy and sleep under the stars, ready to set off at dawn with their faithful wave-riding companion always by their side, like a somewhat lopsided but indispensable aerodynamic appendage.",
+        'equipment_image_alt': "Bikepacking with a surfboard: the SaltRiders essence!",
+        'equipment_image_caption': "The SaltRiders setup: bike, board, and endless horizons.",
+        'grizl_image_alt': "Grizl gravel bike ready for adventure on dirt roads",
+        'grizl_image_caption': "Our trusty two-wheeled companion, ready to tackle any type of terrain.",
+        'map_section_title': "The Interactive Journey Map",
         'footer_text': "© 2024 SaltRiders Epic Fails & Adventures - GG & Paco. Map generated with Folium (and a lot of patience). Stay Stoked (and cross your fingers for us)!",
         'map_tile_clear': "Clear Map",
         'map_tile_standard': "Standard Map",
@@ -579,16 +694,9 @@ text_content = {
     }
 }
 
-# --- 1. Definizioni Dati e Funzioni Helper ---
-# Salva i file nella directory corrente dello script per facilitare il deployment su GitHub Pages
+# --- 1. Definizioni Dati e Funzioni Helper (INVARIATE) ---
 base_output_dir = "."
-# Se preferisci testare in Downloads:
-# base_output_dir = os.path.expanduser("~/Downloads")
-# os.makedirs(base_output_dir, exist_ok=True)
-
-# Crea la sottocartella /en/ se non esiste
 os.makedirs(os.path.join(base_output_dir, "en"), exist_ok=True)
-# Crea la sottocartella /images/ se non esiste (per le immagini locali)
 os.makedirs(os.path.join(base_output_dir, "images"), exist_ok=True)
 
 
@@ -627,7 +735,7 @@ def add_circle_custom(coords, radius, color, weight, fill, fill_color, fill_opac
                   fill_opacity=fill_opacity, tooltip=tooltip_text).add_to(group)
 
 
-# --- Dati Comuni del Viaggio ---
+# --- Dati Comuni del Viaggio (INVARIATI) ---
 train_pts = [(45.4642, 9.1900), (45.0703, 7.6869)]
 bike1_pts = [(45.0703, 7.6869), (45.1885, 5.7245)]
 bus_pts = [(45.1885, 5.7245), (43.3183, -1.9812)]
@@ -722,16 +830,15 @@ def generate_map_for_language(lang):
 
 # --- Generazione dei file HTML ---
 for lang_code in ['it', 'en']:
-    lang_specific_texts = text_content[lang_code].copy()  # Usa una copia per evitare modifiche cross-lingua
+    lang_specific_texts = text_content[lang_code].copy()
 
-    # Imposta gli URL per il cambio lingua e per il brand link
     if lang_code == 'it':
-        lang_specific_texts['brand_link_url'] = "index.html"  # O "#" se preferisci solo scroll top
+        lang_specific_texts['brand_link_url'] = "index.html"
         lang_specific_texts['it_page_url'] = "index.html"
         lang_specific_texts['en_page_url'] = "en/index.html"
-    else:  # 'en'
-        lang_specific_texts['brand_link_url'] = "index.html"  # Link alla pagina inglese corrente
-        lang_specific_texts['it_page_url'] = "../index.html"  # Relativo alla cartella /en/
+    else:
+        lang_specific_texts['brand_link_url'] = "index.html"
+        lang_specific_texts['it_page_url'] = "../index.html"
         lang_specific_texts['en_page_url'] = "index.html"
 
     map_html = generate_map_for_language(lang_code)
@@ -740,17 +847,20 @@ for lang_code in ['it', 'en']:
     render_context = {**lang_specific_texts}
     render_context['map_html_fragment'] = map_html
 
-    render_context['gg_photo_url'] = "images/gg.jpeg"
+    render_context['gg_photo_url'] = "images/gg1.jpeg"
     render_context['paco_photo_url'] = "images/paco.jpeg"
     render_context['surf_photo_url'] = "https://www.thejambo.it/wp-content/uploads/2023/05/Le-migliori-destinazioni-al-mondo-per-fare-surf-Foto-di-Canva-3-1024x683.png"
-    render_context['bike_setup_photo_url'] = "https://www.surfcornerstore.it/data/prod/img/fcs_push_bike_porta_surf_laterale_per_biciclette_11.jpg"
+
+    render_context['bike_setup_photo_url'] = "images/surfpacking1.jpg"
+    render_context['grizl_photo_url'] = "images/grizl.jpg"
+    render_context['ocean_crossing_photo_url'] = "images/ocean_crossing.jpg"
 
     rendered_html_content = html_template.render(render_context)
 
     if lang_code == 'it':
         output_filename = "index.html"
         output_path = os.path.join(base_output_dir, output_filename)
-    else:  # 'en'
+    else:
         output_filename = "index.html"
         output_path = os.path.join(base_output_dir, "en", output_filename)
 
@@ -758,3 +868,6 @@ for lang_code in ['it', 'en']:
         f.write(rendered_html_content)
     print(f"Pagina in {lang_code.upper()} salvata in: {output_path}")
 
+print("\n--- Processo di generazione completato con script JS aggiornato per resize mappa. ---")
+print("Controlla se il problema dello spazio sotto la mappa è risolto, specialmente dopo aver ridimensionato la finestra del browser.")
+print("Assicurati che le immagini necessarie siano presenti nella cartella 'images'.")
