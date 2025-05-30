@@ -5,7 +5,7 @@ from folium.features import DivIcon
 from jinja2 import Template
 from datetime import datetime, timedelta
 
-# --- 0. HTML Template String (CSS e JS MODIFICATI) ---
+# --- 0. HTML Template String (CSS MODIFICATO PER MAPPA) ---
 HTML_TEMPLATE_STR = """
 <!DOCTYPE html>
 <html lang="{{ lang_code }}">
@@ -185,16 +185,20 @@ HTML_TEMPLATE_STR = """
         }
         .equipment-image-caption { font-size: 0.92rem; color: #6c757d; margin-top: 18px; font-style: italic; }
 
+        /* === MAP CONTAINER STYLES (MODIFIED) === */
         #map-container {
-            width: 100%; 
-            height: 70vh; 
-            min-height: 550px; 
+            width: 100%;
+            /* Obiettivo altezza: 70% della viewport, ma non meno di 350px e non più di 600px */
+            height: clamp(350px, 70vh, 600px); /* Combina min, valore preferito, max */
             border-radius: 18px;
             overflow: hidden; 
             box-shadow: 0 12px 35px rgba(0,0,0,0.08);
             margin-top: 35px; 
-            background-color: #e0e0e0; 
+            background-color: #e0e0e0; /* Sfondo di fallback se la mappa carica lentamente */
             position: relative; 
+            /* Aggiunta per performance: dice al browser che questo elemento cambierà trasformazioni/opacità
+               e può essere ottimizzato separatamente dal resto del flusso del documento. */
+            will-change: transform, opacity;
         }
         #map-container .folium-map { 
             width: 100%; 
@@ -205,8 +209,9 @@ HTML_TEMPLATE_STR = """
             border-radius: inherit; 
         }
         .leaflet-container {
-            background: var(--bg-darker) !important; /* Usa una variabile CSS per coerenza o un colore specifico */
+            background: var(--bg-darker) !important; 
         }
+        /* === END MAP CONTAINER STYLES === */
 
         .leaflet-control-container .leaflet-control-layers {
             opacity: 0.97; border-radius: 10px; box-shadow: 0 3px 12px rgba(0,0,0,0.18);
@@ -232,33 +237,21 @@ HTML_TEMPLATE_STR = """
             .navbar-custom .navbar-brand { font-size: 1.3rem; }
             .navbar-custom .nav-link { font-size: 0.9rem; padding: 0.5rem 0.8rem;}
             .navbar-custom .language-switcher { display: flex; align-items: center; }
-
-            /* Stili per il menu navbar mobile aperto */
             .navbar-custom .navbar-collapse.show, 
-            .navbar-custom .navbar-collapse.collapsing { /* Anche durante la transizione */
-                background-color: var(--bg-white); /* Sfondo bianco per il menu aperto */
-                box-shadow: 0 8px 16px rgba(0,0,0,0.15); /* Ombra più pronunciata */
+            .navbar-custom .navbar-collapse.collapsing {
+                background-color: var(--bg-white); 
+                box-shadow: 0 8px 16px rgba(0,0,0,0.15); 
                 border-bottom-left-radius: .5rem;
                 border-bottom-right-radius: .5rem;
-                padding: 1rem; /* Padding interno */
-                margin-top: 0; /* Rimuovi eventuale margine superiore */
-                border-top: 1px solid var(--bg-darker); /* Leggera linea di separazione */
+                padding: 1rem; 
+                margin-top: 0; 
+                border-top: 1px solid var(--bg-darker); 
             }
-            .navbar-custom .navbar-collapse .nav-item {
-                margin-bottom: 0.5rem; /* Spazio tra i link */
-            }
-            .navbar-custom .navbar-collapse .nav-link {
-                color: var(--text-dark) !important; /* Colore scuro per i link su sfondo chiaro */
-                padding: .5rem 0; /* Padding per i link */
-            }
+            .navbar-custom .navbar-collapse .nav-item { margin-bottom: 0.5rem; }
+            .navbar-custom .navbar-collapse .nav-link { color: var(--text-dark) !important; padding: .5rem 0; }
             .navbar-custom .navbar-collapse .nav-link:hover,
-            .navbar-custom .navbar-collapse .nav-link.active {
-                color: var(--primary-color) !important;
-            }
-            .navbar-custom .navbar-collapse .language-switcher {
-                 justify-content: flex-start; /* Allinea a sinistra o centro come preferisci */
-                 padding: .5rem 0;
-            }
+            .navbar-custom .navbar-collapse .nav-link.active { color: var(--primary-color) !important; }
+            .navbar-custom .navbar-collapse .language- switcher { justify-content: flex-start; padding: .5rem 0; }
         }
 
         @media (max-width: 768px) { 
@@ -272,15 +265,14 @@ HTML_TEMPLATE_STR = """
             .trip-description p, .equipment-description p { font-size: 1.05rem; }
             .equipment-image { max-width: 90%; }
 
-            /* Altezza mappa specifica per mobile per evitare che sia troppo alta */
+            /* Altezza mappa specifica per mobile con clamp */
             #map-container { 
-                height: 55vh; /* Ridotta ulteriormente per schermi molto verticali */
-                min-height: 350px; /* Ridotto anche il min-height */
+                /* Obiettivo 55vh, min 300px, max 450px su mobile */
+                height: clamp(300px, 55vh, 450px);
             } 
             .navbar-toggler { margin-right: 0.5rem;}
             footer { font-size: 0.8rem; padding: 8px 15px;} 
             :root { --footer-height: 40px; }
-            /* .navbar-custom .navbar-collapse .language-switcher già gestito sopra */
         }
     </style>
 </head>
@@ -358,12 +350,10 @@ HTML_TEMPLATE_STR = """
     <section id="avventura" class="content-section bg-light-custom">
         <div class="container trip-description">
             <h2 class="section-title">{{ adventure_section_title }}</h2>
-
             <div class="equipment-image-container" style="margin-bottom: 40px;"> 
                 <img src="{{ ocean_crossing_photo_url }}" alt="{{ ocean_crossing_alt }}" class="equipment-image" style="max-width: 85%; border: 2px solid var(--primary-color);">
                  <p class="equipment-image-caption"><em>{{ ocean_crossing_caption }}</em></p>
             </div>
-
             <p class="text-center">{{ adventure_intro1 }}</p>
             <p class="text-center">{{ adventure_intro2 }}</p>
             <ul>
@@ -386,14 +376,11 @@ HTML_TEMPLATE_STR = """
         <div class="container equipment-description">
             <h2 class="section-title">{{ equipment_section_title }}</h2>
             <p class="text-center">{{ equipment_desc1 }}</p>
-
             <div class="equipment-image-container">
                 <img src="{{ bike_setup_photo_url }}" alt="{{ equipment_image_alt }}" class="equipment-image">
                  <p class="equipment-image-caption"><em>{{ equipment_image_caption }}</em></p>
             </div>
-
             <p class="text-center">{{ equipment_desc2 }}</p> 
-
             <div class="equipment-image-container">
                 <img src="{{ grizl_photo_url }}" alt="{{ grizl_image_alt }}" class="equipment-image">
                  <p class="equipment-image-caption"><em>{{ grizl_image_caption }}</em></p>
@@ -409,7 +396,8 @@ HTML_TEMPLATE_STR = """
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> 
+    <!-- ^ Assicurati che jQuery sia caricato prima dei plugin se lo usano, ma Leaflet no -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/marslan390/BeautifyMarker/leaflet-beautify-marker-icon.min.js"></script>
@@ -418,7 +406,72 @@ HTML_TEMPLATE_STR = """
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-locatecontrol/0.66.2/L.Control.Locate.min.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        // Funzione per eseguire il codice quando il DOM è pronto, ma prima del completo caricamento di immagini ecc.
+        function onDocumentReady(fn) {
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', fn);
+            } else {
+                fn(); // DOM già pronto
+            }
+        }
+
+        // Funzione per eseguire il codice quando l'intera pagina è caricata (immagini, script, ecc.)
+        function onWindowLoad(fn) {
+            if (document.readyState === 'complete') {
+                fn(); // Già caricata
+            } else {
+                window.addEventListener('load', fn);
+            }
+        }
+
+        var leafletMapInstances = []; // Array per memorizzare le istanze della mappa
+
+        function invalidateAllMapsSize() {
+            leafletMapInstances.forEach(function(mapInstance) {
+                if (mapInstance && typeof mapInstance.invalidateSize === 'function') {
+                    mapInstance.invalidateSize({ animate: false });
+                }
+            });
+        }
+
+        // Funzione opzionale per adattare i bounds, se necessaria
+        // function fitMapBoundsToContent(mapInstance) {
+        //     if (!mapInstance) return;
+        //     // Definisci qui i bounds che vuoi mostrare. Esempio:
+        //     // var southWest = L.latLng(-40, -95);
+        //     // var northEast = L.latLng(60, 25);
+        //     // var bounds = L.latLngBounds(southWest, northEast);
+        //     // if (bounds.isValid()) {
+        //     //    mapInstance.fitBounds(bounds, { padding: L.point(25, 25), maxZoom: 10 });
+        //     // } else {
+        //     //    mapInstance.setView([20,0], 2); // Fallback view
+        //     // }
+        // }
+
+        function initializeMapLogic() {
+            if (typeof L !== 'undefined') {
+                var mapDivs = document.querySelectorAll('#map-container .folium-map');
+                mapDivs.forEach(function(div) {
+                    if (div._leaflet_map && leafletMapInstances.indexOf(div._leaflet_map) === -1) {
+                        leafletMapInstances.push(div._leaflet_map);
+                    }
+                });
+
+                // Invalida le dimensioni subito dopo aver trovato le istanze.
+                // Il CSS con clamp() dovrebbe fornire dimensioni stabili prima.
+                invalidateAllMapsSize();
+
+                // Se usi fitBounds, chiamalo qui dopo invalidateSize
+                // leafletMapInstances.forEach(fitMapBoundsToContent);
+            }
+        }
+
+        onDocumentReady(function () {
+            // Inizializza la logica della mappa non appena il DOM è pronto.
+            // Questo è importante perché Folium inserisce la mappa direttamente nell'HTML.
+            initializeMapLogic();
+
+            // Logica per la navbar e lo smooth scroll (già presente, mantenuta)
             const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
             navLinks.forEach(link => {
                 link.addEventListener('click', function (e) {
@@ -447,20 +500,25 @@ HTML_TEMPLATE_STR = """
                 });
             });
 
+            // Logica per Intersection Observer (già presente, mantenuta)
             const sections = document.querySelectorAll('.header-banner, .content-section');
             const observerOptions = {
                 root: null,
-                rootMargin: "0px 0px -40% 0px",
-                threshold: 0.1 // Aumentato leggermente threshold per migliore reattività
+                rootMargin: "0px 0px -40% 0px", // Cambiato leggermente per reattività
+                threshold: 0.05 // Ridotto per attivare prima l'effetto visible e il link attivo
             };
-
-            const sectionObserver = new IntersectionObserver((entries, observer) => {
+             const sectionObserver = new IntersectionObserver((entries, observer) => {
                 let intersectingEntry = null;
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        if (!intersectingEntry || entry.intersectionRatio > intersectingEntry.intersectionRatio) {
+                         // Se più entry sono isIntersecting, prendi quella più in alto nella viewport o più visibile
+                        if (!intersectingEntry || entry.boundingClientRect.top < intersectingEntry.boundingClientRect.top || entry.intersectionRatio > intersectingEntry.intersectionRatio) {
                             intersectingEntry = entry;
                         }
+                    }
+                    // Rendi visibile la sezione se entra (anche parzialmente)
+                    if (entry.isIntersecting && (entry.target.classList.contains('content-section') || entry.target.classList.contains('header-banner'))) {
+                        entry.target.classList.add('visible');
                     }
                 });
 
@@ -469,93 +527,74 @@ HTML_TEMPLATE_STR = """
                     if (id) {
                         const navLink = document.querySelector(`.navbar-nav .nav-link[href="#${id}"]`);
                         if (navLink) {
-                            if (intersectingEntry.target.classList.contains('content-section') || intersectingEntry.target.classList.contains('header-banner')) {
-                                intersectingEntry.target.classList.add('visible');
-                            }
                             document.querySelectorAll('.navbar-nav .nav-link').forEach(link => link.classList.remove('active'));
                             navLink.classList.add('active');
                         }
                     }
                 }
             }, observerOptions);
-
-            sections.forEach(section => {
-                sectionObserver.observe(section);
-            });
+            sections.forEach(section => { sectionObserver.observe(section); });
 
             function setActiveLinkOnLoad() {
                 let firstVisibleSectionId = 'home'; 
                 let maxVisibility = 0;
-                const navbarHeight = document.querySelector('.navbar-custom')?.offsetHeight || 0;
+                const navbarHeight = document.querySelector('.navbar-custom')?.offsetHeight || 60;
 
                 for (const section of sections) {
                     const rect = section.getBoundingClientRect();
                     const visibleHeight = Math.max(0, Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, navbarHeight));
-                    const visibleRatio = visibleHeight / rect.height;
 
-                    if (visibleHeight > 0 && rect.top < window.innerHeight - navbarHeight && rect.bottom > navbarHeight) {
-                         // Diamo priorità a sezioni più in alto nella viewport
-                        if (firstVisibleSectionId === 'home' || rect.top < document.getElementById(firstVisibleSectionId).getBoundingClientRect().top) {
-                           if (visibleRatio > maxVisibility || firstVisibleSectionId === 'home') { // Più visibile o è la prima
-                                maxVisibility = visibleRatio;
-                                firstVisibleSectionId = section.getAttribute('id');
-                           }
+                    if (rect.top < window.innerHeight - navbarHeight && rect.bottom > navbarHeight) { // È visibile?
+                        if (section.id === 'home' && rect.top <= navbarHeight + 5) { // Home è vicina alla cima?
+                            firstVisibleSectionId = 'home';
+                            maxVisibility = Infinity; // Dagli priorità assoluta
+                            break; 
+                        }
+                        if (maxVisibility !== Infinity) { // Se home non ha già vinto
+                            if (rect.top < (document.getElementById(firstVisibleSectionId)?.getBoundingClientRect().top || Infinity) ) {
+                                firstVisibleSectionId = section.id;
+                            }
                         }
                     }
-                     if (section.id === 'home' && rect.top >= 0 && rect.top < navbarHeight) { // Home è sempre prioritaria se in cima
-                        firstVisibleSectionId = 'home';
-                        break;
+                     // Rendi visibile la prima sezione al caricamento se non già fatto da observer
+                    if (section.id === firstVisibleSectionId && !section.classList.contains('visible')) {
+                         section.classList.add('visible');
                     }
                 }
 
                 document.querySelectorAll('.navbar-nav .nav-link').forEach(link => link.classList.remove('active'));
                 const activeNavLink = document.querySelector(`.navbar-nav .nav-link[href="#${firstVisibleSectionId}"]`);
+                
                 if (activeNavLink) {
                     activeNavLink.classList.add('active');
                 }
-                const firstSectionElement = document.getElementById(firstVisibleSectionId);
-                 if (firstSectionElement && !firstSectionElement.classList.contains('visible')) {
-                    setTimeout(() => { firstSectionElement.classList.add('visible'); }, 50);
-                }
             }
-            setTimeout(setActiveLinkOnLoad, 200); // Aumentato timeout per sicurezza
+            // Esegui dopo un breve ritardo per permettere al layout di stabilizzarsi
+            setTimeout(setActiveLinkOnLoad, 150); 
+        });
 
-
-            var leafletMapInstances = []; 
-            function initializeMapResizeLogic() {
-                if (typeof L !== 'undefined') {
-                    var mapDivs = document.querySelectorAll('#map-container .folium-map');
-                    mapDivs.forEach(function(div) {
-                        if (div._leaflet_map && leafletMapInstances.indexOf(div._leaflet_map) === -1) {
-                            leafletMapInstances.push(div._leaflet_map);
-                        }
-                    });
-                }
-                invalidateAllMapsSize(); // Chiamata iniziale
-            }
-
-            function invalidateAllMapsSize() {
-                leafletMapInstances.forEach(function(mapInstance) {
-                    if (mapInstance) {
-                        mapInstance.invalidateSize({ animate: false }); // Prova con animate: false
-                    }
-                });
-            }
-
-            // Esegui dopo il caricamento completo della finestra
-            window.addEventListener('load', function() {
-                initializeMapResizeLogic();
-            });
+        // Listener aggiuntivi per resize e visibility change su window.load
+        // per assicurarsi che la mappa sia completamente pronta
+        onWindowLoad(function() {
+            // Potrebbe essere necessario un secondo invalidate dopo che tutto (immagini ecc.) è caricato
+            // se le dimensioni del contenitore mappa dipendono da esse.
+            setTimeout(invalidateAllMapsSize, 100); 
 
             var resizeDebounceTimeout;
             window.addEventListener('resize', function() {
                 clearTimeout(resizeDebounceTimeout);
-                resizeDebounceTimeout = setTimeout(invalidateAllMapsSize, 250); 
+                resizeDebounceTimeout = setTimeout(function() {
+                    invalidateAllMapsSize();
+                    // leafletMapInstances.forEach(fitMapBoundsToContent); // Se usi fitBounds
+                }, 250); 
             });
 
             document.addEventListener('visibilitychange', function() {
                 if (document.visibilityState === 'visible') {
-                    setTimeout(invalidateAllMapsSize, 200); 
+                    setTimeout(function() {
+                        invalidateAllMapsSize();
+                        // leafletMapInstances.forEach(fitMapBoundsToContent); // Se usi fitBounds
+                    }, 200); 
                 }
             });
         });
@@ -564,7 +603,7 @@ HTML_TEMPLATE_STR = """
 </html>
 """
 
-# --- Testi (INVARIATI dall'ultima versione) ---
+# --- Testi (INVARIATI) ---
 text_content = {
     'it': {
         'lang_code': 'it',
@@ -655,7 +694,7 @@ text_content = {
         'map_locate_title': "Dove Diavolo Sono?",
         'map_locate_popup': "Sei qui (più o meno... speriamo)",
     },
-    'en': {  # ... (contenuti in inglese come da tua ultima versione)
+    'en': {
         'lang_code': 'en',
         'page_title': "SaltRiders: GG & Paco's Epic (and Slightly Mad) Adventure - 2025-2026 Itinerary",
         'nav_home': "Home Base",
@@ -747,10 +786,9 @@ text_content = {
 }
 
 # --- 1. Definizioni Dati e Funzioni Helper (INVARIATE) ---
-# (Identiche alla versione precedente)
 base_output_dir = "."
 os.makedirs(os.path.join(base_output_dir, "en"), exist_ok=True)
-os.makedirs(os.path.join(base_output_dir, "images"), exist_ok=True)
+os.makedirs(os.path.join(base_output_dir, "images"), exist_ok=True)  # Assicurati che esista
 
 
 def add_label(lat, lon, text, group):
@@ -773,7 +811,9 @@ def add_marker_custom(lat, lon, name, date, icon, color, group, lang_texts):
     )
     folium.Marker([lat, lon], popup=popup_name, icon=ico).add_to(group)
     if date:
-        date_text = lang_texts.get(date, date)
+        # Se la data è una stringa fissa (es. "10 Set 25"), usala direttamente.
+        # Altrimenti, se è una chiave per lang_texts, traducila.
+        date_text = date if ' ' in date else lang_texts.get(date, date)  # Semplice controllo per data fissa vs chiave
         add_label(lat, lon, date_text, group)
 
 
@@ -795,19 +835,19 @@ iberia_start_coord = (43.3183, -1.9812)
 iberia_coords = [iberia_start_coord, (42.8800, -9.3000), (41.1500, -8.6300), (39.5000, -9.1300),
                  (38.7200, -9.1400), (37.0200, -8.9300), (37.0179, -7.9307)]
 iberia_names_keys = ["map_sanseb_bike_popup", "map_finisterre_name", "map_porto_name", "map_ericeira_name", "map_lisbon_name", "map_sagres_name", "map_faro_name"]
-iberia_dates_str = ["14 Sep 25", "30 Sep 25", "10 Oct 25", "15 Oct 25", "20 Oct 25", "25 Oct 25", "28 Oct 25"]
+iberia_dates_str = ["14 Set 25", "30 Sep 25", "10 Oct 25", "15 Oct 25", "20 Oct 25", "25 Oct 25", "28 Oct 25"]
 faro_coord = (37.0179, -7.9307)
 las_palmas_coord_simple = (28.1234, -15.4362)
 sail_to_canaries_pts = [faro_coord, las_palmas_coord_simple]
 st_lucia_coord_simple = (14.0108, -60.9707)
 arc_pts = [las_palmas_coord_simple, st_lucia_coord_simple]
-panama_canal_entry_approx = st_lucia_coord_simple
+panama_canal_entry_approx = st_lucia_coord_simple  # Usato come punto di partenza per il segmento successivo
 panama_city_coord = (9.0000, -79.5000)
 sea_to_panama_pts = [panama_canal_entry_approx, panama_city_coord]
 cross_pacific_coords = [panama_city_coord, (-0.9000, -89.6000), (-9.8000, -139.0000), (-17.5500, -149.5600)]
 cross_pacific_names_keys = ["map_panama_pacific_start_popup", "map_galapagos_name", "map_marquesas_name", "map_tahiti_name"]
-cross_pacific_arrival_dates_str = ["N/A", "10 Mar 26", "30 Apr 26", "15 Jun 26"]
-ecuador_coast_approx = (-2.1700, -79.9000)
+cross_pacific_arrival_dates_str = ["N/A", "10 Mar 26", "30 Apr 26", "15 Jun 26"]  # N/A per il punto di partenza
+ecuador_coast_approx = (-2.1700, -79.9000)  # Guayaquil approx
 sea_to_ecuador_pts = [st_lucia_coord_simple, ecuador_coast_approx]
 bike_southam_coords = [ecuador_coast_approx, (-1.8300, -80.7500), (-4.4400, -81.2800), (-12.0500, -77.0400),
                        (-20.2300, -70.1400), (-34.3800, -72.0000)]
@@ -815,9 +855,16 @@ bike_southam_names_keys = ["map_guayaquil_bike_popup", "map_montanita_name", "ma
 bike_southam_dates_str = ["01 Mar 26", "15 Apr 26", "15 May 26", "15 Jun 26", "01 Jul 26", "30 Jul 26"]
 
 
+# --- 2. Generazione Mappa Folium (OTTIMIZZAZIONI POSSIBILI) ---
 def generate_map_for_language(lang):
     current_texts = text_content[lang]
-    m = folium.Map(location=[15, -30], zoom_start=2.5, tiles=None)
+
+    # Inizializzazione mappa: location e zoom_start sono importanti.
+    # Se la mappa è troppo zoomata all'inizio, potrebbe caricare più tile.
+    # Un valore di zoom_start più basso (es. 2 o 3) mostra un'area più ampia.
+    m = folium.Map(location=[20, -15], zoom_start=2, tiles=None)  # Meno zoom, centro più generico
+
+    # Aggiungi i TileLayer. L'ordine influenza quello predefinito.
     folium.TileLayer('CartoDB positron', name=current_texts.get('map_tile_clear', "Clear Map"), attr="CartoDB Positron").add_to(m)
     folium.TileLayer('OpenStreetMap', name=current_texts.get('map_tile_standard', "Standard Map"), attr="OpenStreetMap").add_to(m)
     folium.TileLayer('Esri.WorldImagery', name=current_texts.get('map_tile_satellite', "Satellite Map"), attr="Esri World Imagery").add_to(m)
@@ -826,93 +873,129 @@ def generate_map_for_language(lang):
     planA_fg = folium.FeatureGroup(name=current_texts['map_planA_group'], show=False).add_to(m)
     planB_fg = folium.FeatureGroup(name=current_texts['map_planB_group'], show=False).add_to(m)
 
+    # Percorso Principale
     add_marker_custom(45.4642, 9.1900, 'map_milan_popup', 'map_milan_date', "train", "#E74C3C", main_fg, current_texts)
     add_marker_custom(45.0703, 7.6869, 'map_turin_popup', 'map_turin_date', "train", "#E74C3C", main_fg, current_texts)
     add_line_custom(train_pts, "#E74C3C", "2,6", 'map_train_tooltip', main_fg, current_texts)
-    add_marker_custom(45.0703, 7.6869, 'map_turin_bike_popup', 'map_turin_date', "person-biking", "#F39C12", main_fg, current_texts)
-    add_marker_custom(45.1885, 5.7245, 'map_grenoble_popup', 'map_grenoble_date', "person-biking", "#F39C12", main_fg, current_texts)
+
+    add_marker_custom(45.0703, 7.6869, 'map_turin_bike_popup', 'map_turin_date', "person-biking", "#F39C12", main_fg, current_texts)  # Inizio bici Torino
+    add_marker_custom(45.1885, 5.7245, 'map_grenoble_popup', 'map_grenoble_date', "person-biking", "#F39C12", main_fg, current_texts)  # Fine bici Grenoble
     add_line_custom(bike1_pts, "#F39C12", "5,8", 'map_bike1_tooltip', main_fg, current_texts)
-    add_marker_custom(45.1885, 5.7245, 'map_grenoble_bus_popup', 'map_grenoble_bus_date', "bus", "#8E44AD", main_fg, current_texts)
-    add_marker_custom(iberia_start_coord[0], iberia_start_coord[1], 'map_sanseb_bus_popup', 'map_sanseb_bus_date', "bus", "#8E44AD", main_fg, current_texts)
+
+    add_marker_custom(45.1885, 5.7245, 'map_grenoble_bus_popup', 'map_grenoble_bus_date', "bus", "#8E44AD", main_fg, current_texts)  # Bus da Grenoble
+    add_marker_custom(iberia_start_coord[0], iberia_start_coord[1], 'map_sanseb_bus_popup', 'map_sanseb_bus_date', "bus", "#8E44AD", main_fg, current_texts)  # Arrivo bus San Seb
     add_line_custom(bus_pts, "#8E44AD", "2,10", 'map_bus_tooltip', main_fg, current_texts)
-    for i, coord in enumerate(iberia_coords):
+
+    for i, coord in enumerate(iberia_coords):  # Bici Iberica
         add_marker_custom(coord[0], coord[1], iberia_names_keys[i], iberia_dates_str[i], "person-biking", "#F39C12", main_fg, current_texts)
     add_line_custom(iberia_coords, "#F39C12", "5,8", 'map_iberia_bike_tooltip', main_fg, current_texts)
-    add_marker_custom(faro_coord[0], faro_coord[1], 'map_faro_sail_popup', "29 Oct 25", "sailboat", "#2980B9", main_fg, current_texts)
-    add_marker_custom(las_palmas_coord_simple[0], las_palmas_coord_simple[1], 'map_las_palmas_popup', "23 Nov 25", "sailboat", "#2980B9", main_fg, current_texts)
+
+    add_marker_custom(faro_coord[0], faro_coord[1], 'map_faro_sail_popup', "29 Oct 25", "sailboat", "#2980B9", main_fg, current_texts)  # Partenza vela Faro
+    add_marker_custom(las_palmas_coord_simple[0], las_palmas_coord_simple[1], 'map_las_palmas_popup', "23 Nov 25", "sailboat", "#2980B9", main_fg, current_texts)  # Arrivo Las Palmas
     add_line_custom(sail_to_canaries_pts, "#2980B9", "", 'map_sail_canaries_tooltip', main_fg, current_texts)
-    add_circle_custom(las_palmas_coord_simple, 250000, "#2980B9", 1, True, "#AED6F1", 0.3, 'map_canaries_stop_tooltip', main_fg, current_texts)
-    add_marker_custom(st_lucia_coord_simple[0], st_lucia_coord_simple[1], 'map_st_lucia_popup', "10-15 Dec 25", "sailboat", "#1A5276", main_fg, current_texts)
-    add_line_custom(arc_pts, "#1A5276", "", 'map_arc_tooltip', main_fg, current_texts)
-    add_circle_custom(st_lucia_coord_simple, 300000, "#1A5276", 1, True, "#A9CCE3", 0.3, 'map_caribbean_explore_tooltip', main_fg, current_texts)
+    add_circle_custom(las_palmas_coord_simple, 250000, "#2980B9", 1, True, "#AED6F1", 0.3, 'map_canaries_stop_tooltip', main_fg, current_texts)  # Sosta Canarie
+
+    add_marker_custom(st_lucia_coord_simple[0], st_lucia_coord_simple[1], 'map_st_lucia_popup', "10-15 Dec 25", "sailboat", "#1A5276", main_fg, current_texts)  # Arrivo St. Lucia (ARC)
+    add_line_custom(arc_pts, "#1A5276", "", 'map_arc_tooltip', main_fg, current_texts)  # Traversata ARC
+    add_circle_custom(st_lucia_coord_simple, 300000, "#1A5276", 1, True, "#A9CCE3", 0.3, 'map_caribbean_explore_tooltip', main_fg, current_texts)  # Esplorazione Caraibi
+
+    # Piano A: Traversata Pacifico
     add_marker_custom(panama_city_coord[0], panama_city_coord[1], 'map_panama_transfer_popup', "16 Feb 26", "anchor", "#5DADE2", planA_fg, current_texts)
     add_line_custom(sea_to_panama_pts, "#5DADE2", "4,8", 'map_sea_transfer_panama_tooltip', planA_fg, current_texts)
     add_circle_custom(panama_city_coord, 200000, "#8E44AD", 1, True, "#D5B9F8", 0.3, 'map_panama_prep_tooltip', planA_fg, current_texts)
-    add_marker_custom(cross_pacific_coords[0][0], cross_pacific_coords[0][1], cross_pacific_names_keys[0], "01 Mar 26", "sailboat", "#27AE60", planA_fg, current_texts)
-    current_point_A = cross_pacific_coords[0]
-    prev_arrival_A = datetime.strptime("01 Mar 26", "%d %b %y")
+
+    # Logica per Pacifico (Piano A) - Creazione dinamica tooltip
+    current_point_A = cross_pacific_coords[0]  # Panama City
+    add_marker_custom(current_point_A[0], current_point_A[1], cross_pacific_names_keys[0], "01 Mar 26", "sailboat", "#27AE60", planA_fg, current_texts)  # Partenza Panama
+    prev_arrival_A_obj = datetime.strptime("01 Mar 26", "%d %b %y")
+
     for i in range(1, len(cross_pacific_coords)):
-        next_pt_A = cross_pacific_coords[i];
-        stop_name_key_A = cross_pacific_names_keys[i];
+        next_pt_A = cross_pacific_coords[i]
+        stop_name_key_A = cross_pacific_names_keys[i]
         arrival_dt_str_A = cross_pacific_arrival_dates_str[i]
+
         add_marker_custom(next_pt_A[0], next_pt_A[1], stop_name_key_A, arrival_dt_str_A, "sailboat", "#27AE60", planA_fg, current_texts)
+
         arrival_dt_obj_A = datetime.strptime(arrival_dt_str_A, "%d %b %y")
-        leg_start_A = prev_arrival_A.strftime("%d %b")
-        from_loc_A_translated = current_texts.get(cross_pacific_names_keys[i - 1], cross_pacific_names_keys[i - 1])
-        to_loc_A_translated = current_texts.get(stop_name_key_A, stop_name_key_A)
-        tooltip_sail_A = f"{current_texts.get('map_sail_leg_tooltip_prefix', 'Sail')} {from_loc_A_translated}→{to_loc_A_translated} ({leg_start_A} {prev_arrival_A.strftime('%y')} - {arrival_dt_obj_A.strftime('%d %b %y')})"
+
+        from_loc_A_key = cross_pacific_names_keys[i - 1]
+        from_loc_A_translated = current_texts.get(from_loc_A_key, from_loc_A_key.split('_')[1].capitalize())  # Heuristic for name
+        to_loc_A_translated = current_texts.get(stop_name_key_A, stop_name_key_A.split('_')[1].capitalize())
+
+        tooltip_sail_A = (f"{current_texts.get('map_sail_leg_tooltip_prefix', 'Sail')} "
+                          f"{from_loc_A_translated}→{to_loc_A_translated} "
+                          f"({prev_arrival_A_obj.strftime('%d %b %y')} - {arrival_dt_obj_A.strftime('%d %b %y')})")
         folium.PolyLine(locations=[current_point_A, next_pt_A], color="#27AE60", weight=4, dash_array="", tooltip=tooltip_sail_A).add_to(planA_fg)
-        current_point_A = next_pt_A
-        stay_end_A = (arrival_dt_obj_A + timedelta(days=15)).strftime("%d %b")
-        tooltip_stop_A = f"{current_texts.get('map_stopover_tooltip_prefix', 'Stopover at')} {to_loc_A_translated}\n{arrival_dt_obj_A.strftime('%d %b')} - {stay_end_A} {arrival_dt_obj_A.strftime('%y')}"
+
+        stay_end_A_obj = arrival_dt_obj_A + timedelta(days=15)  # Sosta di 15 giorni (esempio)
+        tooltip_stop_A = (f"{current_texts.get('map_stopover_tooltip_prefix', 'Stopover at')} {to_loc_A_translated}\n"
+                          f"{arrival_dt_obj_A.strftime('%d %b %y')} - {stay_end_A_obj.strftime('%d %b %y')}")
         folium.Circle(next_pt_A, radius=150000, color="#2ECC71", weight=1, fill=True, fill_color="#A9DFBF", fill_opacity=0.3, tooltip=tooltip_stop_A).add_to(planA_fg)
-        prev_arrival_A = arrival_dt_obj_A
+
+        current_point_A = next_pt_A
+        prev_arrival_A_obj = stay_end_A_obj  # La prossima tappa parte dopo la sosta
+
+    # Piano B: Bici Sudamerica
     add_marker_custom(ecuador_coast_approx[0], ecuador_coast_approx[1], 'map_ecuador_transfer_popup', "16 Feb 26", "anchor", "#5DADE2", planB_fg, current_texts)
     add_line_custom(sea_to_ecuador_pts, "#5DADE2", "4,8", 'map_sea_transfer_ecuador_tooltip', planB_fg, current_texts)
     add_circle_custom(ecuador_coast_approx, 200000, "#D35400", 1, True, "#EB984E", 0.3, 'map_ecuador_explore_tooltip', planB_fg, current_texts)
+
     for i, coord_B in enumerate(bike_southam_coords):
         add_marker_custom(coord_B[0], coord_B[1], bike_southam_names_keys[i], bike_southam_dates_str[i], "person-biking", "#E67E22", planB_fg, current_texts)
     add_line_custom(bike_southam_coords, "#E67E22", "5,8", 'map_bike_pacific_tooltip', planB_fg, current_texts)
+
+    # Plugin (aggiunti per ultimi)
     plugins.Fullscreen(title=current_texts.get('map_fullscreen_title', "Fullscreen"), title_cancel=current_texts.get('map_fullscreen_cancel', "Exit Fullscreen")).add_to(m)
-    plugins.MiniMap(tile_layer="CartoDB positron", toggle_display=True, minimized=True, zoomLevelOffset=-6).add_to(m)
+    plugins.MiniMap(tile_layer="CartoDB positron", toggle_display=True, minimized=True, zoomLevelOffset=-6).add_to(m)  # Minimappa usa tile leggeri
     plugins.LocateControl(strings={"title": current_texts.get('map_locate_title', "Show my location"), "popup": current_texts.get('map_locate_popup', "You are here (approx.)")}).add_to(m)
-    folium.LayerControl(collapsed=False).add_to(m)
+
+    folium.LayerControl(collapsed=False).add_to(m)  # Layer control
+
     return m._repr_html_()
 
 
-# --- Generazione dei file HTML (INVARIATA) ---
+# --- Generazione dei file HTML ---
 for lang_code in ['it', 'en']:
     lang_specific_texts = text_content[lang_code].copy()
 
+    # URL specifici per lingua
     if lang_code == 'it':
-        lang_specific_texts['brand_link_url'] = "index.html"
+        lang_specific_texts['brand_link_url'] = "index.html"  # Link del brand nella navbar
         lang_specific_texts['it_page_url'] = "index.html"
         lang_specific_texts['en_page_url'] = "en/index.html"
-    else:
-        lang_specific_texts['brand_link_url'] = "index.html"
+    else:  # lang_code == 'en'
+        lang_specific_texts['brand_link_url'] = "index.html"  # Link del brand nella navbar
         lang_specific_texts['it_page_url'] = "../index.html"
         lang_specific_texts['en_page_url'] = "index.html"
 
     map_html = generate_map_for_language(lang_code)
     html_template = Template(HTML_TEMPLATE_STR)
 
-    render_context = {**lang_specific_texts}
+    # Contesto per il rendering del template
+    render_context = {**lang_specific_texts}  # Espande tutti i testi specifici per lingua
     render_context['map_html_fragment'] = map_html
 
-    render_context['gg_photo_url'] = "images/gg1.jpeg"
-    render_context['paco_photo_url'] = "images/paco.jpeg"
-    render_context['surf_photo_url'] = "https://www.thejambo.it/wp-content/uploads/2023/05/Le-migliori-destinazioni-al-mondo-per-fare-surf-Foto-di-Canva-3-1024x683.png"
+    # URL delle immagini (relativi alla posizione del file HTML)
+    # Se le immagini sono in /images/ e index.html è nella root, e en/index.html è in /en/
+    if lang_code == 'it':
+        img_prefix = "images/"
+    else:  # en
+        img_prefix = "../images/"  # Le immagini sono una cartella sopra rispetto a en/index.html
 
-    render_context['bike_setup_photo_url'] = "images/surfpacking1.jpg"
-    render_context['grizl_photo_url'] = "images/grizl.jpg"
-    render_context['ocean_crossing_photo_url'] = "images/ocean_crossing.jpg"
+    render_context['gg_photo_url'] = img_prefix + "gg1.jpeg"
+    render_context['paco_photo_url'] = img_prefix + "paco.jpeg"
+    render_context['surf_photo_url'] = "https://www.thejambo.it/wp-content/uploads/2023/05/Le-migliori-destinazioni-al-mondo-per-fare-surf-Foto-di-Canva-3-1024x683.png"  # URL Esterno
+    render_context['bike_setup_photo_url'] = img_prefix + "surfpacking1.jpg"
+    render_context['grizl_photo_url'] = img_prefix + "grizl.jpg"
+    render_context['ocean_crossing_photo_url'] = img_prefix + "ocean_crossing.jpg"
 
     rendered_html_content = html_template.render(render_context)
 
+    # Percorso di output
     if lang_code == 'it':
         output_filename = "index.html"
         output_path = os.path.join(base_output_dir, output_filename)
-    else:
+    else:  # en
         output_filename = "index.html"
         output_path = os.path.join(base_output_dir, "en", output_filename)
 
@@ -920,5 +1003,5 @@ for lang_code in ['it', 'en']:
         f.write(rendered_html_content)
     print(f"Pagina in {lang_code.upper()} salvata in: {output_path}")
 
-print("\n--- Processo di generazione completato con CSS per navbar mobile e mappa mobile, e JS per resize mappa aggiornati. ---")
-print("Verifica il comportamento della mappa e del menu su schermi di diverse dimensioni, inclusi i telefoni.")
+print("\n--- Processo di generazione completato con CSS ottimizzato per la mappa e JS per inizializzazione più rapida. ---")
+print("Verifica la velocità di caricamento e la visualizzazione della mappa.")
