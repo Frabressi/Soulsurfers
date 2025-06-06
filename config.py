@@ -595,7 +595,7 @@ TEXT_CONTENT = {
         'map_tile_standard': "Mappa Standard",
         'map_tile_satellite': "Mappa Satellitare",
         'map_main_group': "Percorso Principale (Teorico)",
-        'map_planA_group': "Opzione Pacifico: Traversata Oceanica",
+        'map_planA_group': "Opzione Pacifico: Traversata Oceanica", 
         'map_planB_group': "Opzione Pacifico: Bici Sudamerica",
         'map_milan_popup': "Milano - Qui inizia la follia!", 'map_milan_date': "10 Set 25",
         'map_turin_popup': "Torino - Pronti per le Alpi?!", 'map_turin_date': "10 Set 25",

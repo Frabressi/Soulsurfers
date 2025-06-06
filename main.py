@@ -14,7 +14,7 @@ def get_image_url_for_main_page(filename, lang_code, base_images_dir_name):
     if lang_code == 'it':
         return f"{base_images_dir_name}/{filename}"
     else:
-        return f"../{base_images_dir_name}/{filename}" 
+        return f"../{base_images_dir_name}/{filename}"
 
 
 def build_site():
