@@ -34,7 +34,7 @@ def build_site():
             print("ATTENZIONE: I template del blog (BLOG_POST_TEMPLATE_STR, BLOG_INDEX_TEMPLATE_STR) non sono definiti in config.py!")
             print("La generazione del blog potrebbe non funzionare correttamente.")
 
-    html_template_main = Template(config.HTML_TEMPLATE_STR) 
+    html_template_main = Template(config.HTML_TEMPLATE_STR)
 
     for lang_code in ['it', 'en']:
         current_texts_for_lang = config.TEXT_CONTENT[lang_code].copy()
