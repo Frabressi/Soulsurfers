@@ -1,0 +1,7 @@
+# requirements.txt
+folium
+Jinja2
+Markdown
+python-frontmatter
+beautifulsoup4
+# Aggiungi altre dipendenze se ne usi (es. requests se carichi dati esterni)

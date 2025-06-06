@@ -1,0 +1,41 @@
+# .github/workflows/deploy-gh-pages.yml
+name: Build and Deploy SaltRiders Site to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # Si attiva quando fai push su main
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+#        with:
+          # Se usi una branch diversa dalla default (main) per i sorgenti, specificare qui
+          # ref: main # o la tua branch sorgente
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run build script
+        run: python main.py
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: . # La root del progetto dove main.py genera l'output
+          publish_branch: gh-pages # <<<--- ASSICURATI CHE QUESTA RIGA SIA PRESENTE E NON COMMENTATA
+          force_orphan: true # Opzionale: crea una branch gh-pages pulita ogni volta, senza storia precedente. Utile.
+          # cname: yourdomain.com # Se hai un dominio personalizzato

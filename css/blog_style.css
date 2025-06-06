@@ -1,0 +1,385 @@
+/* css/blog_style.css - Versione Completa e Migliorata */
+
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Roboto+Condensed:wght@300;400;700&family=Source+Code+Pro:wght@400;600&display=swap');
+
+:root {
+    --blog-font-serif: 'Merriweather', serif;
+    --blog-font-sans-condensed: 'Roboto Condensed', sans-serif;
+    --blog-font-code: 'Source Code Pro', monospace;
+
+    --blog-primary-accent: #00A9FF;
+    --blog-secondary-accent: #3C4CAD;
+
+    --blog-text-main: #2d3748;
+    --blog-text-muted: #718096;
+
+    --blog-bg-body: #f7fafc;
+    --blog-bg-card: #ffffff; /* Usato sia per card indice che per contenitore singolo post */
+    --blog-border-subtle: #e2e8f0;
+
+    --blog-shadow-sm: 0 2px 4px rgba(0,0,0,0.04);
+    --blog-shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+    --blog-shadow-lg: 0 15px 30px -10px rgba(0,0,0,0.12);
+
+    --blog-radius-md: 8px;
+    --blog-radius-lg: 12px;
+
+    --blog-spacing-unit: 1rem; /* 16px se il font base è 16px */
+}
+
+/* Tema Scuro Opzionale */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --blog-primary-accent: #38bdf8;
+        --blog-secondary-accent: #818cf8;
+        --blog-text-main: #cbd5e1;
+        --blog-text-muted: #94a3b8;
+        --blog-bg-body: #1a202c;
+        --blog-bg-card: #2d3748;
+        --blog-border-subtle: #4a5568;
+    }
+    .blog-post-summary-image, .single-post-content img {
+        filter: brightness(0.85) contrast(1.05);
+    }
+}
+
+body {
+    font-family: var(--blog-font-serif);
+    margin: 0;
+    padding: 0;
+    line-height: 1.8;
+    background-color: var(--blog-bg-body);
+    color: var(--blog-text-main);
+    font-size: 17px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Contenitore principale per le pagine del blog (sia indice che singolo post) */
+.blog-page-container { /* Nuovo nome generico per il contenitore principale di una pagina blog */
+    max-width: 800px; /* Default per singolo post, l'indice lo sovrascriverà */
+    margin: calc(var(--blog-spacing-unit) * 3) auto;
+    padding: calc(var(--blog-spacing-unit) * 2.5) calc(var(--blog-spacing-unit) * 3);
+    background-color: var(--blog-bg-card);
+    border-radius: var(--blog-radius-lg);
+    box-shadow: var(--blog-shadow-lg);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog-header {
+    text-align: center;
+    padding-bottom: var(--blog-spacing-unit);
+    margin-bottom: calc(var(--blog-spacing-unit) * 2);
+    border-bottom: 1px solid var(--blog-border-subtle);
+}
+
+.blog-nav {
+    margin-bottom: var(--blog-spacing-unit);
+    font-family: var(--blog-font-sans-condensed);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.blog-nav a {
+    margin: 0 var(--blog-spacing-unit);
+    text-decoration: none;
+    color: var(--blog-primary-accent);
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s ease, border-bottom-color 0.2s ease;
+}
+.blog-nav a:hover {
+    color: var(--blog-secondary-accent);
+    border-bottom-color: var(--blog-secondary-accent);
+}
+
+/* Header per Pagina Indice del Blog */
+.blog-index-header { /* Usato nel template dell'indice */
+    margin-bottom: calc(var(--blog-spacing-unit) * 2.5);
+    padding-bottom: calc(var(--blog-spacing-unit) * 1.5);
+}
+.blog-index-header h1 {
+    font-family: var(--blog-font-sans-condensed);
+    font-weight: 700;
+    color: var(--blog-text-main);
+    margin-bottom: 0.3em;
+    margin-top: 0.2em;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-size: 3.2rem;
+}
+.blog-index-header .lang-indicator {
+    font-size: 1.8rem;
+    color: var(--blog-primary-accent);
+}
+.blog-index-header .blog-index-subtitle {
+    font-family: var(--blog-font-serif);
+    font-size: 1.2rem;
+    color: var(--blog-text-muted);
+    max-width: 600px;
+    margin: 0.5em auto 0 auto;
+}
+
+/* Contenitore per la griglia dei post nell'indice */
+.blog-post-grid { /* Usato nel template dell'indice */
+    max-width: 1200px; /* Più largo per griglia */
+    margin: calc(var(--blog-spacing-unit) * 2) auto; /* Sovrascrive il margin di .blog-page-container */
+    padding: var(--blog-spacing-unit);
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none; /* Ombra sulle card, non sul contenitore griglia */
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: calc(var(--blog-spacing-unit) * 2.5); /* Più spazio tra le card */
+}
+
+/* Stile della Card del Post (Indice) */
+.blog-post-card {
+    background-color: var(--blog-bg-card);
+    border-radius: var(--blog-radius-lg);
+    box-shadow: var(--blog-shadow-md);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.blog-post-card:hover {
+    transform: translateY(-8px) scale(1.015);
+    box-shadow: 0 20px 40px -15px rgba(0,0,0,0.15);
+}
+.card-link-wrapper {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.card-image-container {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    background-color: var(--blog-border-subtle);
+}
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.blog-post-card:hover .card-image {
+    transform: scale(1.1);
+}
+.card-content {
+    padding: calc(var(--blog-spacing-unit) * 1.25) calc(var(--blog-spacing-unit) * 1.5);
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+.card-title {
+    font-family: var(--blog-font-sans-condensed);
+    font-weight: 700;
+    font-size: 1.6rem;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    color: var(--blog-text-main);
+    line-height: 1.25;
+}
+.card-meta {
+    font-family: var(--blog-font-sans-condensed);
+    font-size: 0.8rem;
+    color: var(--blog-text-muted);
+    margin-bottom: var(--blog-spacing-unit);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.card-meta .meta-date { margin-right: 10px; }
+.card-meta .meta-author::before { content: "|"; margin-right: 10px; color: var(--blog-border-subtle); }
+.card-summary {
+    font-family: var(--blog-font-serif);
+    font-size: 0.95rem;
+    color: var(--blog-text-muted);
+    line-height: 1.65;
+    margin-bottom: var(--blog-spacing-unit);
+    flex-grow: 1;
+}
+.read-more-card-link {
+    display: inline-block;
+    margin-top: auto;
+    font-family: var(--blog-font-sans-condensed);
+    font-weight: 700;
+    color: var(--blog-primary-accent);
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding-top: 0.5rem;
+    align-self: flex-start;
+    transition: color 0.2s ease;
+}
+.read-more-card-link:hover { color: var(--blog-secondary-accent); text-decoration: underline; }
+.no-posts-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-family: var(--blog-font-serif);
+    font-size: 1.2rem;
+    color: var(--blog-text-muted);
+    padding: calc(var(--blog-spacing-unit) * 3) 0;
+}
+
+/* Header per Singolo Post */
+.single-post-header { /* Usato nel template del singolo post */
+    text-align: left; /* Già impostato per h1, ma per coerenza */
+    margin-bottom: calc(var(--blog-spacing-unit) * 1.5); /* Meno margine dell'header indice */
+    border-bottom: none; /* No bordo sotto l'header del singolo post */
+}
+.single-post-header h1 {
+    font-size: 2.6rem;
+    margin-bottom: 0.1em;
+}
+.single-post-meta { /* Già definito prima, ma qui per raggruppare */
+    text-align: left;
+    margin-bottom: calc(var(--blog-spacing-unit) * 2.5);
+}
+
+/* Contenuto del Singolo Post */
+.single-post-content {
+    font-size: 1.125rem; /* 18px */
+    color: var(--blog-text-main);
+}
+.single-post-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--blog-radius-lg);
+    margin: calc(var(--blog-spacing-unit) * 2) auto;
+    display: block;
+    box-shadow: var(--blog-shadow-lg);
+}
+.single-post-content figcaption {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--blog-text-muted);
+    margin-top: calc(var(--blog-spacing-unit) * -0.8);
+    margin-bottom: calc(var(--blog-spacing-unit) * 2);
+    font-style: italic;
+}
+.single-post-content h2, .single-post-content h3, .single-post-content h4 {
+    font-family: var(--blog-font-sans-condensed);
+    font-weight: 700;
+    color: var(--blog-text-main);
+    margin-top: 2.2em;
+    margin-bottom: 1em;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+}
+.single-post-content h2 { font-size: 1.9rem; padding-bottom: 0.3em; border-bottom: 2px solid var(--blog-primary-accent); }
+.single-post-content h3 { font-size: 1.6rem; }
+.single-post-content h4 { font-size: 1.3rem; }
+.single-post-content p { margin-bottom: 1.6em; }
+.single-post-content ul, .single-post-content ol { margin-bottom: 1.6em; padding-left: 35px; }
+.single-post-content li { margin-bottom: 0.6em; }
+.single-post-content a {
+    color: var(--blog-primary-accent);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(0, 169, 255, 0.4);
+    transition: color 0.2s ease, border-bottom-color 0.2s ease;
+}
+.single-post-content a:hover {
+    color: var(--blog-secondary-accent);
+    border-bottom-color: var(--blog-secondary-accent);
+}
+.single-post-content blockquote {
+    border-left: 4px solid var(--blog-primary-accent);
+    padding: var(--blog-spacing-unit) calc(var(--blog-spacing-unit) * 1.5);
+    margin: calc(var(--blog-spacing-unit) * 2) 0;
+    font-style: normal;
+    color: var(--blog-text-muted);
+    background-color: rgba(0, 169, 255, 0.03);
+    border-radius: 0 var(--blog-radius-md) var(--blog-radius-md) 0;
+}
+.single-post-content blockquote p { margin-bottom: 0; font-style: italic; font-size: 1.1rem; }
+.single-post-content pre {
+    background-color: var(--blog-code-bg);
+    color: var(--blog-code-text);
+    padding: var(--blog-spacing-unit);
+    border-radius: var(--blog-radius-md);
+    overflow-x: auto;
+    font-family: var(--blog-font-code);
+    font-size: 0.95em;
+    line-height: 1.6;
+    margin: calc(var(--blog-spacing-unit) * 2) 0;
+    box-shadow: var(--blog-shadow-sm);
+}
+.single-post-content code {
+    font-family: var(--blog-font-code);
+    background-color: rgba(0, 123, 255, 0.1);
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    font-size: 0.9em;
+    color: var(--blog-primary-accent);
+}
+.single-post-content pre code {
+    background-color: transparent; padding: 0; border-radius: 0; font-size: inherit; color: inherit;
+}
+
+/* Sezione Commenti */
+#comments {
+    margin-top: calc(var(--blog-spacing-unit) * 3);
+    padding-top: calc(var(--blog-spacing-unit) * 2);
+    border-top: 1px solid var(--blog-border-subtle);
+}
+#comments h3 {
+    font-family: var(--blog-font-sans-condensed);
+    font-weight: 700;
+    color: var(--blog-text-main);
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: var(--blog-spacing-unit);
+}
+
+.blog-footer {
+    font-family: var(--blog-font-sans-condensed);
+    padding-top: var(--blog-spacing-unit);
+    text-align: center;
+    margin-top: calc(var(--blog-spacing-unit) * 3);
+    font-size: 0.9em;
+    color: var(--blog-text-muted);
+    border-top: 1px solid var(--blog-border-subtle);
+}
+
+/* Media Queries per responsività */
+@media (max-width: 860px) { /* Tablet e schermi più piccoli */
+    .blog-page-container, .blog-post-grid { /* Applica a entrambi i contenitori principali */
+        margin-left: var(--blog-spacing-unit);
+        margin-right: var(--blog-spacing-unit);
+        padding-left: calc(var(--blog-spacing-unit) * 1.5);
+        padding-right: calc(var(--blog-spacing-unit) * 1.5);
+    }
+    body { font-size: 16px; }
+    .blog-index-header h1 { font-size: 2.5rem; }
+    .single-post-header h1 { font-size: 2.1rem; }
+    .blog-post-item h2, .card-title { font-size: 1.4rem; }
+    .single-post-content { font-size: 1.05rem; }
+}
+
+@media (max-width: 600px) { /* Mobile */
+    .blog-page-container {
+        border-radius: 0;
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: var(--blog-spacing-unit);
+        padding-right: var(--blog-spacing-unit);
+        box-shadow: none;
+    }
+    .blog-post-grid {
+        grid-template-columns: 1fr;
+        gap: calc(var(--blog-spacing-unit) * 2);
+        padding-left: 0;
+        padding-right: 0;
+    }
+    body { font-size: 15px; }
+    .blog-index-header h1 { font-size: 2.1rem; }
+    .single-post-header h1 { font-size: 1.8rem; }
+    .blog-post-item h2, .card-title { font-size: 1.3rem; }
+    .card-image-container { height: 200px; }
+    .single-post-content { font-size: 1rem; }
+}
