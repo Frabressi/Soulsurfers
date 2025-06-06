@@ -544,6 +544,11 @@ HTML_TEMPLATE_STR = """
 """
 
 # --- Testi ---
+# config.py
+
+# ... (il resto del file, come HTML_TEMPLATE_STR, rimane invariato sopra questo blocco) ...
+
+# --- Testi ---
 TEXT_CONTENT = {
     'it': {
         'lang_code': 'it',
@@ -555,7 +560,7 @@ TEXT_CONTENT = {
         'nav_map': "La Mappa del Viaggio",
         'nav_blog': "Diario di Bordo", # AGGIUNTO PER IL BLOG
         'header_title': "SaltRiders World Tour",
-        'header_subtitle': "L'incredibile itinerario 2025-2026 di GG & Paco, un'epopea via terra e mare all'insegna del bikepacking e del surf",
+        'header_subtitle': "L'incredibile itinerario 2025-2026 di GG & Paco, un'epopea via terra e mare all'insegna del bikepacking, del surf, dello slow travel e di un approccio sostenibile all'esplorazione.", # MODIFICATO
         'protagonists_section_title': "I Nostri Eroi (Più o Meno)",
         'gg_alt_text': "Foto di GG pronto per l'avventura",
         'gg_name': "GG - Il Gigante Entusiasta",
@@ -566,12 +571,12 @@ TEXT_CONTENT = {
         'adventure_section_title': "La Nostra Gloriosa Odissea",
         'ocean_crossing_alt': "Barca a vela in navigazione oceanica sotto un cielo blu",
         'ocean_crossing_caption': "L'immensità dell'oceano ci attende: la prossima grande sfida.",
-        'adventure_intro1': "Allacciate le cinture! I SaltRiders, GG e Paco, stanno per intraprendere un'odissea che riscriverà le regole dell'esplorazione... o almeno, ci proveranno con stile. Dal cuore pulsante dell'Europa, questi due intrepidi avventurieri scateneranno le loro fidate bici e tavole da surf in un tour de force via terra e mare, pronti a collezionare culture esotiche e panorami da cartolina.",
-        'adventure_intro2': "La loro filosofia di viaggio? Più che un piano, è un manifesto allo **slow travel** e alla **sostenibilità**. Una dichiarazione d'intenti che abbraccia l'imprevisto, l'ingegno e la profonda connessione con i luoghi e le persone, privilegiando la forza delle nostre gambe e mezzi a basso impatto per muoversi nel mondo, evitando il più possibile gli aerei.",
+        'adventure_intro1': "Allacciate le cinture! Noi SaltRiders, GG e Paco, stiamo per intraprendere un'odissea che riscriverà le regole dell'esplorazione... o almeno, ci proveremo con stile. Dal cuore pulsante dell'Europa, questi due intrepidi avventurieri scateneranno le loro fidate bici e tavole da surf in un tour de force via terra e mare, pronti a collezionare culture esotiche e panorami da cartolina, il tutto con un occhio di riguardo per l'ambiente e le comunità locali.", # MODIFICATO
+        'adventure_intro2': "La nostra filosofia di viaggio? Più che un piano, è un manifesto allo **slow travel** e alla **sostenibilità**. Una dichiarazione d'intenti che abbraccia l'imprevisto, l'ingegno e la profonda connessione con i luoghi e le persone, privilegiando la forza delle nostre gambe e mezzi a basso impatto per muoverci nel mondo, evitando il più possibile gli aerei.", # MODIFICATO
         'adventure_step1_title': "Europa Express, con la Calma dei Campioni",
-        'adventure_step1_desc': "Da Milano, un inizio 'soft' su rotaia verso ovest, giusto per assaporare il Vecchio Continente prima del vero caos.",
+        'adventure_step1_desc': "Da Milano, un inizio 'soft' su rotaia verso ovest, assaporando il Vecchio Continente a un ritmo che ci permette di connetterci veramente con i paesaggi, prima del vero caos.", # MODIFICATO
         'adventure_step2_title': "Scalate Epiche (e Forse Poco Sensate)",
-        'adventure_step2_desc': "Un avvio in bicicletta da Torino, con l'ardua impresa di valicare un importante passo alpino con tavole al seguito, per planare (si spera con tutte le ossa intere) su Grenoble. Chi sano di mente lo farebbe? Noi! Seguirà un trasferimento via terra più convenzionale verso San Sebastián, dove l'asfalto tornerà a chiamare le loro ruote.",
+        'adventure_step2_desc': "Un avvio in bicicletta da Torino, con l'ardua impresa di valicare un importante passo alpino con tavole al seguito, per planare (si spera con tutte le ossa intere) su Grenoble. Chi sano di mente lo farebbe? Noi! Seguirà un trasferimento via terra più convenzionale verso San Sebastián, dove l'asfalto tornerà a chiamare le nostre ruote.", # MODIFICATO
         'adventure_step3_title': "Cavalcando l'Atlantico Iberico (e le Salite)",
         'adventure_step3_desc': "Pedalando come se non ci fosse un domani da San Sebastián lungo le coste selvagge di Spagna e Portogallo, alla ricerca di spot da urlo, onde perfette e, possibilmente, un posto dove montare la tenda.",
         'adventure_step4_title': "Rotta per i Caraibi",
@@ -580,11 +585,11 @@ TEXT_CONTENT = {
         'adventure_step5_optionA_title': "Opzione A - Traversata Oceanica da veri Lupi di Mare (o quasi)",
         'adventure_step5_optionA_desc': "Dai Caraibi, un passaggio 'al volo' via mare per Panama. Da lì, l'immensità del Pacifico: un'avventura di pura navigazione verso perle come le Galápagos e le isole della Polinesia Francese, affidandoci al buon cuore delle onde, dei venti e di chiunque abbia una cuccetta libera.",
         'adventure_step5_optionB_title': "Opzione B - Radici Sudamericane e Polpacci d'Acciaio",
-        'adventure_step5_optionB_desc': "Un passaggio marittimo dai Caraibi all'Ecuador segnerà l'inizio di una LUNGA pedalata. Giù per la costa Pacifica del Sudamerica, inseguendo onde mitiche, attraversando deserti e montagne che metteranno alla prova anche i più stoici. Un'immersione nel cuore pulsante del continente fino al Cile, o finché le gambe reggeranno.",
-        'adventure_outro': "Dimenticate le tabelle di marcia precise: questo è più un manifesto al viaggio vissuto con spirito indomito, un brindisi all'imprevisto che diventa la norma e un tributo a ogni singola, strampalata, meravigliosa connessione umana. Restate sintonizzati, perché il bello deve ancora venire (e probabilmente non andrà come previsto)!",
+        'adventure_step5_optionB_desc': "Un passaggio marittimo dai Caraibi all'Ecuador segnerà l'inizio di una LUNGA pedalata. Giù per la costa Pacifica del Sudamerica, inseguendo onde mitiche, attraversando deserti e montagne che metteranno alla prova anche i più stoici. Un'immersione nel cuore pulsante del continente fino al Cile, o finché le nostre gambe reggeranno.", # MODIFICATO
+        'adventure_outro': "Dimenticate le tabelle di marcia precise: questo è più un manifesto al viaggio vissuto con spirito indomito e consapevolezza, un brindisi all'imprevisto che diventa la norma, a un'esplorazione che rispetta i ritmi della natura e delle culture, e un tributo a ogni singola, strampalata, meravigliosa connessione umana. Restate sintonizzati, perché il bello deve ancora venire (e probabilmente non andrà come previsto)!", # MODIFICATO
         'equipment_section_title': "L'Arsenale dei Sognatori: Bici, Surf & Tenda",
-        'equipment_desc1': "L'essenza di un'avventura così particolare risiede anche nella genialità della semplicità e in un pizzico di spirito d’adattamento. Per affrontare le lunghe tratte costiere, GG e Paco hanno scelto bici gravel equipaggiate con supporti laterali dedicati per trasportare le loro amate tavole da surf. Questo sistema ingegnoso permette loro di essere agili come gazzelle (carichi come muli) e vivere appieno l’esperienza del viaggio a misura d’uomo e di tavola.",
-        'equipment_desc2': "Il supporto è leggero ma resistente, e se il vento laterale si farà sentire… fa parte dell’avventura. Con loro anche una tenda compatta, per fermarsi dove capita e dormire sotto le stelle, pronti a ripartire all’alba con la fedele compagna d’onda sempre al fianco, come un’appendice aerodinamica un po’ sbilenca ma indispensabile.",
+        'equipment_desc1': "L'essenza di un'avventura così particolare risiede anche nella genialità della semplicità e in un pizzico di spirito d’adattamento. Per affrontare le lunghe tratte costiere, noi SaltRiders abbiamo scelto bici gravel equipaggiate con supporti laterali dedicati per trasportare le nostre amate tavole da surf. Questo sistema ingegnoso ci permette di essere agili come gazzelle (carichi come muli) e vivere appieno l’esperienza del viaggio a misura d’uomo e di tavola.", # MODIFICATO
+        'equipment_desc2': "Il supporto è leggero ma resistente, e se il vento laterale si farà sentire… fa parte dell’avventura. Con noi anche una tenda compatta, per fermarci dove capita e dormire sotto le stelle, pronti a ripartire all’alba con la fedele compagna d’onda sempre al nostro fianco, come un’appendice aerodinamica un po’ sbilenca ma indispensabile.", # MODIFICATO
         'equipment_image_alt': "Bikepacking con tavola da surf: l'essenza SaltRiders!",
         'equipment_image_caption': "Il nostro assetto da SaltRiders: bici, tavola e orizzonti infiniti.",
         'grizl_image_alt': "Bici gravel Grizl pronta per l'avventura su sterrato",
@@ -595,7 +600,7 @@ TEXT_CONTENT = {
         'map_tile_standard': "Mappa Standard",
         'map_tile_satellite': "Mappa Satellitare",
         'map_main_group': "Percorso Principale (Teorico)",
-        'map_planA_group': "Opzione Pacifico: Traversata Oceanica", 
+        'map_planA_group': "Opzione Pacifico: Traversata Oceanica",
         'map_planB_group': "Opzione Pacifico: Bici Sudamerica",
         'map_milan_popup': "Milano - Qui inizia la follia!", 'map_milan_date': "10 Set 25",
         'map_turin_popup': "Torino - Pronti per le Alpi?!", 'map_turin_date': "10 Set 25",
@@ -645,7 +650,8 @@ TEXT_CONTENT = {
         'nav_map': "Treasure Map",
         'nav_blog': "Logbook", # AGGIUNTO PER IL BLOG
         'header_title': "SaltRiders World Tour",
-        # ... (tutti gli altri testi in inglese come prima, assicurati che ci siano tutti!) ...
+        'header_subtitle': "GG & Paco's incredible 2025-2026 itinerary, an epic land and ocean journey of bikepacking, surf, slow travel, and a sustainable approach to exploration!", # MODIFICATO
+        'protagonists_section_title': "Our (Sorta) Heroes",
         'gg_alt_text': "GG's photo, ready for adventure",
         'gg_name': "GG - The Enthusiastic Giant",
         'gg_description': "A free spirit with an inexhaustible supply of enthusiasm (and perhaps a dash of healthy recklessness). GG faces every challenge, no matter how absurd, with an enthusiasm that could awaken a dormant volcano. His mission: to turn every day into a memorable adventure, collecting friends and improbable anecdotes.",
@@ -655,12 +661,12 @@ TEXT_CONTENT = {
         'adventure_section_title': "Our Glorious Odyssey",
         'ocean_crossing_alt': "Sailboat on an ocean crossing under a blue sky",
         'ocean_crossing_caption': "The vastness of the ocean awaits us: our next great challenge.",
-        'adventure_intro1': "Fasten your seatbelts (or rather, tighten your roof rack straps)! The SaltRiders, GG and Paco, are about to embark on an odyssey that will redefine the very concept of exploration... or at least, they'll give it a stylish shot. From the beating heart of Europe, these two intrepid (or perhaps, gloriously reckless?) adventurers will unleash their trusty bikes and surfboards on a land-and-sea tour de force, ready to collect exotic cultures and postcard-perfect vistas.",
-        'adventure_intro2': "Their travel philosophy? More than a plan, it's a manifesto for **slow travel** and **sustainability**. A declaration of intent that embraces the unexpected, resourcefulness, and a deep connection with places and people, prioritizing human power and low-impact transport to navigate the world, avoiding air travel as much as possible.",
+        'adventure_intro1': "Fasten your seatbelts! We SaltRiders, GG and Paco, are about to embark on an odyssey that will redefine the very concept of exploration... or at least, we'll give it a stylish shot. From the beating heart of Europe, these two intrepid adventurers will unleash their trusty bikes and surfboards on a land-and-sea tour de force, ready to collect exotic cultures and postcard-perfect vistas, all while being mindful of the environment and local communities.", # MODIFICATO
+        'adventure_intro2': "Their travel philosophy? More than a plan, it's a manifesto for **slow travel** and **sustainability**. A declaration of intent that embraces the unexpected, resourcefulness, and a deep connection with places and people, prioritizing human power and low-impact transport to navigate the world, avoiding air travel as much as possible.", # MODIFICATO
         'adventure_step1_title': "Europe Express, with Champion-like Poise",
-        'adventure_step1_desc': "From Milan, a 'soft' start westward by rail, just to savour the Old Continent before the real chaos begins.",
+        'adventure_step1_desc': "From Milan, a 'soft' start westward by rail, savouring the Old Continent at a pace that allows us to truly connect with the landscapes, before the real chaos begins.", # MODIFICATO
         'adventure_step2_title': "Epic (and Possibly Ill-Advised) Climbs",
-        'adventure_step2_desc': "A 'brilliant' cycling kick-off from Turin, featuring the Herculean (and let's be honest, utterly bonkers) challenge of conquering a major Alpine pass with surfboards in tow, before (hopefully, with all bones intact) gliding into Grenoble. Who in their right mind would do this? We would! A more conventional overland transfer will then whisk them to San Sebastián, where the call of the open road will once again beckon their wheels.",
+        'adventure_step2_desc': "A 'brilliant' cycling kick-off from Turin, featuring the Herculean (and let's be honest, utterly bonkers) challenge of conquering a major Alpine pass with surfboards in tow, before (hopefully, with all bones intact) gliding into Grenoble. Who in their right mind would do this? We would! A more conventional overland transfer will then whisk us to San Sebastián, where the call of the open road will once again beckon our wheels.", # MODIFICATO
         'adventure_step3_title': "Riding the Iberian Atlantic (and the Hills)",
         'adventure_step3_desc': "Cycling like there's no tomorrow from San Sebastián along the wild coasts of Spain and Portugal, on the hunt for epic spots, perfect waves, and possibly, a place to pitch the tent.",
         'adventure_step4_title': "Caribbean Bound",
@@ -669,13 +675,103 @@ TEXT_CONTENT = {
         'adventure_step5_optionA_title': "Option A - Ocean Crossing for True (or almost) Sea Dogs",
         'adventure_step5_optionA_desc': "From the Caribbean, a 'quick' sea passage to Panama. From there, the vastness of the Pacific: an adventure of pure sailing towards gems like the Galápagos and the islands of French Polynesia, relying on the kindness of waves, winds, and anyone with a spare bunk.",
         'adventure_step5_optionB_title': "Option B - South American Roots and Calves of Steel",
-        'adventure_step5_optionB_desc': "A sea passage from the Caribbean to Ecuador will mark the beginning of a LONG cycling journey. Down the Pacific coast of South America, chasing legendary waves, crossing deserts straight out of a western movie, and mountains that will test even the most stoic. An immersion into the continent's vibrant heart all the way to Chile, or until their legs give out.",
-        'adventure_outro': "Forget rigid schedules: this is more a manifesto for travel lived with an indomitable spirit, a toast to the unexpected becoming the norm, and a tribute to every single, quirky, wonderful human connection. Stay tuned, because the best (and most hilariously unpredictable parts) are yet to come!",
+        'adventure_step5_optionB_desc': "A sea passage from the Caribbean to Ecuador will mark the beginning of a LONG cycling journey. Down the Pacific coast of South America, chasing legendary waves, crossing deserts straight out of a western movie, and mountains that will test even the most stoic. An immersion into the continent's vibrant heart all the way to Chile, or until our legs give out.", # MODIFICATO
+        'adventure_outro': "Forget rigid schedules: this is more a manifesto for travel lived with an indomitable spirit and awareness, a toast to the unexpected becoming the norm, to an exploration that respects the rhythms of nature and cultures, and a tribute to every single, quirky, wonderful human connection. Stay tuned, because the best (and most hilariously unpredictable parts) are yet to come!", # MODIFICATO
         'equipment_section_title': "The Dreamers' Arsenal: Bikes, Surfboards & Tent",
-        'equipment_desc1': "The essence of such a unique adventure lies also in the genius of simplicity and a touch of adaptability. To tackle the long coastal stretches, GG and Paco have chosen gravel bikes equipped with dedicated side racks to carry their beloved surfboards. This ingenious system allows them to be as agile as gazelles (though loaded like mules) and fully experience the human-and-board-scaled journey.",
-        'equipment_desc2': "The rack is lightweight yet sturdy, and if the crosswinds make themselves felt... well, that's part of the adventure. They'll also carry a compact tent, to stop wherever they fancy and sleep under the stars, ready to set off at dawn with their faithful wave-riding companion always by their side, like a somewhat lopsided but indispensable aerodynamic appendage.",
+        'equipment_desc1': "The essence of such a unique adventure lies also in the genius of simplicity and a touch of adaptability. To tackle the long coastal stretches, we SaltRiders have chosen gravel bikes equipped with dedicated side racks to carry our beloved surfboards. This ingenious system allows us to be as agile as gazelles (though loaded like mules) and fully experience the human-and-board-scaled journey.", # MODIFICATO
+        'equipment_desc2': "The rack is lightweight yet sturdy, and if the crosswinds make themselves felt... well, that's part of the adventure. We also carry a compact tent, to stop wherever we fancy and sleep under the stars, ready to set off at dawn with our faithful wave-riding companion always by our side, like a somewhat lopsided but indispensable aerodynamic appendage.", # MODIFICATO
         'equipment_image_alt': "Bikepacking with a surfboard: the SaltRiders essence!",
-        'equipment_image_caption': "The SaltRiders setup: bike, board, and endless horizons.",
+        'equipment_image_caption': "Our setup as SaltRiders: bike, board, and endless horizons.",
+        'grizl_image_alt': "Grizl gravel bike ready for adventure on dirt roads",
+        'grizl_image_caption': "Our trusty two-wheeled companion, ready to tackle any type of terrain.",
+        'map_section_title': "The Interactive Journey Map",
+        'footer_text': "© 2024 SaltRiders Epic Fails & Adventures - GG & Paco. Map generated with Folium (and a lot of patience). Stay Stoked (and cross your fingers for us)!",
+        'map_tile_clear': "Clear Map",
+        'map_tile_standard': "Standard Map",
+        'map_tile_satellite': "Satellite Map",
+        'map_main_group': "Main Route (Theoretical)",
+        'map_planA_group': "Pacific Option: Ocean Crossing",
+        'map_planB_group': "Pacific Option: South America Bike Tour",
+        'map_milan_popup': "Milan - The madness begins!", 'map_milan_date': "10 Sep 25",
+        'map_turin_popup': "Turin - Ready for the Alps?!", 'map_turin_date': "10 Sep 25",
+        'map_train_tooltip': "Train Milan→Turin (10 Sep 25) - The warm-up",
+        'map_turin_bike_popup': "Turin - Bike Start (and Alpine suffering)",
+        'map_grenoble_popup': "Grenoble - Survived the Alps!", 'map_grenoble_date': "11 Sep 25",
+        'map_bike1_tooltip': "Bike Turin→Grenoble (10-11 Sep 25) - 'A walk in the park,' they said...",
+        'map_grenoble_bus_popup': "Grenoble - Tactical bus break", 'map_grenoble_bus_date': "11 Sep 25",
+        'map_sanseb_bus_popup': "San Sebastián - We're back!", 'map_sanseb_bus_date': "12 Sep 25",
+        'map_bus_tooltip': "Bus Grenoble→San Sebastián (11-12 Set 25) - Temporary civilization",
+        'map_sanseb_bike_popup': "San Sebastián - Back on the bikes, coastal style!",
+        'map_iberia_bike_tooltip': "Bike Iberian Atlantic Coast (14 Sep - 28 Oct 25) - Legs, waves, and tapas",
+        'map_faro_sail_popup': "Faro - Seeking passage across the Atlantic", 'map_faro_sail_date': "29 Oct 25",
+        'map_las_palmas_popup': "Las Palmas, Gran Canaria - Pronti per l'ARC (o quasi)", 'map_las_palmas_date': "23 Nov 25",
+        'map_sail_canaries_tooltip': "Sail Faro→Las Palmas (29 Oct - 03 Nov 25) - Atlantic training",
+        'map_canaries_stop_tooltip': "Stopover & ARC (panic?) preps in Gran Canaria\n03 Nov - 23 Nov 25",
+        'map_st_lucia_popup': "Saint Lucia, Caribbean - Land Ho! (Finally)", 'map_st_lucia_date': "10-15 Dic 25",
+        'map_arc_tooltip': "ARC: Atlantic Crossing (23 Nov - 10/15 Dic 25) - Waves, stars, and seasickness",
+        'map_caribbean_explore_tooltip': "Caribbean Exploration (and energy recovery)\n15 Dic 25 - 15 Feb 26",
+        'map_panama_transfer_popup': "Panama City - To the Big Blue (Pacific)", 'map_panama_transfer_date': "16 Feb 26",
+        'map_sea_transfer_panama_tooltip': "Sea Passage Caribbean→Panama (Feb 26) - Switching oceans!",
+        'map_panama_prep_tooltip': "Preparations in Panama (and treasure map hunting)\n16 Feb - 28 Feb 26",
+        'map_panama_pacific_start_popup': "Panama - Pacific Crossing Start (All aboard!)", 'map_panama_pacific_start_date': "01 Mar 26",
+        'map_sail_leg_tooltip_prefix': "Sail",
+        'map_stopover_tooltip_prefix': "Stopover at",
+        'map_ecuador_transfer_popup': "Guayaquil, Ecuador - South American Adventure Start",
+        'map_ecuador_transfer_date': "16 Feb 26",
+        'map_sea_transfer_ecuador_tooltip': "Passaggio via mare Caraibi→Ecuador (Feb 26) - Rotta a Sud!",
+        'map_ecuador_explore_tooltip': "Esplorazione Ecuador (e acclimatamento)\n16 Feb - 01 Mar 26",
+        'map_guayaquil_bike_popup': "Guayaquil - Inizio Bike Pacifica (e che il dio del ciclismo ci assista)",
+        'map_bike_pacific_tooltip': "Bike Costa Pacifica (Mar - Lug 26) - Chilometri, sudore e panorami",
+        'map_finisterre_name': "Finisterre", 'map_porto_name': "Porto", 'map_ericeira_name': "Ericeira", 'map_lisbon_name': "Lisbona", 'map_sagres_name': "Sagres", 'map_faro_name': "Faro",
+        'map_galapagos_name': "Galápagos", 'map_marquesas_name': "Marchesi", 'map_tahiti_name': "Tahiti",
+        'map_montanita_name': "Montañita", 'map_lobitos_name': "Lobitos", 'map_lima_name': "Lima", 'map_iquique_name': "Iquique", 'map_pichilemu_name': "Pichilemu",
+        'map_fullscreen_title': "Schermo Intero (Modalità Cinema)",
+        'map_fullscreen_cancel': "Esci da Schermo Intero (Ritorno alla Realtà)",
+        'map_locate_title': "Dove Diavolo Sono?",
+        'map_locate_popup': "Sei qui (più o meno... speriamo)",
+    },
+    'en': {
+        'lang_code': 'en',
+        'page_title': "SaltRiders: GG & Paco's Epic (and Slightly Mad) Adventure - 2025-2026 Itinerary",
+        'nav_home': "Home Base",
+        'nav_protagonists': "Heroes (or Villains?)",
+        'nav_adventure': "The Odyssey",
+        'nav_equipment': "Gear & Dreams",
+        'nav_map': "Treasure Map",
+        'nav_blog': "Logbook", # AGGIUNTO PER IL BLOG
+        'header_title': "SaltRiders World Tour",
+        'header_subtitle': "GG & Paco's incredible 2025-2026 itinerary, an epic land and ocean journey of bikepacking, surf, slow travel, and a sustainable approach to exploration!", # MODIFICATO
+        'protagonists_section_title': "Our (Sorta) Heroes",
+        'gg_alt_text': "GG's photo, ready for adventure",
+        'gg_name': "GG - The Enthusiastic Giant",
+        'gg_description': "A free spirit with an inexhaustible supply of enthusiasm (and perhaps a dash of healthy recklessness). GG faces every challenge, no matter how absurd, with an enthusiasm that could awaken a dormant volcano. His mission: to turn every day into a memorable adventure, collecting friends and improbable anecdotes.",
+        'paco_alt_text': "Paco's Photo, lost in the mountains",
+        'paco_name': "Paco - The Sagacious Explorer",
+        'paco_description': "A sharp mind and energetic soul, Paco is the organizing spirit of the duo. Always ready to find ingenious solutions (or at least, ones that seem so at the time), he faces every mishap with a healthy dose of creative problem-solving. The adrenaline of discovery guides him, turning every unforeseen event into… well, another unforeseen event to solve.",
+        'adventure_section_title': "Our Glorious Odyssey",
+        'ocean_crossing_alt': "Sailboat on an ocean crossing under a blue sky",
+        'ocean_crossing_caption': "The vastness of the ocean awaits us: our next great challenge.",
+        'adventure_intro1': "Fasten your seatbelts! We SaltRiders, GG and Paco, are about to embark on an odyssey that will redefine the very concept of exploration... or at least, we'll give it a stylish shot. From the beating heart of Europe, these two intrepid adventurers will unleash their trusty bikes and surfboards on a land-and-sea tour de force, ready to collect exotic cultures and postcard-perfect vistas, all while being mindful of the environment and local communities.", # MODIFICATO
+        'adventure_intro2': "Their travel philosophy? More than a plan, it's a manifesto for **slow travel** and **sustainability**. A declaration of intent that embraces the unexpected, resourcefulness, and a deep connection with places and people, prioritizing human power and low-impact transport to navigate the world, avoiding air travel as much as possible.", # MODIFICATO
+        'adventure_step1_title': "Europe Express, with Champion-like Poise",
+        'adventure_step1_desc': "From Milan, a 'soft' start westward by rail, savouring the Old Continent at a pace that allows us to truly connect with the landscapes, before the real chaos begins.", # MODIFICATO
+        'adventure_step2_title': "Epic (and Possibly Ill-Advised) Climbs",
+        'adventure_step2_desc': "A 'brilliant' cycling kick-off from Turin, featuring the Herculean (and let's be honest, utterly bonkers) challenge of conquering a major Alpine pass with surfboards in tow, before (hopefully, with all bones intact) gliding into Grenoble. Who in their right mind would do this? We would! A more conventional overland transfer will then whisk us to San Sebastián, where the call of the open road will once again beckon our wheels.", # MODIFICATO
+        'adventure_step3_title': "Riding the Iberian Atlantic (and the Hills)",
+        'adventure_step3_desc': "Cycling like there's no tomorrow from San Sebastián along the wild coasts of Spain and Portugal, on the hunt for epic spots, perfect waves, and possibly, a place to pitch the tent.",
+        'adventure_step4_title': "Caribbean Bound",
+        'adventure_step4_desc': "From Las Palmas de Gran Canaria, we'll sneak into the ARC (Atlantic Rally for Cruisers) fleet on November 23, 2025. The mission: to find a passage directly on the pontoons or through unlikely contacts. Ready to cross the Atlantic, sailing towards Saint Lucia, hoping not to end up washing dishes for the entire voyage.",
+        'adventure_step5_title': "Pacific Dream: Two Destinies, Same Madness",
+        'adventure_step5_optionA_title': "Option A - Ocean Crossing for True (or almost) Sea Dogs",
+        'adventure_step5_optionA_desc': "From the Caribbean, a 'quick' sea passage to Panama. From there, the vastness of the Pacific: an adventure of pure sailing towards gems like the Galápagos and the islands of French Polynesia, relying on the kindness of waves, winds, and anyone with a spare bunk.",
+        'adventure_step5_optionB_title': "Option B - South American Roots and Calves of Steel",
+        'adventure_step5_optionB_desc': "A sea passage from the Caribbean to Ecuador will mark the beginning of a LONG cycling journey. Down the Pacific coast of South America, chasing legendary waves, crossing deserts straight out of a western movie, and mountains that will test even the most stoic. An immersion into the continent's vibrant heart all the way to Chile, or until our legs give out.", # MODIFICATO
+        'adventure_outro': "Forget rigid schedules: this is more a manifesto for travel lived with an indomitable spirit and awareness, a toast to the unexpected becoming the norm, to an exploration that respects the rhythms of nature and cultures, and a tribute to every single, quirky, wonderful human connection. Stay tuned, because the best (and most hilariously unpredictable parts) are yet to come!", # MODIFICATO
+        'equipment_section_title': "The Dreamers' Arsenal: Bikes, Surfboards & Tent",
+        'equipment_desc1': "The essence of such a unique adventure lies also in the genius of simplicity and a touch of adaptability. To tackle the long coastal stretches, we SaltRiders have chosen gravel bikes equipped with dedicated side racks to carry our beloved surfboards. This ingenious system allows us to be as agile as gazelles (though loaded like mules) and fully experience the human-and-board-scaled journey.", # MODIFICATO
+        'equipment_desc2': "The rack is lightweight yet sturdy, and if the crosswinds make themselves felt... well, that's part of the adventure. We also carry a compact tent, to stop wherever we fancy and sleep under the stars, ready to set off at dawn with our faithful wave-riding companion always by our side, like a somewhat lopsided but indispensable aerodynamic appendage.", # MODIFICATO
+        'equipment_image_alt': "Bikepacking with a surfboard: the SaltRiders essence!",
+        'equipment_image_caption': "Our setup as SaltRiders: bike, board, and endless horizons.",
         'grizl_image_alt': "Grizl gravel bike ready for adventure on dirt roads",
         'grizl_image_caption': "Our trusty two-wheeled companion, ready to tackle any type of terrain.",
         'map_section_title': "The Interactive Journey Map",
@@ -701,7 +797,7 @@ TEXT_CONTENT = {
         'map_las_palmas_popup': "Las Palmas, Gran Canaria - ARC ready (almost)", 'map_las_palmas_date': "23 Nov 25",
         'map_sail_canaries_tooltip': "Sail Faro→Las Palmas (29 Oct - 03 Nov 25) - Atlantic training",
         'map_canaries_stop_tooltip': "Stopover & ARC (panic?) preps in Gran Canaria\n03 Nov - 23 Nov 25",
-        'map_st_lucia_popup': "Saint Lucia, Caribbean - Land Ho! (Finally)", 'map_st_lucia_date': "10-15 Dec 25",
+        'map_st_lucia_popup': "Saint Lucia, Caribbean - Land Ho! (Finally)", 'map_st_lucia_date': "10-15 Dic 25",
         'map_arc_tooltip': "ARC: Atlantic Crossing (23 Nov - 10/15 Dic 25) - Waves, stars, and seasickness",
         'map_caribbean_explore_tooltip': "Caribbean Exploration (and energy recovery)\n15 Dic 25 - 15 Feb 26",
         'map_panama_transfer_popup': "Panama City - To the Big Blue (Pacific)", 'map_panama_transfer_date': "16 Feb 26",
@@ -712,17 +808,17 @@ TEXT_CONTENT = {
         'map_stopover_tooltip_prefix': "Stopover at",
         'map_ecuador_transfer_popup': "Guayaquil, Ecuador - South American Adventure Start",
         'map_ecuador_transfer_date': "16 Feb 26",
-        'map_sea_transfer_ecuador_tooltip': "Sea Passage Caribbean→Ecuador (Feb 26) - Heading South!",
-        'map_ecuador_explore_tooltip': "Ecuador Exploration (and acclimatization)\n16 Feb - 01 Mar 26",
-        'map_guayaquil_bike_popup': "Guayaquil - Pacific Bike Tour Start (may the cycling gods be with us)",
-        'map_bike_pacific_tooltip': "Bike Pacific Coast (Mar - Jul 26) - Kilometers, sweat, and views",
-        'map_finisterre_name': "Finisterre", 'map_porto_name': "Porto", 'map_ericeira_name': "Ericeira", 'map_lisbon_name': "Lisbon", 'map_sagres_name': "Sagres", 'map_faro_name': "Faro",
+        'map_sea_transfer_ecuador_tooltip': "Sea Passage Caribbean→Ecuador (Feb 26) - Rotta a Sud!",
+        'map_ecuador_explore_tooltip': "Ecuador Exploration (and acclimatamento)\n16 Feb - 01 Mar 26",
+        'map_guayaquil_bike_popup': "Guayaquil - Inizio Bike Pacifica (e che il dio del ciclismo ci assista)",
+        'map_bike_pacific_tooltip': "Bike Costa Pacifica (Mar - Lug 26) - Chilometri, sudore e panorami",
+        'map_finisterre_name': "Finisterre", 'map_porto_name': "Porto", 'map_ericeira_name': "Ericeira", 'map_lisbon_name': "Lisbona", 'map_sagres_name': "Sagres", 'map_faro_name': "Faro",
         'map_galapagos_name': "Galápagos", 'map_marquesas_name': "Marchesi", 'map_tahiti_name': "Tahiti",
         'map_montanita_name': "Montañita", 'map_lobitos_name': "Lobitos", 'map_lima_name': "Lima", 'map_iquique_name': "Iquique", 'map_pichilemu_name': "Pichilemu",
-        'map_fullscreen_title': "Fullscreen (Cinema Mode)",
-        'map_fullscreen_cancel': "Exit Fullscreen (Back to Reality)",
-        'map_locate_title': "Where The Heck Am I?",
-        'map_locate_popup': "You are here (more or less... hopefully)",
+        'map_fullscreen_title': "Schermo Intero (Modalità Cinema)",
+        'map_fullscreen_cancel': "Esci da Schermo Intero (Ritorno alla Realtà)",
+        'map_locate_title': "Dove Diavolo Sono?",
+        'map_locate_popup': "Sei qui (più o meno... speriamo)",
     }
 }
 
